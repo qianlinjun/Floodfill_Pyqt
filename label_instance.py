@@ -20,11 +20,15 @@ class Main(QWidget):
 
 
 class PaintArea(QWidget):
+    PosChangeSignal = pyqtSignal(int,int)# 定义信号
+
     def __init__(self):
         super(PaintArea,self).__init__()
         self.left_top_point = None
         self.wait_paint_img     = None
         self.setMinimumSize(800,800)
+
+        self.setMouseTracking(True)#get mouse in real time
 
     def set_pos_and_img(self, left_top_point, img):
         self.left_top_point = left_top_point
@@ -54,6 +58,16 @@ class PaintArea(QWidget):
                     
         # self.left_top_point = None
         # self.scaled_img     = None
+    
+    def mouseMoveEvent(self, e):
+        s = e.windowPos()
+        x = s.x()
+        y = s.y()
+        text = "x: {0},  y: {1}".format(x, y)
+        # self.posInfoLabel.setText(text)
+        # print(text)
+        self.PosChangeSignal.emit(x , y)
+        
 
 
 def cvimg_to_qtimg(cvimg):
@@ -80,41 +94,42 @@ class ImageWithMouseControl(QWidget):
         # left paint area
         spliter1 = QSplitter(Qt.Horizontal)
         spliter1.setOpaqueResize(True)
-        
-        stack1 = QStackedWidget()
-        stack1.setFrameStyle(QFrame.Panel|QFrame.Raised)
-        self.paintArea = PaintArea()
-        stack1.addWidget(self.paintArea)    
         frame1 = QFrame(spliter1)
         layout_left = QVBoxLayout(frame1)
+        self.paintArea = PaintArea()
+        self.paintArea.PosChangeSignal.connect(self.posChangeCallback)
+        
         #mainLayout1.setMargin(10)
         layout_left.setSpacing(6)
-        layout_left.addWidget(stack1)
-
+        layout_left.addWidget(self.paintArea)
+        
+        
         # right button area
         spliter2 = QSplitter(Qt.Horizontal)
         # spliter2.setOpaqueResize(True)
         frame = QFrame(spliter2)
-        gridLayout = QGridLayout(frame)
-        load_btn = QPushButton()
-        load_btn.clicked.connect(self.loadFile)
-        load_btn.setText("open")
-        gridLayout.addWidget(load_btn, 1, 0)
+        layoutRight = QGridLayout(frame)
+        loadBtn = QPushButton()
+        loadBtn.clicked.connect(self.loadFile)
+        loadBtn.setText("open")
+        layoutRight.addWidget(loadBtn, 1, 0)
+        self.posInfoLabel = QLabel("hello world")
+        layoutRight.addWidget(self.posInfoLabel)
   
         self.setWindowTitle('Image with mouse control')
 
-        full_layout = QGridLayout(self)
-        full_layout.addWidget(spliter1,0,0)
-        full_layout.addWidget(spliter2,0,1)
-        self.setLayout(full_layout)
-
-        # print("self.paintArea", self.paintArea.width(), self.paintArea.height())
-    
-
+        fullLayout = QGridLayout(self)
+        fullLayout.addWidget(spliter1,0,0)
+        fullLayout.addWidget(spliter2,0,1)
+        self.setLayout(fullLayout)
 
     def loadFile(self):
         # load qpixmap
-        fname, _ = QFileDialog.getOpenFileName(self, '选择图片', 'c:\\', 'Image files(*.jpg *.gif *.png)')
+        fname, ret = QFileDialog.getOpenFileName(self, '选择图片', 'c:\\', 'Image files(*.jpg *.gif *.png)')
+        if fname == "":
+            print("no valid image")
+            return
+
         self.img = QPixmap(fname)
         self.scaled_img = self.img#.scaled(self.img.size())
         # resize paint area
@@ -169,17 +184,27 @@ class ImageWithMouseControl(QWidget):
                 copyImg = self.gray.copy()
                 h, w = self.gray.shape[:2]
                 mask = np.zeros([h+2, w+2], np.uint8)
-                # mask 需要填充的位置设置为0
-                cv2.floodFill(copyImg, mask, seedPt, (0, 0, 0), (5, 0, 0), (5, 0, 0))  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
 
-                alpha = 0.5
+                
+                mask_fill = 252 #mask的填充值
+                #floodFill充值标志
+                flags = 4|(mask_fill<<8)#|cv2.FLOODFILL_FIXED_RANGE
+
+                # mask 需要填充的位置设置为0
+                cv2.floodFill(copyImg, mask, seedPt, 255, 5, 5, flags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
+                # cv2.imwrite("C:\qianlinjun\graduate\gen_dem\output\mask.png", mask)
+                # cv2.waitKey(1000)
+
+                alpha = 0.7
                 beta = 1-alpha
                 gamma = 0
 
                 # mask = np.vstack( (copyImg[:,:,np.newaxis], np.zeros([h, w, 2], np.uint8) ))
-                mask = np.concatenate((copyImg[:,:,np.newaxis].astype(np.uint8), np.zeros([h, w, 2], dtype=np.uint8)), axis=-1)
-                
-                img_add = cv2.addWeighted(self.cv_img, alpha, mask, beta, gamma)# add mask
+                mask = cv2.resize(mask, (h, w))
+                mask_rgb = np.concatenate((np.ones([h, w, 2], dtype=np.uint8),  mask[:,:,np.newaxis].astype(np.uint8) ), axis=-1)
+                mask_rgb[mask == 0] = [127,127,127]
+                mask_rgb[mask == 255] = [255,0,0]
+                img_add = cv2.addWeighted(self.cv_img, alpha, mask_rgb, beta, gamma)# add mask
                 qt_add_img = cvimg_to_qtimg(img_add)
                 self.scaled_img = qt_add_img.scaled(self.scaled_img.size())
                 
@@ -233,6 +258,15 @@ class ImageWithMouseControl(QWidget):
     #         self.scaled_img = self.img.scaled(self.size())
     #         self.left_top_point = QPoint(0, 0)
     #         self.update()
+
+    def  posChangeCallback(self, x, y):
+        '''
+        receive mouse pos change signal 
+        '''
+
+        text = "x: {0},  y: {1}".format(x, y)
+        self.posInfoLabel.setText(text)
+
 
 
 if __name__ == '__main__':

@@ -1,0 +1,891 @@
+before paintEvent
+before paintEvent
+draw img args: left_top_point or scale img is none
+after paintEvent
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before posChangeCallback
+after posChangeCallback
+before paintEvent
+before paintEvent
+draw img args: left_top_point or scale img is none
+after paintEvent
+before paintEvent
+before paintEvent
+draw img args: left_top_point or scale img is none
+after paintEvent
+before paintEvent
+before paintEvent
+before drawPixmap
+after drawPixmap
+
+after paintEvent
+before paintEvent
+before paintEvent
+before drawPixmap
+after drawPixmap
+
+after paintEvent
+before paintEvent
+before paintEvent
+before drawPixmap
+after drawPixmap
+
+after paintEvent
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(655, 144) (0, 0) (655, 144)
+after getPtMapInImg
+after posChangeCallback
+before paintEvent
+before paintEvent
+before drawPixmap
+after drawPixmap
+
+after paintEvent
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(658, 156) (0, 0) (658, 156)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(659, 166) (0, 0) (659, 166)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(660, 181) (0, 0) (660, 181)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(660, 195) (0, 0) (660, 195)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(662, 210) (0, 0) (662, 210)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(663, 230) (0, 0) (663, 230)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(664, 249) (0, 0) (664, 249)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(667, 265) (0, 0) (667, 265)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(674, 290) (0, 0) (674, 290)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(678, 307) (0, 0) (678, 307)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(684, 322) (0, 0) (684, 322)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(692, 347) (0, 0) (692, 347)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(699, 361) (0, 0) (699, 361)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(704, 373) (0, 0) (704, 373)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(710, 387) (0, 0) (710, 387)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(712, 395) (0, 0) (712, 395)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(718, 408) (0, 0) (718, 408)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(720, 416) (0, 0) (720, 416)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(725, 425) (0, 0) (725, 425)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(728, 431) (0, 0) (728, 431)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(730, 437) (0, 0) (730, 437)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(732, 441) (0, 0) (732, 441)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(734, 445) (0, 0) (734, 445)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(736, 449) (0, 0) (736, 449)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(740, 455) (0, 0) (740, 455)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(742, 459) (0, 0) (742, 459)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(744, 465) (0, 0) (744, 465)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(746, 469) (0, 0) (746, 469)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(748, 473) (0, 0) (748, 473)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(749, 475) (0, 0) (749, 475)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(751, 476) (0, 0) (751, 476)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(751, 477) (0, 0) (751, 477)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(751, 478) (0, 0) (751, 478)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(753, 479) (0, 0) (753, 479)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(754, 479) (0, 0) (754, 479)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(754, 480) (0, 0) (754, 480)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(755, 480) (0, 0) (755, 480)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(756, 480) (0, 0) (756, 480)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(757, 480) (0, 0) (757, 480)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(758, 480) (0, 0) (758, 480)
+after getPtMapInImg
+after posChangeCallback
+before mousePressEvent
+before getPtMapInImg
+PyQt5.QtCore.QPoint(758, 480) (0, 0) (758, 480)
+after getPtMapInImg
+before paintEvent
+before paintEvent
+before drawImage
+after drawImage
+
+after paintEvent
+after mousePressEvent
+before mouseReleaseEvent
+after mouseReleaseEvent
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(758, 479) (0, 0) (758, 479)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(758, 478) (0, 0) (758, 478)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(757, 478) (0, 0) (757, 478)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(757, 477) (0, 0) (757, 477)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(757, 476) (0, 0) (757, 476)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(756, 475) (0, 0) (756, 475)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(755, 475) (0, 0) (755, 475)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(755, 474) (0, 0) (755, 474)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(754, 473) (0, 0) (754, 473)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(752, 472) (0, 0) (752, 472)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(752, 471) (0, 0) (752, 471)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(750, 470) (0, 0) (750, 470)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(748, 469) (0, 0) (748, 469)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(746, 467) (0, 0) (746, 467)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(743, 466) (0, 0) (743, 466)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(729, 458) (0, 0) (729, 458)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(722, 456) (0, 0) (722, 456)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(713, 452) (0, 0) (713, 452)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(701, 448) (0, 0) (701, 448)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(692, 444) (0, 0) (692, 444)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(660, 433) (0, 0) (660, 433)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(622, 421) (0, 0) (622, 421)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(588, 411) (0, 0) (588, 411)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(554, 403) (0, 0) (554, 403)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(542, 400) (0, 0) (542, 400)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(511, 393) (0, 0) (511, 393)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(491, 388) (0, 0) (491, 388)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(475, 384) (0, 0) (475, 384)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(465, 383) (0, 0) (465, 383)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(450, 379) (0, 0) (450, 379)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(435, 375) (0, 0) (435, 375)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(426, 372) (0, 0) (426, 372)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(419, 370) (0, 0) (419, 370)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(411, 367) (0, 0) (411, 367)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(403, 365) (0, 0) (403, 365)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(396, 364) (0, 0) (396, 364)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(382, 360) (0, 0) (382, 360)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(365, 355) (0, 0) (365, 355)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(351, 351) (0, 0) (351, 351)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(343, 349) (0, 0) (343, 349)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(328, 347) (0, 0) (328, 347)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(319, 345) (0, 0) (319, 345)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(314, 345) (0, 0) (314, 345)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(307, 344) (0, 0) (307, 344)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(303, 343) (0, 0) (303, 343)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(299, 342) (0, 0) (299, 342)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(296, 342) (0, 0) (296, 342)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(295, 342) (0, 0) (295, 342)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(294, 341) (0, 0) (294, 341)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(293, 341) (0, 0) (293, 341)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(292, 341) (0, 0) (292, 341)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(291, 340) (0, 0) (291, 340)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(290, 340) (0, 0) (290, 340)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(289, 340) (0, 0) (289, 340)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(288, 340) (0, 0) (288, 340)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(287, 339) (0, 0) (287, 339)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(286, 339) (0, 0) (286, 339)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(286, 338) (0, 0) (286, 338)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(285, 338) (0, 0) (285, 338)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(284, 338) (0, 0) (284, 338)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(282, 337) (0, 0) (282, 337)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(279, 336) (0, 0) (279, 336)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(277, 336) (0, 0) (277, 336)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(274, 335) (0, 0) (274, 335)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(271, 335) (0, 0) (271, 335)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(268, 334) (0, 0) (268, 334)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(267, 334) (0, 0) (267, 334)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(264, 333) (0, 0) (264, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(261, 333) (0, 0) (261, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(259, 333) (0, 0) (259, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(256, 333) (0, 0) (256, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(253, 333) (0, 0) (253, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(252, 333) (0, 0) (252, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(250, 333) (0, 0) (250, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(249, 333) (0, 0) (249, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(248, 333) (0, 0) (248, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(247, 333) (0, 0) (247, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(246, 333) (0, 0) (246, 333)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(246, 332) (0, 0) (246, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(245, 332) (0, 0) (245, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(244, 332) (0, 0) (244, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(243, 332) (0, 0) (243, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(242, 332) (0, 0) (242, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(241, 332) (0, 0) (241, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(240, 332) (0, 0) (240, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(239, 332) (0, 0) (239, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(238, 332) (0, 0) (238, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(237, 332) (0, 0) (237, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(234, 332) (0, 0) (234, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(228, 332) (0, 0) (228, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(219, 332) (0, 0) (219, 332)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(214, 331) (0, 0) (214, 331)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(197, 330) (0, 0) (197, 330)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(180, 325) (0, 0) (180, 325)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(163, 321) (0, 0) (163, 321)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(137, 314) (0, 0) (137, 314)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(99, 304) (0, 0) (99, 304)
+after getPtMapInImg
+after posChangeCallback
+before paintEvent
+before paintEvent
+before drawImage
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(17, 15) (0, 0) (17, 15)
+after getPtMapInImg
+after posChangeCallback
+before paintEvent
+before paintEvent
+before drawImage
+after drawImage
+
+after paintEvent
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(114, 34) (0, 0) (114, 34)
+after getPtMapInImg
+after posChangeCallback
+before paintEvent
+before paintEvent
+before drawImage
+after drawImage
+
+after paintEvent
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(234, 50) (0, 0) (234, 50)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(356, 61) (0, 0) (356, 61)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(455, 64) (0, 0) (455, 64)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(553, 67) (0, 0) (553, 67)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(651, 67) (0, 0) (651, 67)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(729, 63) (0, 0) (729, 63)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(792, 55) (0, 0) (792, 55)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(852, 43) (0, 0) (852, 43)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg
+PyQt5.QtCore.QPoint(895, 32) (0, 0) (895, 32)
+after getPtMapInImg
+after posChangeCallback
+before posChangeCallback
+before getPtMapInImg

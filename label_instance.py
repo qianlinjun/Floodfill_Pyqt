@@ -10,6 +10,11 @@ import cv2
 import numpy as np
 from utils import fill_color_demo
 
+
+# f_handler=open('C:\qianlinjun\graduate\gen_dem\output\out.log', 'w')
+# sys.stdout=f_handler
+
+
 class Main(QWidget):
     def __init__(self):
         super().__init__()
@@ -48,7 +53,6 @@ class PaintArea(QWidget):
         print("after paintEvent")
     
     def draw_img(self, painter):
-        print("before paintEvent")
         if self.left_top_point is None or self.wait_paint_img is None:
             print("draw img args: left_top_point or scale img is none")
             return
@@ -58,9 +62,9 @@ class PaintArea(QWidget):
             painter.drawPixmap(self.left_top_point, self.wait_paint_img)
             print("after drawPixmap\n")
         else:
-            print("before drawPixmap")
+            print("before drawImage")
             painter.drawImage(self.left_top_point, self.wait_paint_img)
-            print("after drawPixmap\n")
+            print("after drawImage\n")
         # self.left_top_point = None
         # self.scaled_img     = None
     
@@ -85,12 +89,15 @@ class ImageWithMouseControl(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        print("before init")
         self.parent = parent
-        self.img = None
+        self.qImg = None
         self.scaled_img = None
+        self.scaled_img_mask = None
         self.cv_img = None
         self.left_top_point = QPoint(0,0) #只有在缩放和移动的时候才会改变
         self.initUI()
+        print("after init")
 
     def initUI(self):
         # left paint area
@@ -130,16 +137,20 @@ class ImageWithMouseControl(QWidget):
         # self.setWindowTitle('Image with mouse control')
 
     def loadFile(self):
+        print("before load file")
+
+        print("before QFileDialog")
         # load qpixmap
         fname, ret = QFileDialog.getOpenFileName(self, '选择图片', 'c:\\', 'Image files(*.jpg *.gif *.png)')
         if fname == "":
             print("no valid image")
             return
+        print("after QFileDialog")
 
-        self.img = QPixmap(fname)
-        self.scaled_img = self.img#.scaled(self.img.size())
+        self.qImg = QPixmap(fname)
+        self.scaled_img = self.qImg#.scaled(self.qImg.size())
         # resize paint area
-        self.paintArea.setMinimumSize(self.img.width(), self.img.height())
+        self.paintArea.setMinimumSize(self.qImg.width(), self.qImg.height())
         
         # cv image to flood fill
         self.cv_img = cv2.imread(fname)
@@ -150,9 +161,11 @@ class ImageWithMouseControl(QWidget):
         self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
         self.repaint()
 
+        print("after load file")
+
     def mouseMoveEvent(self, e):  # 重写移动事件
         print("before movement")
-        if self.img is None or self.scaled_img is None:
+        if self.qImg is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in mouseMoveEvent ")
             return
 
@@ -168,55 +181,68 @@ class ImageWithMouseControl(QWidget):
 
 
     def mousePressEvent(self, e):
+        '''
+        点击产生漫水填充算法
+        '''
+        
         print("before mousePressEvent")
-        if self.img is None or self.scaled_img is None:
+        if self.qImg is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in mousePressEvent ")
             return
 
         if e.button() == Qt.LeftButton:
             self.left_click = True
             self._startPos = e.pos()
-            
-            # curPos = e.pos()
-            flag, ptLocxy = self.getPtMapInImg(QPoint(self.mousePos.x(), self.mousePos.y()))
-            if flag is True:
-                # fill_color_demo(self.gray, seedPt)
-
-                copyImg = self.gray.copy()
-                h, w = self.gray.shape[:2]
-                mask = np.zeros([h+2, w+2], np.uint8)
-
-                
-                mask_fill = 252 #mask的填充值
-                #floodFill充值标志
-                flags = 4|(mask_fill<<8)#|cv2.FLOODFILL_FIXED_RANGE
-
-                # mask 需要填充的位置设置为0
-                cv2.floodFill(copyImg, mask, ptLocxy, 255, 5, 5, flags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
-                # cv2.imwrite("C:\qianlinjun\graduate\gen_dem\output\mask.png", mask)
-                # cv2.waitKey(1000)
-
-                alpha = 0.7
-                beta = 1-alpha
-                gamma = 0
-
-                # mask = np.vstack( (copyImg[:,:,np.newaxis], np.zeros([h, w, 2], np.uint8) ))
-                mask = cv2.resize(mask, (h, w))
-                mask_rgb = np.concatenate((np.ones([h, w, 2], dtype=np.uint8),  mask[:,:,np.newaxis].astype(np.uint8) ), axis=-1)
-                mask_rgb[mask == 0] = [127,127,127]
-                mask_rgb[mask == 255] = [255,0,0]
-                img_add = cv2.addWeighted(self.cv_img, alpha, mask_rgb, beta, gamma)# add mask
-                qt_add_img = cvimg_to_qtimg(img_add)
-                self.scaled_img = qt_add_img.scaled(self.scaled_img.size())
-                
-                self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
-                self.repaint()
+            self.floodFill()
+  
         print("after mousePressEvent")
+    
+    def floodFill(self):
+        '''
+        get segmentation by  mouse click
+        '''
+        flag, ptLocxy = self.getPtMapInImg(QPoint(self.mousePos.x(), self.mousePos.y()))
+        if flag is True:
+            # fill_color_demo(self.gray, seedPt)
 
+            copyImg = self.gray.copy()
+            h, w = self.gray.shape[:2]
+            mask = np.zeros([h+2, w+2], np.uint8)
+
+            
+            mask_fill = 252 #mask的填充值
+            #floodFill充值标志
+            flags = 4|(mask_fill<<8)|cv2.FLOODFILL_FIXED_RANGE
+
+            # mask 需要填充的位置设置为0
+            cv2.floodFill(copyImg, mask, ptLocxy, 255, 5, 5, flags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
+            # cv2.imwrite("C:\qianlinjun\graduate\gen_dem\output\mask.png", mask)
+            # cv2.waitKey(1000)
+
+            alpha = 0.7
+            beta = 1-alpha
+            gamma = 0
+
+            # mask = np.vstack( (copyImg[:,:,np.newaxis], np.zeros([h, w, 2], np.uint8) ))
+            mask = cv2.resize(mask, (h, w))
+            mask_rgb = np.concatenate((np.ones([h, w, 2], dtype=np.uint8),  mask[:,:,np.newaxis].astype(np.uint8) ), axis=-1)
+            mask_rgb[mask == 0] = [127,127,127]
+            mask_rgb[mask == 255] = [255,0,0]
+
+            self.scaled_img_mask = mask_rgb
+
+
+            img_add = cv2.addWeighted(self.cv_img, alpha, mask_rgb, beta, gamma)# add mask
+            qt_add_img = cvimg_to_qtimg(img_add)
+            scaled_qimg = qt_add_img.scaled(self.scaled_img.size())
+            scaled_Pixmap = QPixmap.fromImage(scaled_qimg)
+            
+            self.paintArea.set_pos_and_img(self.left_top_point, scaled_Pixmap)
+            self.repaint()
 
     def mouseReleaseEvent(self, e):
         print("before mouseReleaseEvent")
-        if self.img is None or self.scaled_img is None:
+        if self.qImg is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in mouseReleaseEvent ")
             return
 
@@ -224,7 +250,7 @@ class ImageWithMouseControl(QWidget):
             self.left_click = False
         # elif e.button() == Qt.RightButton:
         #     self.left_top_point = QPoint(0, 0)
-        #     self.scaled_img = self.img.scaled(self.size())
+        #     self.scaled_img = self.qImg.scaled(self.size())
         #     self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
         #     self.repaint()
         print("after mouseReleaseEvent")
@@ -236,13 +262,13 @@ class ImageWithMouseControl(QWidget):
         '''
         print("before wheelEvent")
 
-        if self.img is None or self.scaled_img is None:
+        if self.qImg is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in wheelEvent ")
             return
 
         if e.angleDelta().y() < 0:
             # 放大图片
-            self.scaled_img = self.img.scaled(self.scaled_img.width()-15, self.scaled_img.height()-15)
+            self.scaled_img = self.qImg.scaled(self.scaled_img.width()-15, self.scaled_img.height()-15)
             new_w = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() + 5)
             new_h = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() + 5)
             # print(new_w, new_h)
@@ -250,7 +276,7 @@ class ImageWithMouseControl(QWidget):
 
         elif e.angleDelta().y() > 0:
             # 缩小图片
-            self.scaled_img = self.img.scaled(self.scaled_img.width()+15, self.scaled_img.height()+15)
+            self.scaled_img = self.qImg.scaled(self.scaled_img.width()+15, self.scaled_img.height()+15)
             new_w = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() - 5)
             new_h = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() - 5)
             self.left_top_point = QPoint(new_w, new_h)
@@ -260,8 +286,8 @@ class ImageWithMouseControl(QWidget):
         print("after wheelEvent")
 
     # def resizeEvent(self, e):
-    #     if self.parent is not None and self.img is not None:
-    #         self.scaled_img = self.img.scaled(self.size())
+    #     if self.parent is not None and self.qImg is not None:
+    #         self.scaled_img = self.qImg.scaled(self.size())
     #         self.left_top_point = QPoint(0, 0)
     #         self.update()
 
@@ -289,6 +315,7 @@ class ImageWithMouseControl(QWidget):
         print("before getPtMapInImg")
         # check valid window
         if curPos.x() <= 0 or curPos.x() >= self.paintArea.width() or curPos.y() <= 0 or curPos.y() >= self.paintArea.height():
+            print("after getPtMapInImg False, (-1, -1)")
             return False, (-1, -1)
 
         if self.scaled_img is not None:
@@ -301,6 +328,8 @@ class ImageWithMouseControl(QWidget):
                 print(curPos, (self.left_top_point.x(), self.left_top_point.y()), (point_map2_img_x, point_map2_img_y))
                 print("after getPtMapInImg")
                 return True, (point_map2_img_x, point_map2_img_y)
+            else:
+                print("after getPtMapInImg relat_pos.x() > 0 is false")
             
         return False, (-1, -1)
 

@@ -79,23 +79,31 @@ from matplotlib import pyplot as plt
 
 
 
-def fill_color_demo(image, pos=(1,1)):
+def fill_color_demo(img_path, pos=(1,1)):
+    image = cv2.imread(img_path)
+    gray2 = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    gray  = cv2.cvtColor(gray2, cv2.COLOR_RGB2GRAY)
     copyIma = image.copy()
     h, w = image.shape[:2]
     mask = np.zeros([h+2, w+2], np.uint8)
+    mask_fill = 252 #mask的填充值
+    #floodFill充值标志
+    flags = 4|(mask_fill<<8)#|cv2.FLOODFILL_FIXED_RANGE
+    
     # mask 需要填充的位置设置为0
-    cv2.floodFill(copyIma, mask, pos, (0, 0, 0), (5, 0, 0), (5, 0, 0))  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
+    cv2.floodFill(copyIma, mask, pos, 255, 5, 5 , flags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
     # cv.imshow("fill_color", copyIma)
-    # plt.subplot(1,2,1)
-    # plt.imshow(image),
-    # plt.title('image')
-    # plt.subplot(1,2,2)
+    plt.subplot(1,2,1)
+    plt.imshow(image),
+    plt.title('image')
+    plt.subplot(1,2,2)
     plt.imshow(copyIma),
     plt.title('copyIma')
 
     plt.show()
     # return mask
 
-# fill_color_demo(gray)
+if __name__ == "__main__":
+  fill_color_demo(sys.argv[1], (811,490))
 
 

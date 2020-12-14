@@ -40,32 +40,34 @@ class PaintArea(QWidget):
         :param e:
         :return:
         '''
-        painter = QPainter(self)
+        print("before paintEvent")
+        painter = QPainter()#self
         painter.begin(self)
         self.draw_img(painter)
         painter.end()
+        print("after paintEvent")
     
     def draw_img(self, painter):
+        print("before paintEvent")
         if self.left_top_point is None or self.wait_paint_img is None:
             print("draw img args: left_top_point or scale img is none")
             return
-        print(type(self.wait_paint_img))
+
         if type(self.wait_paint_img) == QPixmap:
+            print("before drawPixmap")
             painter.drawPixmap(self.left_top_point, self.wait_paint_img)
+            print("after drawPixmap\n")
         else:
-            print("QImage")
+            print("before drawPixmap")
             painter.drawImage(self.left_top_point, self.wait_paint_img)
-                    
+            print("after drawPixmap\n")
         # self.left_top_point = None
         # self.scaled_img     = None
     
     def mouseMoveEvent(self, e):
-        s = e.windowPos()
+        s = e.pos() #e.windowPos()
         x = s.x()
         y = s.y()
-        text = "x: {0},  y: {1}".format(x, y)
-        # self.posInfoLabel.setText(text)
-        # print(text)
         self.PosChangeSignal.emit(x , y)
         
 
@@ -87,7 +89,7 @@ class ImageWithMouseControl(QWidget):
         self.img = None
         self.scaled_img = None
         self.cv_img = None
-        self.left_top_point = QPoint(0, 0)
+        self.left_top_point = QPoint(0,0) #只有在缩放和移动的时候才会改变
         self.initUI()
 
     def initUI(self):
@@ -99,29 +101,33 @@ class ImageWithMouseControl(QWidget):
         self.paintArea = PaintArea()
         self.paintArea.PosChangeSignal.connect(self.posChangeCallback)
         
-        #mainLayout1.setMargin(10)
         layout_left.setSpacing(6)
         layout_left.addWidget(self.paintArea)
         
-        
+
         # right button area
+        loadBtn = QPushButton()
+        loadBtn.clicked.connect(self.loadFile)
+        loadBtn.setText("open")
+        
+        self.posInfoLabel = QLabel()
+        self.pixInfoLabel = QLabel()
+
         spliter2 = QSplitter(Qt.Horizontal)
         # spliter2.setOpaqueResize(True)
         frame = QFrame(spliter2)
         layoutRight = QGridLayout(frame)
-        loadBtn = QPushButton()
-        loadBtn.clicked.connect(self.loadFile)
-        loadBtn.setText("open")
         layoutRight.addWidget(loadBtn, 1, 0)
-        self.posInfoLabel = QLabel("hello world")
         layoutRight.addWidget(self.posInfoLabel)
-  
-        self.setWindowTitle('Image with mouse control')
+        layoutRight.addWidget(self.pixInfoLabel)
+        
 
         fullLayout = QGridLayout(self)
         fullLayout.addWidget(spliter1,0,0)
         fullLayout.addWidget(spliter2,0,1)
         self.setLayout(fullLayout)
+
+        # self.setWindowTitle('Image with mouse control')
 
     def loadFile(self):
         # load qpixmap
@@ -145,6 +151,7 @@ class ImageWithMouseControl(QWidget):
         self.repaint()
 
     def mouseMoveEvent(self, e):  # 重写移动事件
+        print("before movement")
         if self.img is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in mouseMoveEvent ")
             return
@@ -155,10 +162,13 @@ class ImageWithMouseControl(QWidget):
             self._startPos = e.pos()
             self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
             self.repaint()
+        
+        print("after movement")
 
 
 
     def mousePressEvent(self, e):
+        print("before mousePressEvent")
         if self.img is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in mousePressEvent ")
             return
@@ -167,18 +177,9 @@ class ImageWithMouseControl(QWidget):
             self.left_click = True
             self._startPos = e.pos()
             
-            curPos = e.pos()
-            # check valid window
-            if curPos.x() <= 0 or curPos.x() >= self.paintArea.width() or curPos.y() <= 0 or curPos.y() >= self.paintArea.height():
-                return  
-
-            relat_pos = curPos - self.left_top_point
-            if relat_pos.x() > 0 and relat_pos.x() < self.scaled_img.width() and relat_pos.y() > 0 and relat_pos.y() < self.scaled_img.height():
-                # 得到鼠标点击位置在原始图片上的位置 作为漫水填充算法种子点
-                point_map2_img_x = int(relat_pos.x()*1.0 / self.scaled_img.width() *  self.ori_img_wh[0])
-                point_map2_img_y = int(relat_pos.y()*1.0 / self.scaled_img.height() *  self.ori_img_wh[1] )
-                seedPt = (point_map2_img_x, point_map2_img_y)
-
+            # curPos = e.pos()
+            flag, ptLocxy = self.getPtMapInImg(QPoint(self.mousePos.x(), self.mousePos.y()))
+            if flag is True:
                 # fill_color_demo(self.gray, seedPt)
 
                 copyImg = self.gray.copy()
@@ -191,7 +192,7 @@ class ImageWithMouseControl(QWidget):
                 flags = 4|(mask_fill<<8)#|cv2.FLOODFILL_FIXED_RANGE
 
                 # mask 需要填充的位置设置为0
-                cv2.floodFill(copyImg, mask, seedPt, 255, 5, 5, flags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
+                cv2.floodFill(copyImg, mask, ptLocxy, 255, 5, 5, flags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
                 # cv2.imwrite("C:\qianlinjun\graduate\gen_dem\output\mask.png", mask)
                 # cv2.waitKey(1000)
 
@@ -210,27 +211,31 @@ class ImageWithMouseControl(QWidget):
                 
                 self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
                 self.repaint()
-
+        print("after mousePressEvent")
 
 
     def mouseReleaseEvent(self, e):
+        print("before mouseReleaseEvent")
         if self.img is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in mouseReleaseEvent ")
             return
 
         if e.button() == Qt.LeftButton:
             self.left_click = False
-        elif e.button() == Qt.RightButton:
-            self.left_top_point = QPoint(0, 0)
-            self.scaled_img = self.img.scaled(self.size())
-            self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
-            self.repaint()
+        # elif e.button() == Qt.RightButton:
+        #     self.left_top_point = QPoint(0, 0)
+        #     self.scaled_img = self.img.scaled(self.size())
+        #     self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
+        #     self.repaint()
+        print("after mouseReleaseEvent")
 
 
     def wheelEvent(self, e):
         '''
         spin wheel to zoom in/out image
         '''
+        print("before wheelEvent")
+
         if self.img is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in wheelEvent ")
             return
@@ -252,6 +257,7 @@ class ImageWithMouseControl(QWidget):
         
         self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
         self.repaint()
+        print("after wheelEvent")
 
     # def resizeEvent(self, e):
     #     if self.parent is not None and self.img is not None:
@@ -263,9 +269,40 @@ class ImageWithMouseControl(QWidget):
         '''
         receive mouse pos change signal 
         '''
-
+        print("before posChangeCallback")
         text = "x: {0},  y: {1}".format(x, y)
+        self.mousePos = QPoint(x, y)
         self.posInfoLabel.setText(text)
+
+        if self.cv_img is not None:
+            flag, ptLocxy = self.getPtMapInImg(QPoint(x, y))
+            if flag is True:
+                pixel_value = self.cv_img[ptLocxy[1], ptLocxy[0]]
+                text = "{0} {1} {2}".format(pixel_value[2], pixel_value[1], pixel_value[0])
+                self.pixInfoLabel.setText(text)
+        print("after posChangeCallback")
+    
+    def getPtMapInImg(self, curPos):
+        '''
+        get mouse's point location mapped in image
+        '''
+        print("before getPtMapInImg")
+        # check valid window
+        if curPos.x() <= 0 or curPos.x() >= self.paintArea.width() or curPos.y() <= 0 or curPos.y() >= self.paintArea.height():
+            return False, (-1, -1)
+
+        if self.scaled_img is not None:
+            relat_pos = curPos - self.left_top_point
+            
+            if relat_pos.x() > 0 and relat_pos.x() < self.scaled_img.width() and relat_pos.y() > 0 and relat_pos.y() < self.scaled_img.height():
+                # 得到鼠标点击位置在原始图片上的位置 作为漫水填充算法种子点
+                point_map2_img_x = int(relat_pos.x()*1.0 / self.scaled_img.width() *  self.ori_img_wh[0])
+                point_map2_img_y = int(relat_pos.y()*1.0 / self.scaled_img.height() *  self.ori_img_wh[1] )
+                print(curPos, (self.left_top_point.x(), self.left_top_point.y()), (point_map2_img_x, point_map2_img_y))
+                print("after getPtMapInImg")
+                return True, (point_map2_img_x, point_map2_img_y)
+            
+        return False, (-1, -1)
 
 
 

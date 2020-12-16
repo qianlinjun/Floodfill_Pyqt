@@ -44,12 +44,12 @@ class PaintArea(QWidget):
         :param e:
         :return:
         '''
-        print("before paintEvent")
+        # print("before paintEvent")
         painter = QPainter()#self
         painter.begin(self)
         self.draw_img(painter)
         painter.end()
-        print("after paintEvent")
+        # print("after paintEvent")
     
     def draw_img(self, painter):
         if self.left_top_point is None or self.wait_paint_img is None:
@@ -57,13 +57,13 @@ class PaintArea(QWidget):
             return
 
         if type(self.wait_paint_img) == QPixmap:
-            print("before drawPixmap")
+            # print("before drawPixmap")
             painter.drawPixmap(self.left_top_point, self.wait_paint_img)
-            print("after drawPixmap\n")
+            # print("after drawPixmap\n")
         else:
-            print("before drawImage")
+            # print("before drawImage")
             painter.drawImage(self.left_top_point, self.wait_paint_img)
-            print("after drawImage\n")
+            # print("after drawImage\n")
         # self.left_top_point = None
         # self.scaled_img     = None
     
@@ -78,7 +78,7 @@ class PaintArea(QWidget):
 def cvimg_to_qtimg(cvimg):
 
     height, width, depth = cvimg.shape
-    cvimg = cv2.cvtColor(cvimg, cv2.COLOR_BGR2RGB)
+    # cvimg = cv2.cvtColor(cvimg, cv2.COLOR_BGR2RGB)
     cvimg = QImage(cvimg.data, width, height, width * depth, QImage.Format_RGB888)
 
     return cvimg
@@ -96,10 +96,12 @@ class ImageWithMouseControl(QWidget):
         self.scaled_img = None
         self.scaled_img_mask = None
         self.polygons = []# draw polygons in scaled mask
+        self.polygons_undo_stack = []
 
         # value
-        self.floodFillthread = 5
+        self.floodFillthread = 10
         # self.floodFillDowner = 5
+        self.floodfillFlags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE
         
         self.cv_img = None
         self.left_top_point = QPoint(0,0) #只有在缩放和移动的时候才会改变
@@ -121,10 +123,12 @@ class ImageWithMouseControl(QWidget):
 
         # right button area
         self.loadBtn = QPushButton()
+        self.loadBtn.setMaximumSize(QSize(50, 50))
         self.loadBtn.clicked.connect(self.loadFile)
-        self.loadBtn.setText("open")
+        self.loadBtn.setText("打开")
 
         self.spinbox = QSpinBox()
+        self.spinbox.setMaximumSize(QSize(50, 20))
         self.spinbox.setMinimum(1)
         self.spinbox.setMaximum(254)
         self.sld = QSlider(Qt.Horizontal, self)
@@ -135,6 +139,14 @@ class ImageWithMouseControl(QWidget):
         self.sld.valueChanged.connect(self.changeFloodfillArgv)
         self.sld.setValue(self.floodFillthread)
 
+        self.cbFlag = QCheckBox('固定差值')
+        self.cbFlag.stateChanged.connect(self.changeFlag)
+        self.cbFlag.setCheckState(Qt.Checked)
+
+        self.cbMask = QCheckBox('show mask')
+        self.cbFlag.stateChanged.connect(self.changeFlag)
+        self.cbFlag.setCheckState(Qt.Checked)
+
         self.posInfoLabel = QLabel()
         self.pixInfoLabel = QLabel()
 
@@ -143,10 +155,11 @@ class ImageWithMouseControl(QWidget):
         frame = QFrame(spliter2)
         layoutRight = QGridLayout(frame)
         layoutRight.addWidget(self.loadBtn, 1, 0)
-        layoutRight.addWidget(self.spinbox)
-        layoutRight.addWidget(self.sld)
-        layoutRight.addWidget(self.posInfoLabel)
-        layoutRight.addWidget(self.pixInfoLabel)
+        layoutRight.addWidget(self.spinbox, 3, 0)
+        layoutRight.addWidget(self.sld, 4, 0)
+        layoutRight.addWidget(self.cbFlag,5,0)
+        layoutRight.addWidget(self.posInfoLabel,6, 0)
+        layoutRight.addWidget(self.pixInfoLabel,7,0)
         
 
         fullLayout = QGridLayout(self)
@@ -186,22 +199,33 @@ class ImageWithMouseControl(QWidget):
     def changeFloodfillArgv(self, v):
         self.spinbox.setValue(v)
         self.floodFillthread = v
-        print("self.floodFillthread :", v)
+    
+    def changeFlag(self, e):
+        if e > 0:
+            self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_FIXED_RANGE
+            self.spinbox.setValue(10)
+        else:
+            self.floodfillFlags = 4 | (252<<8)
+            self.spinbox.setValue(5)
+    
+    def showMask(self):
+        pass
 
     def mouseMoveEvent(self, e):  # 重写移动事件
-        print("before movement")
+        # print("before movement")
         if self.qImg is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in mouseMoveEvent ")
             return
 
-        if self.left_click:
+        if self.right_click:
+            print("mouseMoveEvent")
             self._endPos = e.pos() - self._startPos
             self.left_top_point = self.left_top_point + self._endPos
             self._startPos = e.pos()
             self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
             self.repaint()
         
-        print("after movement")
+        # print("after movement")
 
 
 
@@ -210,20 +234,27 @@ class ImageWithMouseControl(QWidget):
         点击产生漫水填充算法
         '''
 
-        print("before mousePressEvent")
+        # print("before mousePressEvent")
         if self.qImg is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in mousePressEvent ")
             return
 
         if e.button() == Qt.LeftButton:
-            self.left_click = True
+            # self.left_click = True
             self._startPos = e.pos()
-            self.floodFill()
+            getflag, polygon = self.floodFillOnce()#得到当前的polygon
+            if getflag is True:
+                self.polygons.append(polygon)#将当前polygon加入到list中
+                self.polygons_undo_stack.clear()
+
+                self.drawPolygonsOnCv()
+        elif e.button() == Qt.RightButton:
+            self.right_click = True
   
-        print("after mousePressEvent")
+        # print("after mousePressEvent")
     
 
-    def floodFill(self):
+    def floodFillOnce(self):
         '''
         get segmentation by  mouse click
         '''
@@ -236,59 +267,72 @@ class ImageWithMouseControl(QWidget):
             mask = np.zeros([h+2, w+2], np.uint8)
 
             
-            mask_fill = 252 #mask的填充值
+            # mask_fill = 175#252 #mask的填充值
             #floodFill充值标志
-            flags = 4|(mask_fill<<8)|cv2.FLOODFILL_FIXED_RANGE
+            # flags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE
 
             # mask 需要填充的位置设置为0
-            cv2.floodFill(copyImg, mask, ptLocxy, 255, self.floodFillthread, self.floodFillthread, flags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
+            cv2.floodFill(copyImg, mask, ptLocxy, 255, self.floodFillthread, self.floodFillthread, self.floodfillFlags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
             # cv2.imwrite("C:\qianlinjun\graduate\gen_dem\output\mask.png", mask)
             # cv2.waitKey(1000)
 
-            alpha = 0.7
-            beta = 1-alpha
-            gamma = 0
-
             # mask = np.vstack( (copyImg[:,:,np.newaxis], np.zeros([h, w, 2], np.uint8) ))
             mask = cv2.resize(mask, (h, w))
-            mask_rgb = np.concatenate((np.ones([h, w, 2], dtype=np.uint8),  mask[:,:,np.newaxis].astype(np.uint8) ), axis=-1)
-            mask_rgb[mask == 0] = [127,127,127]
-            mask_rgb[mask == 255] = [255,0,0]
-            self.scaled_img_mask = mask_rgb
-
-            polygon = getOnePolygon(self.scaled_img_mask)
-
+            # mask_rgb = np.concatenate((np.ones([h, w, 2], dtype=np.uint8),  mask[:,:,np.newaxis].astype(np.uint8) ), axis=-1)
+            # mask_rgb[mask == 0] = [255,255,255]#[127,127,127]
+            # mask_rgb[mask == 255] = [0,0,0]#[255,0,0]
             
-            img_add       = cv2.addWeighted(self.cv_img, alpha, mask_rgb, beta, gamma)# add mask
-            qt_add_img    = cvimg_to_qtimg(img_add)
-            scaled_qimg   = qt_add_img.scaled(self.scaled_img.size())
-            scaled_Pixmap = QPixmap.fromImage(scaled_qimg)
-            
-            self.paintArea.set_pos_and_img(self.left_top_point, scaled_Pixmap)
-            self.repaint()
+            # cv2.imshow("mask_rgb", mask)
+            # cv2.waitKey()
+
+            self.scaled_img_mask = mask
+
+            getflag, polygon = getOnePolygon(self.scaled_img_mask)
+
+            return getflag, polygon
+    
+    def drawPolygonsOnCv(self):
+        alpha = 0.7
+        beta = 1-alpha
+        gamma = 0
+
+        dst = np.ones(self.cv_img.shape, dtype=np.uint8)
+        for polygon in self.polygons:
+            # print("draw polygon area:{}".format(polygon.area))
+            cv2.drawContours(dst, [polygon.contour], 0, polygon.fillColor, cv2.FILLED)#(255, 0, 0)
+        
+        img_add       = cv2.addWeighted(self.cv_img, alpha, dst, beta, gamma)# add mask
+        qt_add_img    = cvimg_to_qtimg(img_add)
+        scaled_qimg   = qt_add_img.scaled(self.scaled_img.size())
+        scaled_Pixmap = QPixmap.fromImage(scaled_qimg)
+        
+        self.paintArea.set_pos_and_img(self.left_top_point, scaled_Pixmap)
+        self.repaint()
 
 
     def mouseReleaseEvent(self, e):
-        print("before mouseReleaseEvent")
+        # print("before mouseReleaseEvent")
         if self.qImg is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in mouseReleaseEvent ")
             return
 
         if e.button() == Qt.LeftButton:
             self.left_click = False
+        elif e.button() == Qt.RightButton:
+            self.right_click = False
         # elif e.button() == Qt.RightButton:
         #     self.left_top_point = QPoint(0, 0)
         #     self.scaled_img = self.qImg.scaled(self.size())
         #     self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
         #     self.repaint()
-        print("after mouseReleaseEvent")
+        # print("after mouseReleaseEvent")
 
 
     def wheelEvent(self, e):
         '''
         spin wheel to zoom in/out image
         '''
-        print("before wheelEvent")
+        # print("before wheelEvent")
 
         if self.qImg is None or self.scaled_img is None:
             print("img is None or or scaled_img is None  in wheelEvent ")
@@ -297,6 +341,8 @@ class ImageWithMouseControl(QWidget):
         if e.angleDelta().y() < 0:
             # 放大图片
             self.scaled_img = self.qImg.scaled(self.scaled_img.width()-15, self.scaled_img.height()-15)
+            if self.scaled_img_mask is not None:
+                self.scaled_img_mask = cv2.resize(self.scaled_img_mask, (self.scaled_img_mask.shape[1]-15, self.scaled_img_mask.shape[0]-15))#self.scaled_img_mask.scaled(self.scaled_img_mask.width()-15, self.scaled_img_mask.height()-15)
             new_w = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() + 5)
             new_h = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() + 5)
             # print(new_w, new_h)
@@ -305,13 +351,16 @@ class ImageWithMouseControl(QWidget):
         elif e.angleDelta().y() > 0:
             # 缩小图片
             self.scaled_img = self.qImg.scaled(self.scaled_img.width()+15, self.scaled_img.height()+15)
+            if self.scaled_img_mask is not None:
+                self.scaled_img_mask = cv2.resize(self.scaled_img_mask, (self.scaled_img_mask.shape[1]+15, self.scaled_img_mask.shape[0]+15))#self.scaled_img_mask = self.scaled_img_mask.scaled(self.scaled_img_mask.width()-15, self.scaled_img_mask.height()-15)
+
             new_w = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() - 5)
             new_h = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() - 5)
             self.left_top_point = QPoint(new_w, new_h)
         
         self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
         self.repaint()
-        print("after wheelEvent")
+        # print("after wheelEvent")
 
     # def resizeEvent(self, e):
     #     if self.parent is not None and self.qImg is not None:
@@ -319,11 +368,14 @@ class ImageWithMouseControl(QWidget):
     #         self.left_top_point = QPoint(0, 0)
     #         self.update()
 
+
+
+
     def  posChangeCallback(self, x, y):
         '''
         receive mouse pos change signal 
         '''
-        print("before posChangeCallback")
+        # print("before posChangeCallback")
         text = "x: {0},  y: {1}".format(x, y)
         self.mousePos = QPoint(x, y)
         self.posInfoLabel.setText(text)
@@ -334,13 +386,15 @@ class ImageWithMouseControl(QWidget):
                 pixel_value = self.cv_img[ptLocxy[1], ptLocxy[0]]
                 text = "{0} {1} {2}".format(pixel_value[2], pixel_value[1], pixel_value[0])
                 self.pixInfoLabel.setText(text)
-        print("after posChangeCallback")
+        # print("after posChangeCallback")
     
+
+
     def getPtMapInImg(self, curPos):
         '''
         get mouse's point location mapped in image
         '''
-        print("before getPtMapInImg")
+        # print("before getPtMapInImg")
         # check valid window
         if curPos.x() <= 0 or curPos.x() >= self.paintArea.width() or curPos.y() <= 0 or curPos.y() >= self.paintArea.height():
             print("after getPtMapInImg False, (-1, -1)")
@@ -353,13 +407,35 @@ class ImageWithMouseControl(QWidget):
                 # 得到鼠标点击位置在原始图片上的位置 作为漫水填充算法种子点
                 point_map2_img_x = int(relat_pos.x()*1.0 / self.scaled_img.width() *  self.ori_img_wh[0])
                 point_map2_img_y = int(relat_pos.y()*1.0 / self.scaled_img.height() *  self.ori_img_wh[1] )
-                print(curPos, (self.left_top_point.x(), self.left_top_point.y()), (point_map2_img_x, point_map2_img_y))
-                print("after getPtMapInImg")
+                # print(curPos, (self.left_top_point.x(), self.left_top_point.y()), (point_map2_img_x, point_map2_img_y))
+                # print("after getPtMapInImg")
                 return True, (point_map2_img_x, point_map2_img_y)
             else:
                 print("after getPtMapInImg relat_pos.x() > 0 is false")
             
         return False, (-1, -1)
+
+    
+    def keyPressEvent(self,event):
+        if QApplication.keyboardModifiers() == Qt.ControlModifier:
+            # self.actionFile.save(self.action_text.toPlainText())
+            # self.status.showMessage(self.action_text.toPlainText())#"保存成功 %s" % self.file)
+            if event.key() == Qt.Key_Z:
+                # ctrl z
+                print("undo")
+                if len(self.polygons) > 0:
+                    polygon = self.polygons.pop()
+                    self.polygons_undo_stack.append(polygon)
+
+                
+            elif event.key() == Qt.Key_Y:
+                print("redo")
+                if len(self.polygons_undo_stack) > 0:
+                    polygon = self.polygons_undo_stack.pop()
+                    self.polygons.append(polygon)
+
+            
+            self.drawPolygonsOnCv()
 
 
 

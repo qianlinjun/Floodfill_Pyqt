@@ -3,24 +3,44 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
+colorList = [[255, 0, 51],
+            [0, 0, 255],# Blue 
+            [0, 255, 0],# Green 
+            [0, 255, 255],# Cyan 
+            [255, 0, 0],# Red 
+            [255, 0, 255],# Magenta 
+            [255, 255, 0],# Yellow 
+            [255, 255, 255],# White 
+            [0, 0, 128],# Dark blue 
+            [0, 128, 0],# Dark green 
+            [0, 128, 128],# Dark cyan 
+            [128, 0, 0],# Dark red 
+            [128, 0, 128],# Dark magenta 
+            [128, 128, 0],# Dark yellow 
+            [128, 128, 128],# Dark gray 
+            [192, 192, 192]]# Light gray 
 
 class Polygon(object):
-    object_id = 0
-    def __init__(self, polygon):
-        self.id = Polygon.object_id
-        Polygon.object_id += 1
-        self.polygon = polygon
-        self.area = cv2.contourArea(polygon)
+    id = 0
+
+
+    def __init__(self, contour):
+        self.id = Polygon.id
+        Polygon.id += 1
+        self.contour = contour
+        self.area = cv2.contourArea(contour)
         self.mountain_line = None
+        print("self id", self.id)
+        self.fillColor = colorList[self.id % len(colorList)]
     
-    def set(self, polygon):
-        self.polygon = polygon
+    # def set(self, contour):
+    #     self.contour = contour
     
-    def get(self):
-        return self.polygon
+    # def get(self):
+    #     return self.contour
     
-    def getArea(self):
-        return self.area
+    # def getArea(self):
+    #     return self.area
 
 
 # img1 = cv2.imread(sys.argv[1])
@@ -127,7 +147,7 @@ def fill_color_demo(img_path, pos=(1,1)):
 
 def getOnePolygon(img):
     # img = cv2.imread('002.tif')
-    rows, cols, ch = img.shape
+    rows, cols = img.shape
     # 边缘提取
     Ksize = 3
     L2g = True
@@ -150,22 +170,28 @@ def getOnePolygon(img):
     print("contours", len(contours))
 
     if len(contours) == 0:
-      return False, None
+       return False, None
 
     min_area = 10000000000000000000000000
-    min_idx = 0
+    min_idx = -1
     #find min area
     for idx, cnt in enumerate(contours):
         area = cv2.contourArea(cnt)
         print("area", area)
-        if area > 10 and area < min_area:
+        # and area < 1440000*0.7
+        if (area > 15 ) and area < min_area:
             min_idx = idx
             min_area = area
-    
+
+    if min_idx < 0:
+       return False, None
+
     cnt = contours[min_idx]
+    print("min_area", min_area)
 
     # dst = np.ones(img.shape, dtype=np.uint8)
-    # # cv2.drawContours(dst, contours, -1, (0, 255, 0), 1)
+    # # contours
+    # cv2.drawContours(dst, [cnt], -1, (0, 255, 0), 1)
     # # 绘制单个轮廓
     # print("min_idx", min_idx)
     # cnt = contours[min_idx]
@@ -233,7 +259,8 @@ def getOnePolygon(img):
 
     # cv2.imshow("dst", dst)
     # cv2.waitKey()
-    return Polygon(cnt)
+
+    return True, Polygon(cnt)
 
 
 

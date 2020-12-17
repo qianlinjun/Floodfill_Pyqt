@@ -21,16 +21,14 @@ colorList = [[255, 0, 51],
             [192, 192, 192]]# Light gray 
 
 class Polygon(object):
-    id = 0
-
-
-    def __init__(self, contour):
-        self.id = Polygon.id
-        Polygon.id += 1
+    # id = 0
+    def __init__(self, contour, objectId):
+        self.id = objectId
+        # Polygon.id += 1
         self.contour = contour
         self.area = cv2.contourArea(contour)
         self.mountain_line = None
-        print("self id", self.id)
+        # print("self id", self.id)
         self.fillColor = colorList[self.id % len(colorList)]
     
     # def set(self, contour):
@@ -145,7 +143,7 @@ def fill_color_demo(img_path, pos=(1,1)):
 
 
 
-def getOnePolygon(img):
+def getOnePolygon(img, ptLocxy):
     # img = cv2.imread('002.tif')
     rows, cols = img.shape
     # 边缘提取
@@ -176,10 +174,14 @@ def getOnePolygon(img):
     min_idx = -1
     #find min area
     for idx, cnt in enumerate(contours):
+        
         area = cv2.contourArea(cnt)
+        ifInPoly = cv2.pointPolygonTest(cnt, ptLocxy ,True)
+        print("ifinpoly", ifInPoly)
+        # ifInPoly is True and
         print("area", area)
         # and area < 1440000*0.7
-        if (area > 15 ) and area < min_area:
+        if  ifInPoly > 0 and (area > 15 and area < min_area):
             min_idx = idx
             min_area = area
 
@@ -187,7 +189,7 @@ def getOnePolygon(img):
        return False, None
 
     cnt = contours[min_idx]
-    print("min_area", min_area)
+    print("min_area {} \n".format(min_area) )
 
     # dst = np.ones(img.shape, dtype=np.uint8)
     # # contours
@@ -260,7 +262,7 @@ def getOnePolygon(img):
     # cv2.imshow("dst", dst)
     # cv2.waitKey()
 
-    return True, Polygon(cnt)
+    return True, cnt#Polygon(cnt)
 
 
 

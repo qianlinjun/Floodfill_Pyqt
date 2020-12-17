@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from utils import getOnePolygon
+from utils import Polygon, getOnePolygon
 
 # f_handler=open('C:\qianlinjun\graduate\gen_dem\output\out.log', 'w')
 # sys.stdout=f_handler
@@ -31,6 +31,7 @@ class PaintArea(QWidget):
         self.left_top_point = None
         self.wait_paint_img     = None
         self.setMinimumSize(800,800)
+        
 
         self.setMouseTracking(True)#get mouse in real time
 
@@ -94,7 +95,7 @@ class ImageWithMouseControl(QWidget):
         self.parent = parent
         self.qImg = None
         self.scaled_img = None
-        self.scaled_img_mask = None
+        self.scaled_img_last_mask = None
         self.polygons = []# draw polygons in scaled mask
         self.polygons_undo_stack = []
 
@@ -102,10 +103,13 @@ class ImageWithMouseControl(QWidget):
         self.floodFillthread = 10
         # self.floodFillDowner = 5
         self.floodfillFlags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE
+        self.drawMaskFlag = False
         
         self.cv_img = None
         self.left_top_point = QPoint(0,0) #只有在缩放和移动的时候才会改变
         self.initUI()
+
+        self.right_click = False
         print("after init")
 
     def initUI(self):
@@ -143,9 +147,13 @@ class ImageWithMouseControl(QWidget):
         self.cbFlag.stateChanged.connect(self.changeFlag)
         self.cbFlag.setCheckState(Qt.Checked)
 
-        self.cbMask = QCheckBox('show mask')
-        self.cbFlag.stateChanged.connect(self.changeFlag)
-        self.cbFlag.setCheckState(Qt.Checked)
+        self.cbShowMask = QCheckBox('show mask')
+        self.cbShowMask.stateChanged.connect(self.changeDrawMaskFlag)
+        self.cbShowMask.setCheckState(Qt.Checked)
+
+        self.cbDrawPolygon = QCheckBox('draw by hand')
+        # self.cbDrawPolygon.stateChanged.connect(self.ifDrawByHand)
+        # self.cbFlag.setCheckState(Qt.Checked)
 
         self.posInfoLabel = QLabel()
         self.pixInfoLabel = QLabel()
@@ -157,14 +165,16 @@ class ImageWithMouseControl(QWidget):
         layoutRight.addWidget(self.loadBtn, 1, 0)
         layoutRight.addWidget(self.spinbox, 3, 0)
         layoutRight.addWidget(self.sld, 4, 0)
-        layoutRight.addWidget(self.cbFlag,5,0)
-        layoutRight.addWidget(self.posInfoLabel,6, 0)
-        layoutRight.addWidget(self.pixInfoLabel,7,0)
+        layoutRight.addWidget(self.cbFlag, 5, 0)
+        layoutRight.addWidget(self.cbShowMask, 6, 0)
+        layoutRight.addWidget(self.cbDrawPolygon, 7, 0)
+        layoutRight.addWidget(self.posInfoLabel,8, 0)
+        layoutRight.addWidget(self.pixInfoLabel,9,0)
         
 
         fullLayout = QGridLayout(self)
-        fullLayout.addWidget(spliter1,0,0)
-        fullLayout.addWidget(spliter2,0,1)
+        fullLayout.addWidget(spliter1,0,1)
+        fullLayout.addWidget(spliter2,0,0)
         self.setLayout(fullLayout)
 
         # self.setWindowTitle('Image with mouse control')
@@ -190,6 +200,9 @@ class ImageWithMouseControl(QWidget):
         gray2 = cv2.cvtColor(self.cv_img, cv2.COLOR_BGR2RGB)
         self.gray  = cv2.cvtColor(gray2, cv2.COLOR_RGB2GRAY)
         self.ori_img_wh = self.cv_img.shape
+        
+        self.polygons.clear()
+        self.polygons_undo_stack.clear()
 
         self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
         self.repaint()
@@ -208,8 +221,14 @@ class ImageWithMouseControl(QWidget):
             self.floodfillFlags = 4 | (252<<8)
             self.spinbox.setValue(5)
     
-    def showMask(self):
-        pass
+    def changeDrawMaskFlag(self, e):
+        if e > 0:
+            self.drawMaskFlag = True
+        else:
+            self.drawMaskFlag = False
+        
+        self.drawPolygonsOnCv()
+        
 
     def mouseMoveEvent(self, e):  # 重写移动事件
         # print("before movement")
@@ -287,24 +306,38 @@ class ImageWithMouseControl(QWidget):
 
             self.scaled_img_mask = mask
 
-            getflag, polygon = getOnePolygon(self.scaled_img_mask)
+            getflag, polygon = getOnePolygon(mask, ptLocxy)
+            if getflag is True:
+                return True, Polygon(polygon, len(self.polygons))
+            else:
+                return False, None
+        else:
+            return False, None
 
-            return getflag, polygon
-    
     def drawPolygonsOnCv(self):
+        if self.cv_img is None:
+            return
+
         alpha = 0.7
         beta = 1-alpha
         gamma = 0
 
-        dst = np.ones(self.cv_img.shape, dtype=np.uint8)
-        for polygon in self.polygons:
-            # print("draw polygon area:{}".format(polygon.area))
-            cv2.drawContours(dst, [polygon.contour], 0, polygon.fillColor, cv2.FILLED)#(255, 0, 0)
-        
-        img_add       = cv2.addWeighted(self.cv_img, alpha, dst, beta, gamma)# add mask
-        qt_add_img    = cvimg_to_qtimg(img_add)
-        scaled_qimg   = qt_add_img.scaled(self.scaled_img.size())
-        scaled_Pixmap = QPixmap.fromImage(scaled_qimg)
+        # scaled_img_last_mask
+
+
+        if self.drawMaskFlag is True and len(self.polygons) > 0:
+            dst = np.ones(self.cv_img.shape, dtype=np.uint8)
+            for polygon in self.polygons[::-1]:
+                # print("draw polygon area:{}".format(polygon.area))
+                cv2.drawContours(dst, [polygon.contour], 0, polygon.fillColor, cv2.FILLED)#(255, 0, 0)
+
+            img_add       = cv2.addWeighted(self.cv_img, alpha, dst, beta, gamma)# add mask
+            qt_add_img    = cvimg_to_qtimg(img_add)
+            scaled_qimg   = qt_add_img.scaled(self.scaled_img.size())
+            scaled_Pixmap = QPixmap.fromImage(scaled_qimg)
+        else:
+            scaled_Pixmap   = self.scaled_img
+            
         
         self.paintArea.set_pos_and_img(self.left_top_point, scaled_Pixmap)
         self.repaint()
@@ -341,25 +374,26 @@ class ImageWithMouseControl(QWidget):
         if e.angleDelta().y() < 0:
             # 放大图片
             self.scaled_img = self.qImg.scaled(self.scaled_img.width()-15, self.scaled_img.height()-15)
-            if self.scaled_img_mask is not None:
-                self.scaled_img_mask = cv2.resize(self.scaled_img_mask, (self.scaled_img_mask.shape[1]-15, self.scaled_img_mask.shape[0]-15))#self.scaled_img_mask.scaled(self.scaled_img_mask.width()-15, self.scaled_img_mask.height()-15)
             new_w = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() + 5)
             new_h = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() + 5)
             # print(new_w, new_h)
             self.left_top_point = QPoint(new_w, new_h)
 
+            # self.drawPolygonsOnCv()
+
         elif e.angleDelta().y() > 0:
             # 缩小图片
             self.scaled_img = self.qImg.scaled(self.scaled_img.width()+15, self.scaled_img.height()+15)
-            if self.scaled_img_mask is not None:
-                self.scaled_img_mask = cv2.resize(self.scaled_img_mask, (self.scaled_img_mask.shape[1]+15, self.scaled_img_mask.shape[0]+15))#self.scaled_img_mask = self.scaled_img_mask.scaled(self.scaled_img_mask.width()-15, self.scaled_img_mask.height()-15)
-
             new_w = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() - 5)
             new_h = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() - 5)
             self.left_top_point = QPoint(new_w, new_h)
+
         
-        self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
-        self.repaint()
+        self.drawPolygonsOnCv()
+
+
+        # self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
+        # self.repaint()
         # print("after wheelEvent")
 
     # def resizeEvent(self, e):

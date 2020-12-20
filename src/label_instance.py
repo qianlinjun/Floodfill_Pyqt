@@ -8,11 +8,10 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from utils import Polygon, getOnePolygon
+from utils import Polygon, getOnePolygon, mergePoly
 
 # f_handler=open('C:\qianlinjun\graduate\gen_dem\output\out.log', 'w')
 # sys.stdout=f_handler
-
 
 class Main(QWidget):
     def __init__(self):
@@ -20,6 +19,23 @@ class Main(QWidget):
         self.widget = ImageWithMouseControl(self)
         self.widget.setGeometry(10, 10, 1200, 1200)
         self.setWindowTitle('Image with mouse control')
+
+
+
+class Operation(object):
+    '''
+    1. insert a polygon by floodfill
+    2. draw a polygon by hand, by draw points then by then
+    3. merge two poygons
+    '''
+    insertPolygonType = "insertPolygon"
+    drawPolygonByHandType = "drawPolygonByHand"
+    mergePolygonsType = "mergePolygons"
+    def __init__(self, operateType, relateObjectIds, relatePosxy = None):
+        assert operateType in [Operation.insertPolygonType, Operation.drawPolygonByHandType, Operation.mergePolygonsType]
+        self.operateType     = operateType
+        self.relateObjectIds = relateObjectIds
+        self.relatePos       = relatePosxy
 
 
 
@@ -96,14 +112,21 @@ class ImageWithMouseControl(QWidget):
         self.qImg = None
         self.scaled_img = None
         self.scaled_img_last_mask = None
-        self.polygons = []# draw polygons in scaled mask
+        self.operation_stack = []
+        self.operation_undo_stack = []
+        self.polygons_stack = []# draw polygons in scaled mask
         self.polygons_undo_stack = []
+        self.operation_stack = []
+        self.operation_undo_stack = []
 
         # value
         self.floodFillthread = 10
         # self.floodFillDowner = 5
-        self.floodfillFlags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE
+        self.floodfillFlags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE | cv2.FLOODFILL_MASK_ONLY
         self.drawMaskFlag = False
+        self.showTmpMask = False
+        self.drawByHand = False
+        self.pts_draw_byHand = []
         
         self.cv_img = None
         self.left_top_point = QPoint(0,0) #只有在缩放和移动的时候才会改变
@@ -135,13 +158,13 @@ class ImageWithMouseControl(QWidget):
         self.spinbox.setMaximumSize(QSize(50, 20))
         self.spinbox.setMinimum(1)
         self.spinbox.setMaximum(254)
-        self.sld = QSlider(Qt.Horizontal, self)
-        self.sld.setMinimum(1)
-        self.sld.setMaximum(254)
+        # self.sld = QSlider(Qt.Horizontal, self)
+        # self.sld.setMinimum(1)
+        # self.sld.setMaximum(254)
 
-        self.spinbox.valueChanged.connect(lambda: self.sld.setValue(self.spinbox.value()))
-        self.sld.valueChanged.connect(self.changeFloodfillArgv)
-        self.sld.setValue(self.floodFillthread)
+        self.spinbox.valueChanged.connect(self.changeFloodfillArgv)#lambda: self.floodFillthread = self.spinbox.value()) #self.sld.setValue(self.spinbox.value()))
+        # self.sld.valueChanged.connect(self.changeFloodfillArgv)
+        # self.sld.setValue(self.floodFillthread)
 
         self.cbFlag = QCheckBox('固定差值')
         self.cbFlag.stateChanged.connect(self.changeFlag)
@@ -151,9 +174,12 @@ class ImageWithMouseControl(QWidget):
         self.cbShowMask.stateChanged.connect(self.changeDrawMaskFlag)
         self.cbShowMask.setCheckState(Qt.Checked)
 
-        self.cbDrawPolygon = QCheckBox('draw by hand')
-        # self.cbDrawPolygon.stateChanged.connect(self.ifDrawByHand)
+        self.cbDrawPolygon = QCheckBox('show_tmp_mask')
+        self.cbDrawPolygon.stateChanged.connect(self.show_tmp_mask)
         # self.cbFlag.setCheckState(Qt.Checked)
+
+        self.cbDrawPolygon = QCheckBox('draw by hand')
+        self.cbDrawPolygon.stateChanged.connect(self.switchDrawByHand)
 
         self.posInfoLabel = QLabel()
         self.pixInfoLabel = QLabel()
@@ -164,7 +190,7 @@ class ImageWithMouseControl(QWidget):
         layoutRight = QGridLayout(frame)
         layoutRight.addWidget(self.loadBtn, 1, 0)
         layoutRight.addWidget(self.spinbox, 3, 0)
-        layoutRight.addWidget(self.sld, 4, 0)
+        # layoutRight.addWidget(self.sld, 4, 0)
         layoutRight.addWidget(self.cbFlag, 5, 0)
         layoutRight.addWidget(self.cbShowMask, 6, 0)
         layoutRight.addWidget(self.cbDrawPolygon, 7, 0)
@@ -197,11 +223,15 @@ class ImageWithMouseControl(QWidget):
         
         # cv image to flood fill
         self.cv_img = cv2.imread(fname)
-        gray2 = cv2.cvtColor(self.cv_img, cv2.COLOR_BGR2RGB)
-        self.gray  = cv2.cvtColor(gray2, cv2.COLOR_RGB2GRAY)
         self.ori_img_wh = self.cv_img.shape
-        
-        self.polygons.clear()
+        gray2 = cv2.cvtColor(self.cv_img, cv2.COLOR_BGR2RGB)       
+        self.gray  = cv2.cvtColor(gray2, cv2.COLOR_RGB2GRAY)
+        self.copyImg = self.gray.copy()
+
+        self.cur_mask = np.zeros([self.ori_img_wh[1]+2, self.ori_img_wh[0]+2], np.uint8)
+        self.last_mask = self.cur_mask.copy()
+
+        self.polygons_stack.clear()
         self.polygons_undo_stack.clear()
 
         self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
@@ -210,15 +240,17 @@ class ImageWithMouseControl(QWidget):
         print("after load file")
     
     def changeFloodfillArgv(self, v):
-        self.spinbox.setValue(v)
+        
+        # self.spinbox.setValue(v)
+        print("circle")
         self.floodFillthread = v
     
     def changeFlag(self, e):
         if e > 0:
-            self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_FIXED_RANGE
+            self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_FIXED_RANGE | cv2.FLOODFILL_MASK_ONLY
             self.spinbox.setValue(10)
         else:
-            self.floodfillFlags = 4 | (252<<8)
+            self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_MASK_ONLY
             self.spinbox.setValue(5)
     
     def changeDrawMaskFlag(self, e):
@@ -228,6 +260,18 @@ class ImageWithMouseControl(QWidget):
             self.drawMaskFlag = False
         
         self.drawPolygonsOnCv()
+    
+    def show_tmp_mask(self, e):
+        if e > 0:
+            self.showTmpMask = True
+        else:
+            self.showTmpMask = False
+    
+    def switchDrawByHand(self, e):
+        if e > 0:
+            self.drawByHand = True
+        else:
+            self.drawByHand = False
         
 
     def mouseMoveEvent(self, e):  # 重写移动事件
@@ -260,59 +304,76 @@ class ImageWithMouseControl(QWidget):
 
         if e.button() == Qt.LeftButton:
             # self.left_click = True
-            self._startPos = e.pos()
-            getflag, polygon = self.floodFillOnce()#得到当前的polygon
-            if getflag is True:
-                self.polygons.append(polygon)#将当前polygon加入到list中
-                self.polygons_undo_stack.clear()
+            # self._startPos = e.pos()
+            
+            validRegion, ptLocxy = self.getPtMapInImg(QPoint(self.mousePos.x(), self.mousePos.y()))
+            if validRegion is True:
+                if self.drawByHand is True:
+                    # draw poly by hand
+                    self.pts_draw_byHand.append(ptLocxy)
+                    self.drawPolygonsOnCv()
+                else:
+                    getflag, polygon = self.floodFillOnce(ptLocxy)#得到当前的polygon
+                    if getflag is True:
+                        
+                        self.polygons_stack.append(polygon)#将当前polygon加入到list中
+                        self.polygons_undo_stack.clear()
+                        insertPolygonOpe = Operation(Operation.insertPolygonType, [polygon.id], ptLocxy)
+                        self.operation_stack.append(insertPolygonOpe)
+                        self.operation_undo_stack.clear()
 
-                self.drawPolygonsOnCv()
+                        self.drawPolygonsOnCv()
         elif e.button() == Qt.RightButton:
             self.right_click = True
   
         # print("after mousePressEvent")
     
 
-    def floodFillOnce(self):
+    def floodFillOnce(self, ptLocxy):
         '''
         get segmentation by  mouse click
         '''
-        flag, ptLocxy = self.getPtMapInImg(QPoint(self.mousePos.x(), self.mousePos.y()))
-        if flag is True:
-            # fill_color_demo(self.gray, seedPt)
+        # flag, ptLocxy = self.getPtMapInImg(QPoint(self.mousePos.x(), self.mousePos.y()))
+        # if flag is True:
+        # fill_color_demo(self.gray, seedPt)
 
-            copyImg = self.gray.copy()
-            h, w = self.gray.shape[:2]
-            mask = np.zeros([h+2, w+2], np.uint8)
+        # copyImg = self.gray.copy()
+        # h, w = self.gray.shape[:2]
+        mask = np.zeros([self.ori_img_wh[1] + 2, self.ori_img_wh[0] + 2], np.uint8)
+        
+        # mask_fill = 175#252 #mask的填充值
+        #floodFill充值标志
+        # flags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE
 
-            
-            # mask_fill = 175#252 #mask的填充值
-            #floodFill充值标志
-            # flags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE
+        # mask 需要填充的位置设置为0
+        # self.last_mask = self.cur_mask
+        self.cur_mask = self.last_mask.copy()
+        # self.cur_mask
+        cv2.floodFill(self.copyImg, self.cur_mask, ptLocxy, 255, self.floodFillthread, self.floodFillthread, self.floodfillFlags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
+        # cv2.imwrite("C:\qianlinjun\graduate\gen_dem\output\mask.png", mask)
+        # cv2.waitKey(1000)
+        # print(self.cur_mask.sum() , self.last_mask.sum())
+        mask = self.cur_mask - self.last_mask
+        # mask = np.vstack( (copyImg[:,:,np.newaxis], np.zeros([h, w, 2], np.uint8) ))
+        mask = cv2.resize(mask, (self.ori_img_wh[1], self.ori_img_wh[0]))
+        
+        # mask_rgb = np.concatenate((np.ones([h, w, 2], dtype=np.uint8),  mask[:,:,np.newaxis].astype(np.uint8) ), axis=-1)
+        # mask_rgb[mask == 0] = [255,255,255]#[127,127,127]
+        # mask_rgb[mask == 255] = [0,0,0]#[255,0,0]
+        
+        if self.showTmpMask is True:            
+            cv2.imshow("mask_rgb", mask)
+            cv2.waitKey()
 
-            # mask 需要填充的位置设置为0
-            cv2.floodFill(copyImg, mask, ptLocxy, 255, self.floodFillthread, self.floodFillthread, self.floodfillFlags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
-            # cv2.imwrite("C:\qianlinjun\graduate\gen_dem\output\mask.png", mask)
-            # cv2.waitKey(1000)
+        self.scaled_img_mask = mask
 
-            # mask = np.vstack( (copyImg[:,:,np.newaxis], np.zeros([h, w, 2], np.uint8) ))
-            mask = cv2.resize(mask, (h, w))
-            # mask_rgb = np.concatenate((np.ones([h, w, 2], dtype=np.uint8),  mask[:,:,np.newaxis].astype(np.uint8) ), axis=-1)
-            # mask_rgb[mask == 0] = [255,255,255]#[127,127,127]
-            # mask_rgb[mask == 255] = [0,0,0]#[255,0,0]
-            
-            # cv2.imshow("mask_rgb", mask)
-            # cv2.waitKey()
-
-            self.scaled_img_mask = mask
-
-            getflag, polygon = getOnePolygon(mask, ptLocxy)
-            if getflag is True:
-                return True, Polygon(polygon, len(self.polygons))
-            else:
-                return False, None
+        getflag, polygon = getOnePolygon(mask, ptLocxy)
+        if getflag is True:
+            return True, Polygon(polygon, len(self.polygons_stack))
         else:
             return False, None
+        # else:
+        #     return False, None
 
     def drawPolygonsOnCv(self):
         if self.cv_img is None:
@@ -325,11 +386,19 @@ class ImageWithMouseControl(QWidget):
         # scaled_img_last_mask
 
 
-        if self.drawMaskFlag is True and len(self.polygons) > 0:
+        if self.drawMaskFlag is True and len(self.polygons_stack) > 0:
+            
+            self.last_mask = np.zeros([self.ori_img_wh[1]+2, self.ori_img_wh[0]+2], np.uint8)
             dst = np.ones(self.cv_img.shape, dtype=np.uint8)
-            for polygon in self.polygons[::-1]:
+
+
+            for polygon in self.polygons_stack[::-1]:
                 # print("draw polygon area:{}".format(polygon.area))
-                cv2.drawContours(dst, [polygon.contour], 0, polygon.fillColor, cv2.FILLED)#(255, 0, 0)
+                cv2.drawContours(dst, [polygon.contour], -1, polygon.fillColor, cv2.FILLED)# -1表示全画 (255, 0, 0)
+                cv2.drawContours(self.last_mask, [polygon.contour], -1, 255, cv2.FILLED)# -1表示全画 (255, 0, 0)
+            
+            # if len(self.polygons) >= 2:
+            #     mergePoly(self.ori_img_wh, self.polygons[0].contour, self.polygons[1].contour)
 
             img_add       = cv2.addWeighted(self.cv_img, alpha, dst, beta, gamma)# add mask
             qt_add_img    = cvimg_to_qtimg(img_add)
@@ -337,7 +406,17 @@ class ImageWithMouseControl(QWidget):
             scaled_Pixmap = QPixmap.fromImage(scaled_qimg)
         else:
             scaled_Pixmap   = self.scaled_img
-            
+        
+
+
+        # print(self.pts_draw_byHand)
+        # self.draw
+        # if len(self.pts_draw_byHand) == 1:
+        #     pass
+        # elif len(self.pts_draw_byHand) == 2:
+        #     pass
+        # elif len(self.pts_draw_byHand) >= 3:
+        #     pass
         
         self.paintArea.set_pos_and_img(self.left_top_point, scaled_Pixmap)
         self.repaint()
@@ -451,22 +530,44 @@ class ImageWithMouseControl(QWidget):
 
     
     def keyPressEvent(self,event):
+
+        # print("hello",QApplication.keyboardModifiers() == Qt.ControlModifier,QApplication.keyboardModifiers())
         if QApplication.keyboardModifiers() == Qt.ControlModifier:
             # self.actionFile.save(self.action_text.toPlainText())
             # self.status.showMessage(self.action_text.toPlainText())#"保存成功 %s" % self.file)
+            print("hi")
             if event.key() == Qt.Key_Z:
-                # ctrl z
-                print("undo")
-                if len(self.polygons) > 0:
-                    polygon = self.polygons.pop()
-                    self.polygons_undo_stack.append(polygon)
-
+                # undo
+                if len(self.polygons_stack) > 0:
+                    
+                    last_operation = self.operation_stack.pop()
+                    if last_operation.operateType == Operation.insertPolygonType:
+                        polygon = self.polygons_stack.pop()
+                        self.polygons_undo_stack.append(polygon)
+                    elif last_operation.operateType == Operation.drawPolygonByHandType:
+                        point = self.polygons_stack[-1].contour.pop()
+                        # self.polygons_undo_stack.append(polygon)
+                    elif last_operation.operateType == Operation.mergePolygonsType:
+                        pass
+                    self.operation_undo_stack.append(last_operation)
                 
             elif event.key() == Qt.Key_Y:
-                print("redo")
+                
                 if len(self.polygons_undo_stack) > 0:
-                    polygon = self.polygons_undo_stack.pop()
-                    self.polygons.append(polygon)
+                    # redo
+                    # polygon = self.polygons_undo_stack.pop()
+                    # self.polygons_stack.append(polygon)
+
+                    last_operation = self.operation_undo_stack.pop()
+                    if last_operation.operateType == Operation.insertPolygonType:
+                        polygon = self.polygons_undo_stack.pop()
+                        self.polygons_stack.append(polygon)
+                    elif last_operation.operateType == Operation.drawPolygonByHandType:
+                        self.polygons_stack[-1].contour.append(last_operation.relatePosxy)  
+                        # self.polygons_undo_stack.append(polygon)
+                    elif last_operation.operateType == Operation.mergePolygonsType:
+                        pass
+                    self.operation_stack.append(last_operation)
 
             
             self.drawPolygonsOnCv()
@@ -475,6 +576,7 @@ class ImageWithMouseControl(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    print("click left button to segmention")
     ex = Main()
     # ex = ImageWithMouseControl()
     ex.show()

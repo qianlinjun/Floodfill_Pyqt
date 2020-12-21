@@ -1,3 +1,4 @@
+import json
 import networkx as nx
 import gmatch4py as gm
 import matplotlib.pyplot as plt 
@@ -124,3 +125,7 @@ print("G K dist:", dist)
 # node edit cost
 # 山体 水 平原 森林 房屋
 # 同一个类别计算相似度
+
+img1_res = "C:\qianlinjun\graduate\gen_dem\output\8.59262657_46.899601.json"
+a_json = json.load(open(img1_res,'r'))
+print(a_json)

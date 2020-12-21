@@ -34,11 +34,12 @@ class InstanceLabelTool(QWidget):
         self.floodFillthread = 10
         # self.floodFillDowner = 5
         self.floodfillFlags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE | cv2.FLOODFILL_MASK_ONLY
-        self.drawMaskFlag = False
+        self.showMaskFlag = False
         self.showTmpMask = False
         self.drawByHand = False
+        self.handDrawing = False
 
-        self.objectId = 0
+        self.objectId = -1
         
         self.cv_img = None
         self.left_top_point = QPoint(0,0) #只有在缩放和移动的时候才会改变
@@ -65,12 +66,12 @@ class InstanceLabelTool(QWidget):
         # right button area
         self.loadBtn = QPushButton()
         self.loadBtn.setMaximumSize(QSize(50, 50))
-        self.loadBtn.clicked.connect(self.loadFile)
+        self.loadBtn.clicked.connect(self.loadFileCallBack)
         self.loadBtn.setText("open")
         self.loadBtn.setStyleSheet('''QPushButton{background:#A0D468;border-radius:5px;}''') #QPushButton:hover{background:yellow;}
         self.saveBtn = QPushButton()
         self.saveBtn.setMaximumSize(QSize(50, 50))
-        self.saveBtn.clicked.connect(self.savePolygons)
+        self.saveBtn.clicked.connect(self.savePolygonsCallBack)
         self.saveBtn.setText("save")
         self.saveBtn.setStyleSheet('''QPushButton{background:#48CFAD;border-radius:5px;}''')
 
@@ -82,20 +83,20 @@ class InstanceLabelTool(QWidget):
         # self.sld.setMinimum(1)
         # self.sld.setMaximum(254)
 
-        self.spinbox.valueChanged.connect(self.changeFloodfillArgv)#lambda: self.floodFillthread = self.spinbox.value()) #self.sld.setValue(self.spinbox.value()))
+        self.spinbox.valueChanged.connect(self.switchFloodfillThread)#lambda: self.floodFillthread = self.spinbox.value()) #self.sld.setValue(self.spinbox.value()))
         # self.sld.valueChanged.connect(self.changeFloodfillArgv)
         # self.sld.setValue(self.floodFillthread)
 
         self.cbFlag = QCheckBox('固定差值')
-        self.cbFlag.stateChanged.connect(self.changeFloodfillMode)
+        self.cbFlag.stateChanged.connect(self.switchFloodfillMode)
         self.cbFlag.setCheckState(Qt.Checked)
 
         self.cbShowMask = QCheckBox('show mask')
-        self.cbShowMask.stateChanged.connect(self.changeDrawMaskFlag)
+        self.cbShowMask.stateChanged.connect(self.switchShowMask)
         self.cbShowMask.setCheckState(Qt.Checked)
 
         self.cbShowTmpMask = QCheckBox('show_tmp_mask')
-        self.cbShowTmpMask.stateChanged.connect(self.show_tmp_mask)
+        self.cbShowTmpMask.stateChanged.connect(self.switchShowTmpMask)
         # self.cbFlag.setCheckState(Qt.Checked)
 
         self.cbDrawPolygon = QCheckBox('draw by hand')
@@ -137,7 +138,7 @@ class InstanceLabelTool(QWidget):
 
         # self.setWindowTitle('Image with mouse control')
 
-    def loadFile(self):
+    def loadFileCallBack(self):
 
         # load qpixmap
         fname, ret = QFileDialog.getOpenFileName(self, '选择图片', 'c:\\', 'Image files(*.jpg *.gif *.png)')
@@ -168,11 +169,11 @@ class InstanceLabelTool(QWidget):
         self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
         self.repaint()
 
-    def changeFloodfillArgv(self, v):
+    def switchFloodfillThread(self, v):
         # self.spinbox.setValue(v)
         self.floodFillthread = v
     
-    def changeFloodfillMode(self, e):
+    def switchFloodfillMode(self, e):
         if e > 0:
             self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_FIXED_RANGE | cv2.FLOODFILL_MASK_ONLY
             self.spinbox.setValue(self.floodFillthread) #10
@@ -180,7 +181,7 @@ class InstanceLabelTool(QWidget):
             self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_MASK_ONLY
             self.spinbox.setValue(self.floodFillthread) # 5
     
-    def changeDrawMaskFlag(self, e):
+    def switchShowMask(self, e):
         if e > 0:
             self.drawMaskFlag = True
         else:
@@ -188,7 +189,7 @@ class InstanceLabelTool(QWidget):
         
         self.drawPolygonsOnCv()
     
-    def show_tmp_mask(self, e):
+    def switchShowTmpMask(self, e):
         if e > 0:
             self.showTmpMask = True
         else:
@@ -200,7 +201,7 @@ class InstanceLabelTool(QWidget):
         else:
             self.drawByHand = False
     
-    def savePolygons(self, e):
+    def savePolygonsCallBack(self, e):
         if self.fname is None:
             QMessageBox.information(self,"warning","no result to save",QMessageBox.Yes, QMessageBox.Yes) # |QMessageBox.No
             return
@@ -245,11 +246,11 @@ class InstanceLabelTool(QWidget):
             validRegion, ptLocxy = self.getPtMapInImg(QPoint(self.mousePos.x(), self.mousePos.y()))
             if validRegion is True:
                 if self.drawByHand is True:
-                    
                     # draw poly by hand
-                    curObjectIdx = self.findPolygonByID(self.objectId)
-                    objectId = self.objectId
-                    if curObjectIdx > 0:
+                    curObjectIdx = self.findPolygonByID(self.objectId + 1)
+                    print("curObjectid:{}".format(curObjectIdx))
+                    objectId = self.objectId + 1
+                    if curObjectIdx >= 0:
                         # pass
                         self.polygons_stack[curObjectIdx].addPoint(ptLocxy)
                         # add operation for undo
@@ -266,10 +267,20 @@ class InstanceLabelTool(QWidget):
                         insertPolygonOpe = Operation(Operation.insertPolygonType, objectId, ptLocxy)
                         self.operation_stack.append(insertPolygonOpe)
                         self.operation_undo_stack.clear()
+                        self.handDrawing = True
 
                     # self.pts_draw_byHand.append(ptLocxy)
                     self.drawPolygonsOnCv()
                 else:
+                    if self.handDrawing is True:
+                        #没有绘制完上一个多边形
+                        res = QMessageBox.question(self,"warning","last polygon is drawing, if finish it?",QMessageBox.Yes|QMessageBox.No, QMessageBox.Yes) # 
+                        if res == QMessageBox.Yes:
+                            self.objectId += 1
+                            self.handDrawing = False
+                        else:
+                            return
+
                     getflag, polygon = self.floodFillOnce(ptLocxy)#得到当前的polygon
                     if getflag is True:
                         
@@ -287,8 +298,11 @@ class InstanceLabelTool(QWidget):
 
 
     def mouseDoubleClickEvent(self,e):
-        self.objectId += 1
-        print("双击")
+        curObjectIdx = self.findPolygonByID(self.objectId + 1)
+        if self.drawByHand is True and len(self.polygons_stack[curObjectIdx].contour) > 0:
+            self.objectId += 1
+            self.handDrawing = False
+            print("双击")
 
     def mouseDoubieCiickEvent(self, event):
 #        if event.buttons () == QtCore.Qt.LeftButton:                           # 左键按下
@@ -337,9 +351,8 @@ class InstanceLabelTool(QWidget):
 
         getflag, polygon = getOnePolygon(mask, ptLocxy)
         if getflag is True:
-            objectId = self.objectId
             self.objectId += 1
-            return True, Polygon(polygon, objectId)#, len(self.polygons_stack)
+            return True, Polygon(polygon, self.objectId)#, len(self.polygons_stack)
         else:
             return False, None
         # else:
@@ -364,6 +377,17 @@ class InstanceLabelTool(QWidget):
                     # print("draw polygon area:{}".format(polygon.area))
                     cv2.drawContours(dst, [polygon.contour], -1, polygon.fillColor, cv2.FILLED)# -1表示全画 (255, 0, 0)
                     cv2.drawContours(self.last_mask, [polygon.contour], -1, 255, cv2.FILLED)# -1表示全画 (255, 0, 0)
+                elif len(polygon.contour) == 1:
+                    cx = polygon.contour[0][0][0]
+                    cy = polygon.contour[0][0][1]
+                    cv2.circle(dst, (cx, cy), 5, polygon.fillColor, -1)   # 绘制圆点
+                elif len(polygon.contour) == 2:
+                    x1 = polygon.contour[0][0][0]
+                    y1 = polygon.contour[0][0][1]
+                    x2 = polygon.contour[1][0][0]
+                    y2 = polygon.contour[1][0][1]
+                    cv2.line(dst, (x1, y1), (x2, y2), polygon.fillColor, 2)
+                    # cv2.circle(dst, (cx, cy), 2, (0, 0, 255), -1)   # 绘制圆点
             
             # if len(self.polygons) >= 2:
             #     mergePoly(self.ori_img_wh, self.polygons[0].contour, self.polygons[1].contour)

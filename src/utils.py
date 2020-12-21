@@ -32,10 +32,10 @@ class Polygon(object):
         '''
         contour 
         '''
-        self.id = objectId
-        self.contour = contour
+        self.id            = objectId
+        self.contour       = contour
         self.mountain_line = None
-        self.fillColor = colorList[self.id % len(colorList)]
+        self.fillColor     = colorList[self.id % len(colorList)]
     
     def addPoint(self, ptxy):
         if len(np.array(ptxy).shape) == 1:
@@ -349,20 +349,27 @@ def savePolygons2Json(img_name, polygons_list):
         return
 
     save_file_path = os.path.join("./", img_name[:-4] + ".json") 
-    with open(save_file_path) as save_f:
+    print("save to {}".format(save_file_path))
+    with open(save_file_path, "w") as save_f:
         list_2_save = []
         for poly in polygons_list:
             if len(poly.contour) >= 3:
                 cur_poly = {}
+                # print("type id:{}".format(type(poly.id)))
                 cur_poly["id"]        = poly.id
-                cur_poly["contour"]   = poly.contour
+                # print("type contour:{}".format(type(poly.contour)))
+                # print(poly.contour.tolist())
+                cur_poly["contour"]   = poly.contour.tolist()
+                # print("type fillColor:{}".format(type(poly.fillColor)))
                 cur_poly["fillColor"] = poly.fillColor
+                # print("type getArea:{}".format(type(poly.getArea())))
                 cur_poly["area"]      = poly.getArea()
+                # print("type getMoments:{}".format(type(poly.getMoments())))
                 cur_poly["momente"]   = poly.getMoments()
                 list_2_save.append(cur_poly)
         if len(list_2_save) > 0:
-            data_2_save = json.dumps(list_2_save, ensure_ascii=False)
-            save_f.write(data_2_save.encode('utf-8'))
+            json.dump(list_2_save, save_f, ensure_ascii=False)
+            # save_f.write(data_2_save.encode('utf-8'))
 
 
 

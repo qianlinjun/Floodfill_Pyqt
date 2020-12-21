@@ -126,6 +126,7 @@ class InstanceLabelTool(QWidget):
         layoutRight.addWidget(self.posInfoLabel)#,7, 0)
         layoutRight.addWidget(self.pixInfoLabel)#,8,0)
         
+        # layoutRight("background-color:black;")
         
 
         # fullLayout = QGridLayout(self)
@@ -519,7 +520,7 @@ class InstanceLabelTool(QWidget):
     
     def keyPressEvent(self,event):
 
-        print("hello",QApplication.keyboardModifiers() == Qt.ControlModifier, QApplication.keyboardModifiers())
+        # print("hello",QApplication.keyboardModifiers() == Qt.ControlModifier, QApplication.keyboardModifiers())
         for modifiers in dir(Qt):
             if QApplication.keyboardModifiers() == getattr(Qt, modifiers):
                 print("modifiers:", modifiers)
@@ -536,10 +537,9 @@ class InstanceLabelTool(QWidget):
                     if last_operation.operateType == Operation.insertPolygonType:
                         polygon = self.polygons_stack.pop()
                         self.polygons_undo_stack.append(polygon)
+                        self.handDrawing = False
                     elif last_operation.operateType == Operation.drawPolygonByHandType:
                         self.polygons_stack[-1].removeLastPoint()
-                        # self.operation_undo_stack.append(last_operation)
-                        # self.polygons_undo_stack.append(polygon)
                     elif last_operation.operateType == Operation.mergePolygonsType:
                         pass
                     self.operation_undo_stack.append(last_operation)
@@ -547,26 +547,18 @@ class InstanceLabelTool(QWidget):
             elif event.key() == Qt.Key_Y:
                 
                 if len(self.operation_undo_stack) > 0:
-                    # redo
-                    # polygon = self.polygons_undo_stack.pop()
-                    # self.polygons_stack.append(polygon)
-
                     last_operation = self.operation_undo_stack.pop()
                     if last_operation.operateType == Operation.insertPolygonType:
                         polygon = self.polygons_undo_stack.pop()
                         self.polygons_stack.append(polygon)
                     elif last_operation.operateType == Operation.drawPolygonByHandType:
-                        # self.polygons_stack[-1].contour.append(last_operation.relatePosxy)  
                         self.polygons_stack[-1].addPoint([[last_operation.relatePos]])
-                        # self.polygons_undo_stack.append(polygon)
                     elif last_operation.operateType == Operation.mergePolygonsType:
                         pass
                     self.operation_stack.append(last_operation)
 
             print("self.polygons_stack", len(self.polygons_stack))
             self.drawPolygonsOnCv()
-        
-        # elif enter 键 则形成polygon
 
 
 
@@ -575,7 +567,7 @@ class Main(QWidget):
         super().__init__()
         self.widget = InstanceLabelTool(self)
         self.widget.setGeometry(10, 10, 1200, 1200)
-        self.setWindowTitle('Image with mouse control')
+        self.setWindowTitle('image label tool')
 
 
 

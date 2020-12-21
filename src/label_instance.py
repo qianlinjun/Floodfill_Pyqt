@@ -30,6 +30,7 @@ class InstanceLabelTool(QWidget):
         self.operation_undo_stack = []
 
         # value
+        self.fname = None
         self.floodFillthread = 10
         # self.floodFillDowner = 5
         self.floodfillFlags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE | cv2.FLOODFILL_MASK_ONLY
@@ -53,25 +54,25 @@ class InstanceLabelTool(QWidget):
         spliter1 = QSplitter(Qt.Horizontal)
         spliter1.setOpaqueResize(True)
         frame1 = QFrame(spliter1)
-        layout_left = QVBoxLayout(frame1)
+        layoutLeft = QVBoxLayout()#frame1
         self.paintArea = PaintArea()
         self.paintArea.PosChangeSignal.connect(self.posChangeCallback)
         
-        layout_left.setSpacing(6)
-        layout_left.addWidget(self.paintArea)
+        layoutLeft.setSpacing(6)
+        layoutLeft.addWidget(self.paintArea)
         
 
         # right button area
         self.loadBtn = QPushButton()
         self.loadBtn.setMaximumSize(QSize(50, 50))
         self.loadBtn.clicked.connect(self.loadFile)
-        self.loadBtn.setText("打开")
-        self.loadBtn.setStyleSheet('''QPushButton{background:#98FB98;border-radius:5px;}''') #QPushButton:hover{background:yellow;}
+        self.loadBtn.setText("open")
+        self.loadBtn.setStyleSheet('''QPushButton{background:#A0D468;border-radius:5px;}''') #QPushButton:hover{background:yellow;}
         self.saveBtn = QPushButton()
         self.saveBtn.setMaximumSize(QSize(50, 50))
         self.saveBtn.clicked.connect(self.savePolygons)
-        self.saveBtn.setText("保存")
-        self.saveBtn.setStyleSheet('''QPushButton{background:#98FB98;border-radius:5px;}''')
+        self.saveBtn.setText("save")
+        self.saveBtn.setStyleSheet('''QPushButton{background:#48CFAD;border-radius:5px;}''')
 
         self.spinbox = QSpinBox()
         self.spinbox.setMaximumSize(QSize(50, 20))
@@ -86,7 +87,7 @@ class InstanceLabelTool(QWidget):
         # self.sld.setValue(self.floodFillthread)
 
         self.cbFlag = QCheckBox('固定差值')
-        self.cbFlag.stateChanged.connect(self.changeFlag)
+        self.cbFlag.stateChanged.connect(self.changeFloodfillMode)
         self.cbFlag.setCheckState(Qt.Checked)
 
         self.cbShowMask = QCheckBox('show mask')
@@ -101,28 +102,37 @@ class InstanceLabelTool(QWidget):
         self.cbDrawPolygon.stateChanged.connect(self.switchDrawByHand)
 
         self.posInfoLabel = QLabel()
-        self.pixInfoLabel = QLabel()
+        # self.posInfoLabel.setGeometry(QRect(328, 240, 329, 27*4))
+        self.posInfoLabel.setWordWrap(True)
+        self.posInfoLabel.setAlignment(Qt.AlignTop)
+        self.pixInfoLabel = QLabel("0 0 0")
+        # self.pixInfoLabel.setGeometry(QRect(328, 240, 329, 27*4))
+        self.pixInfoLabel.setWordWrap(True)
+        self.pixInfoLabel.setAlignment(Qt.AlignTop)
 
         spliter2 = QSplitter(Qt.Horizontal)
         # spliter2.setOpaqueResize(True)
         frame = QFrame(spliter2)
-        layoutRight = QGridLayout(frame)
-        layoutRight.addWidget(self.loadBtn, 1, 0)
-        
-        layoutRight.addWidget(self.spinbox, 2, 0)
+        layoutRight = QVBoxLayout()#frame
+        layoutRight.addWidget(self.loadBtn)#, 1, 0)
+        layoutRight.addWidget(self.saveBtn)#, 9, 0)
+        layoutRight.addWidget(self.spinbox)#, 2, 0)
         # layoutRight.addWidget(self.sld, 4, 0)
-        layoutRight.addWidget(self.cbFlag, 3, 0)
-        layoutRight.addWidget(self.cbShowMask, 4, 0)
-        layoutRight.addWidget(self.cbDrawPolygon, 5, 0)
-        layoutRight.addWidget(self.cbShowTmpMask, 6, 0)  
-        layoutRight.addWidget(self.posInfoLabel,7, 0)
-        layoutRight.addWidget(self.pixInfoLabel,8,0)
-        layoutRight.addWidget(self.saveBtn, 9, 0)
+        layoutRight.addWidget(self.cbFlag)#, 3, 0)
+        layoutRight.addWidget(self.cbShowMask)#, 4, 0)
+        layoutRight.addWidget(self.cbDrawPolygon)#, 5, 0)
+        layoutRight.addWidget(self.cbShowTmpMask)#, 6, 0)  
+        layoutRight.addWidget(self.posInfoLabel)#,7, 0)
+        layoutRight.addWidget(self.pixInfoLabel)#,8,0)
+        
         
 
-        fullLayout = QGridLayout(self)
-        fullLayout.addWidget(spliter1,0,1)
-        fullLayout.addWidget(spliter2,0,0)
+        # fullLayout = QGridLayout(self)
+        # fullLayout.addWidget(spliter1,0,1)
+        # fullLayout.addWidget(spliter2,0,0)
+        fullLayout = QHBoxLayout()
+        fullLayout.addLayout(layoutRight)
+        fullLayout.addLayout(layoutLeft)
         self.setLayout(fullLayout)
 
         # self.setWindowTitle('Image with mouse control')
@@ -162,13 +172,13 @@ class InstanceLabelTool(QWidget):
         # self.spinbox.setValue(v)
         self.floodFillthread = v
     
-    def changeFlag(self, e):
+    def changeFloodfillMode(self, e):
         if e > 0:
             self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_FIXED_RANGE | cv2.FLOODFILL_MASK_ONLY
-            self.spinbox.setValue(10)
+            self.spinbox.setValue(self.floodFillthread) #10
         else:
             self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_MASK_ONLY
-            self.spinbox.setValue(5)
+            self.spinbox.setValue(self.floodFillthread) # 5
     
     def changeDrawMaskFlag(self, e):
         if e > 0:
@@ -191,6 +201,10 @@ class InstanceLabelTool(QWidget):
             self.drawByHand = False
     
     def savePolygons(self, e):
+        if self.fname is None:
+            QMessageBox.information(self,"warning","no result to save",QMessageBox.Yes, QMessageBox.Yes) # |QMessageBox.No
+            return
+
         savePolygons2Json(self.fname, self.polygons_stack)
 
 
@@ -481,7 +495,11 @@ class InstanceLabelTool(QWidget):
     
     def keyPressEvent(self,event):
 
-        # print("hello",QApplication.keyboardModifiers() == Qt.ControlModifier,QApplication.keyboardModifiers())
+        print("hello",QApplication.keyboardModifiers() == Qt.ControlModifier, QApplication.keyboardModifiers())
+        for modifiers in dir(Qt):
+            if QApplication.keyboardModifiers() == getattr(Qt, modifiers):
+                print("modifiers:", modifiers)
+
         if QApplication.keyboardModifiers() == Qt.ControlModifier:
             # self.actionFile.save(self.action_text.toPlainText())
             # self.status.showMessage(self.action_text.toPlainText())#"保存成功 %s" % self.file)

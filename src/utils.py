@@ -1,3 +1,4 @@
+import os
 import sys
 import cv2
 import json
@@ -353,10 +354,6 @@ def savePolygons2Json(img_name, polygons_list):
         for poly in polygons_list:
             if len(poly.contour) >= 3:
                 cur_poly = {}
-                # self.id = objectId
-                # self.contour = contour
-                # self.mountain_line = None
-                # self.fillColor
                 cur_poly["id"]        = poly.id
                 cur_poly["contour"]   = poly.contour
                 cur_poly["fillColor"] = poly.fillColor

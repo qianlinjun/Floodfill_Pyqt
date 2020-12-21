@@ -1,7 +1,12 @@
 import sys
 import cv2
+import json
 import numpy as np
 from matplotlib import pyplot as plt
+
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 colorList = [[255, 0, 51],
             [0, 0, 255],# Blue 
@@ -23,39 +28,104 @@ colorList = [[255, 0, 51],
 class Polygon(object):
     # id = 0
     def __init__(self, contour, objectId):
+        '''
+        contour 
+        '''
         self.id = objectId
-        # Polygon.id += 1
         self.contour = contour
-        self.area = cv2.contourArea(contour)
         self.mountain_line = None
-        # print("self id", self.id)
         self.fillColor = colorList[self.id % len(colorList)]
     
-    # def set(self, contour):
-    #     self.contour = contour
+    def addPoint(self, ptxy):
+        if len(np.array(ptxy).shape) == 1:
+            ptxy = [[ptxy]]
+        elif len(np.array(ptxy).shape) == 2:
+            ptxy = [ptxy]
+        self.contour = np.concatenate((self.contour, ptxy), axis=0)
     
-    # def get(self):
-    #     return self.contour
+    def removeLastPoint(self):
+        self.contour = self.contour[:-1]
+
+    def getArea(self):
+        if len(self.contour) < 3:
+            return 0
+        else:
+            return cv2.contourArea(self.contour)
     
-    # def getArea(self):
-    #     return self.area
+    def getMoments(self):
+        # 特征矩
+        M = cv2.moments(self.contour)
+        # print(M)
+        cx = int(M['m10']/M['m00'])
+        cy = int(M['m01']/M['m00'])
+        # cv2.circle(dst, (cx, cy), 2, (0, 0, 255), -1)   # 绘制圆点
+        return [cx,cy]
 
 
-class Operation(object):
-    '''
-    1. insert a polygon by floodfill
-    2. draw a polygon by hand, by draw points then by then
-    3. merge two poygons
-    '''
-    insertPolygonType = "insertPolygon"
-    drawPolygonByHandType = "drawPolygonByHand"
-    mergePolygonsType = "mergePolygons"
-    def __init__(self, operateType, relateObjectIds, relatePosxy = None):
-        assert operateType in [insertPolygon, drawPolygonByHand, mergePolygons]
-        self.operateType     = operateType
-        self.relateObjectIds = relateObjectIds
-        self.relatePos       = relatePosxy
+
+class PaintArea(QWidget):
+    PosChangeSignal = pyqtSignal(int,int)# 定义信号
+
+    def __init__(self):
+        super(PaintArea,self).__init__()
+        self.left_top_point = None
+        self.wait_paint_img     = None
+        self.setMinimumSize(800,800)
         
+
+        self.setMouseTracking(True)#get mouse in real time
+
+    def set_pos_and_img(self, left_top_point, img):
+        self.left_top_point = left_top_point
+        self.wait_paint_img     = img
+
+    def paintEvent(self, e):
+        '''
+        绘图
+        :param e:
+        :return:
+        '''
+        # print("before paintEvent")
+        painter = QPainter()#self
+        painter.begin(self)
+        self.draw_img(painter)
+        painter.end()
+        # print("after paintEvent")
+    
+    def draw_img(self, painter):
+        if self.left_top_point is None or self.wait_paint_img is None:
+            print("draw img args: left_top_point or scale img is none")
+            return
+
+        if type(self.wait_paint_img) == QPixmap:
+            # print("before drawPixmap")
+            painter.drawPixmap(self.left_top_point, self.wait_paint_img)
+            # print("after drawPixmap\n")
+        else:
+            # print("before drawImage")
+            painter.drawImage(self.left_top_point, self.wait_paint_img)
+            # print("after drawImage\n")
+        # self.left_top_point = None
+        # self.scaled_img     = None
+    
+    def mouseMoveEvent(self, e):
+        s = e.pos() #e.windowPos()
+        x = s.x()
+        y = s.y()
+        self.PosChangeSignal.emit(x , y)
+        
+
+
+def cvimg_to_qtimg(cvimg):
+
+    height, width, depth = cvimg.shape
+    # cvimg = cv2.cvtColor(cvimg, cv2.COLOR_BGR2RGB)
+    cvimg = QImage(cvimg.data, width, height, width * depth, QImage.Format_RGB888)
+
+    return cvimg
+
+
+
 def fill_color_demo(img_path, pos=(1,1)):
     image = cv2.imread(img_path)
     gray2 = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -272,6 +342,49 @@ def mergePoly(ori_hw, poly1, poly2):
     cv2.destroyAllWindows()
 
 
+def savePolygons2Json(img_name, polygons_list):
+    if "png" not in img_name:
+        print("invalid for image:{}".format(img_name))
+        return
+
+    save_file_path = os.path.join("./", img_name[:-4] + ".json") 
+    with open(save_file_path) as save_f:
+        list_2_save = []
+        for poly in polygons_list:
+            if len(poly.contour) >= 3:
+                cur_poly = {}
+                # self.id = objectId
+                # self.contour = contour
+                # self.mountain_line = None
+                # self.fillColor
+                cur_poly["id"]        = poly.id
+                cur_poly["contour"]   = poly.contour
+                cur_poly["fillColor"] = poly.fillColor
+                cur_poly["area"]      = poly.getArea()
+                cur_poly["momente"]   = poly.getMoments()
+                list_2_save.append(cur_poly)
+        if len(list_2_save) > 0:
+            data_2_save = json.dumps(list_2_save, ensure_ascii=False)
+            save_f.write(data_2_save.encode('utf-8'))
+
+
+
+
+class Operation(object):
+    '''
+    1. insert a polygon by floodfill
+    2. draw a polygon by hand, by draw points then by then
+    3. merge two poygons
+    '''
+    insertPolygonType = "insertPolygon"
+    drawPolygonByHandType = "drawPolygonByHand"
+    mergePolygonsType = "mergePolygons"
+    def __init__(self, operateType, relateObjectIds, relatePosxy = None):
+        assert operateType in [Operation.insertPolygonType, Operation.drawPolygonByHandType, Operation.mergePolygonsType]
+        self.operateType     = operateType
+        self.relateObjectIds = relateObjectIds
+        self.relatePos       = relatePosxy
+    
 
 
 

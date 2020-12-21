@@ -8,102 +8,12 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from utils import Polygon, getOnePolygon, mergePoly
+from utils import Polygon, PaintArea, getOnePolygon, mergePoly, Operation, savePolygons2Json, cvimg_to_qtimg
 
 # f_handler=open('C:\qianlinjun\graduate\gen_dem\output\out.log', 'w')
 # sys.stdout=f_handler
 
-class Main(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.widget = ImageWithMouseControl(self)
-        self.widget.setGeometry(10, 10, 1200, 1200)
-        self.setWindowTitle('Image with mouse control')
-
-
-
-class Operation(object):
-    '''
-    1. insert a polygon by floodfill
-    2. draw a polygon by hand, by draw points then by then
-    3. merge two poygons
-    '''
-    insertPolygonType = "insertPolygon"
-    drawPolygonByHandType = "drawPolygonByHand"
-    mergePolygonsType = "mergePolygons"
-    def __init__(self, operateType, relateObjectIds, relatePosxy = None):
-        assert operateType in [Operation.insertPolygonType, Operation.drawPolygonByHandType, Operation.mergePolygonsType]
-        self.operateType     = operateType
-        self.relateObjectIds = relateObjectIds
-        self.relatePos       = relatePosxy
-
-
-
-class PaintArea(QWidget):
-    PosChangeSignal = pyqtSignal(int,int)# 定义信号
-
-    def __init__(self):
-        super(PaintArea,self).__init__()
-        self.left_top_point = None
-        self.wait_paint_img     = None
-        self.setMinimumSize(800,800)
-        
-
-        self.setMouseTracking(True)#get mouse in real time
-
-    def set_pos_and_img(self, left_top_point, img):
-        self.left_top_point = left_top_point
-        self.wait_paint_img     = img
-
-    def paintEvent(self, e):
-        '''
-        绘图
-        :param e:
-        :return:
-        '''
-        # print("before paintEvent")
-        painter = QPainter()#self
-        painter.begin(self)
-        self.draw_img(painter)
-        painter.end()
-        # print("after paintEvent")
-    
-    def draw_img(self, painter):
-        if self.left_top_point is None or self.wait_paint_img is None:
-            print("draw img args: left_top_point or scale img is none")
-            return
-
-        if type(self.wait_paint_img) == QPixmap:
-            # print("before drawPixmap")
-            painter.drawPixmap(self.left_top_point, self.wait_paint_img)
-            # print("after drawPixmap\n")
-        else:
-            # print("before drawImage")
-            painter.drawImage(self.left_top_point, self.wait_paint_img)
-            # print("after drawImage\n")
-        # self.left_top_point = None
-        # self.scaled_img     = None
-    
-    def mouseMoveEvent(self, e):
-        s = e.pos() #e.windowPos()
-        x = s.x()
-        y = s.y()
-        self.PosChangeSignal.emit(x , y)
-        
-
-
-def cvimg_to_qtimg(cvimg):
-
-    height, width, depth = cvimg.shape
-    # cvimg = cv2.cvtColor(cvimg, cv2.COLOR_BGR2RGB)
-    cvimg = QImage(cvimg.data, width, height, width * depth, QImage.Format_RGB888)
-
-    return cvimg
-
-
-
-
-class ImageWithMouseControl(QWidget):
+class InstanceLabelTool(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -126,14 +36,17 @@ class ImageWithMouseControl(QWidget):
         self.drawMaskFlag = False
         self.showTmpMask = False
         self.drawByHand = False
-        self.pts_draw_byHand = []
+
+        self.objectId = 0
         
         self.cv_img = None
         self.left_top_point = QPoint(0,0) #只有在缩放和移动的时候才会改变
         self.initUI()
 
         self.right_click = False
+        self.isDoubleClick = False
         print("after init")
+
 
     def initUI(self):
         # left paint area
@@ -153,6 +66,12 @@ class ImageWithMouseControl(QWidget):
         self.loadBtn.setMaximumSize(QSize(50, 50))
         self.loadBtn.clicked.connect(self.loadFile)
         self.loadBtn.setText("打开")
+        self.loadBtn.setStyleSheet('''QPushButton{background:#98FB98;border-radius:5px;}''') #QPushButton:hover{background:yellow;}
+        self.saveBtn = QPushButton()
+        self.saveBtn.setMaximumSize(QSize(50, 50))
+        self.saveBtn.clicked.connect(self.savePolygons)
+        self.saveBtn.setText("保存")
+        self.saveBtn.setStyleSheet('''QPushButton{background:#98FB98;border-radius:5px;}''')
 
         self.spinbox = QSpinBox()
         self.spinbox.setMaximumSize(QSize(50, 20))
@@ -174,8 +93,8 @@ class ImageWithMouseControl(QWidget):
         self.cbShowMask.stateChanged.connect(self.changeDrawMaskFlag)
         self.cbShowMask.setCheckState(Qt.Checked)
 
-        self.cbDrawPolygon = QCheckBox('show_tmp_mask')
-        self.cbDrawPolygon.stateChanged.connect(self.show_tmp_mask)
+        self.cbShowTmpMask = QCheckBox('show_tmp_mask')
+        self.cbShowTmpMask.stateChanged.connect(self.show_tmp_mask)
         # self.cbFlag.setCheckState(Qt.Checked)
 
         self.cbDrawPolygon = QCheckBox('draw by hand')
@@ -189,13 +108,16 @@ class ImageWithMouseControl(QWidget):
         frame = QFrame(spliter2)
         layoutRight = QGridLayout(frame)
         layoutRight.addWidget(self.loadBtn, 1, 0)
-        layoutRight.addWidget(self.spinbox, 3, 0)
+        
+        layoutRight.addWidget(self.spinbox, 2, 0)
         # layoutRight.addWidget(self.sld, 4, 0)
-        layoutRight.addWidget(self.cbFlag, 5, 0)
-        layoutRight.addWidget(self.cbShowMask, 6, 0)
-        layoutRight.addWidget(self.cbDrawPolygon, 7, 0)
-        layoutRight.addWidget(self.posInfoLabel,8, 0)
-        layoutRight.addWidget(self.pixInfoLabel,9,0)
+        layoutRight.addWidget(self.cbFlag, 3, 0)
+        layoutRight.addWidget(self.cbShowMask, 4, 0)
+        layoutRight.addWidget(self.cbDrawPolygon, 5, 0)
+        layoutRight.addWidget(self.cbShowTmpMask, 6, 0)  
+        layoutRight.addWidget(self.posInfoLabel,7, 0)
+        layoutRight.addWidget(self.pixInfoLabel,8,0)
+        layoutRight.addWidget(self.saveBtn, 9, 0)
         
 
         fullLayout = QGridLayout(self)
@@ -206,15 +128,14 @@ class ImageWithMouseControl(QWidget):
         # self.setWindowTitle('Image with mouse control')
 
     def loadFile(self):
-        print("before load file")
 
-        print("before QFileDialog")
         # load qpixmap
         fname, ret = QFileDialog.getOpenFileName(self, '选择图片', 'c:\\', 'Image files(*.jpg *.gif *.png)')
         if fname == "":
             print("no valid image")
             return
-        print("after QFileDialog")
+
+        self.fname = fname
 
         self.qImg = QPixmap(fname)
         self.scaled_img = self.qImg#.scaled(self.qImg.size())
@@ -237,12 +158,8 @@ class ImageWithMouseControl(QWidget):
         self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
         self.repaint()
 
-        print("after load file")
-    
     def changeFloodfillArgv(self, v):
-        
         # self.spinbox.setValue(v)
-        print("circle")
         self.floodFillthread = v
     
     def changeFlag(self, e):
@@ -272,6 +189,11 @@ class ImageWithMouseControl(QWidget):
             self.drawByHand = True
         else:
             self.drawByHand = False
+    
+    def savePolygons(self, e):
+        savePolygons2Json(self.fname, self.polygons_stack)
+
+
         
 
     def mouseMoveEvent(self, e):  # 重写移动事件
@@ -309,8 +231,29 @@ class ImageWithMouseControl(QWidget):
             validRegion, ptLocxy = self.getPtMapInImg(QPoint(self.mousePos.x(), self.mousePos.y()))
             if validRegion is True:
                 if self.drawByHand is True:
+                    
                     # draw poly by hand
-                    self.pts_draw_byHand.append(ptLocxy)
+                    curObjectIdx = self.findPolygonByID(self.objectId)
+                    objectId = self.objectId
+                    if curObjectIdx > 0:
+                        # pass
+                        self.polygons_stack[curObjectIdx].addPoint(ptLocxy)
+                        # add operation for undo
+                        drawPolygonOpe = Operation(Operation.drawPolygonByHandType, objectId, ptLocxy)
+                        self.operation_stack.append(drawPolygonOpe)
+                        self.operation_undo_stack.clear()
+                    else:
+                        # create a new poly
+                        #双击的时候 object id 才增加
+                        polygon = Polygon(np.array([[ptLocxy]]), objectId)
+                        self.polygons_stack.append(polygon)#将当前polygon加入到list中
+                        self.polygons_undo_stack.clear()
+                        # add operation for undo
+                        insertPolygonOpe = Operation(Operation.insertPolygonType, objectId, ptLocxy)
+                        self.operation_stack.append(insertPolygonOpe)
+                        self.operation_undo_stack.clear()
+
+                    # self.pts_draw_byHand.append(ptLocxy)
                     self.drawPolygonsOnCv()
                 else:
                     getflag, polygon = self.floodFillOnce(ptLocxy)#得到当前的polygon
@@ -327,7 +270,17 @@ class ImageWithMouseControl(QWidget):
             self.right_click = True
   
         # print("after mousePressEvent")
-    
+
+
+    def mouseDoubleClickEvent(self,e):
+        self.objectId += 1
+        print("双击")
+
+    def mouseDoubieCiickEvent(self, event):
+#        if event.buttons () == QtCore.Qt.LeftButton:                           # 左键按下
+#            self.setText ("双击鼠标左键的功能: 自己定义")
+        # self.setText ("鼠标双击事件: 自己定义")
+        print("double")
 
     def floodFillOnce(self, ptLocxy):
         '''
@@ -363,17 +316,21 @@ class ImageWithMouseControl(QWidget):
         
         if self.showTmpMask is True:            
             cv2.imshow("mask_rgb", mask)
+            cv2.imshow("last_mask", self.last_mask)
             cv2.waitKey()
 
         self.scaled_img_mask = mask
 
         getflag, polygon = getOnePolygon(mask, ptLocxy)
         if getflag is True:
-            return True, Polygon(polygon, len(self.polygons_stack))
+            objectId = self.objectId
+            self.objectId += 1
+            return True, Polygon(polygon, objectId)#, len(self.polygons_stack)
         else:
             return False, None
         # else:
         #     return False, None
+        
 
     def drawPolygonsOnCv(self):
         if self.cv_img is None:
@@ -382,20 +339,17 @@ class ImageWithMouseControl(QWidget):
         alpha = 0.7
         beta = 1-alpha
         gamma = 0
-
         # scaled_img_last_mask
-
-
+        self.last_mask = np.zeros([self.ori_img_wh[1]+2, self.ori_img_wh[0]+2], np.uint8)
         if self.drawMaskFlag is True and len(self.polygons_stack) > 0:
             
-            self.last_mask = np.zeros([self.ori_img_wh[1]+2, self.ori_img_wh[0]+2], np.uint8)
             dst = np.ones(self.cv_img.shape, dtype=np.uint8)
 
-
             for polygon in self.polygons_stack[::-1]:
-                # print("draw polygon area:{}".format(polygon.area))
-                cv2.drawContours(dst, [polygon.contour], -1, polygon.fillColor, cv2.FILLED)# -1表示全画 (255, 0, 0)
-                cv2.drawContours(self.last_mask, [polygon.contour], -1, 255, cv2.FILLED)# -1表示全画 (255, 0, 0)
+                if len(polygon.contour) >= 3:
+                    # print("draw polygon area:{}".format(polygon.area))
+                    cv2.drawContours(dst, [polygon.contour], -1, polygon.fillColor, cv2.FILLED)# -1表示全画 (255, 0, 0)
+                    cv2.drawContours(self.last_mask, [polygon.contour], -1, 255, cv2.FILLED)# -1表示全画 (255, 0, 0)
             
             # if len(self.polygons) >= 2:
             #     mergePoly(self.ori_img_wh, self.polygons[0].contour, self.polygons[1].contour)
@@ -407,20 +361,15 @@ class ImageWithMouseControl(QWidget):
         else:
             scaled_Pixmap   = self.scaled_img
         
-
-
-        # print(self.pts_draw_byHand)
-        # self.draw
-        # if len(self.pts_draw_byHand) == 1:
-        #     pass
-        # elif len(self.pts_draw_byHand) == 2:
-        #     pass
-        # elif len(self.pts_draw_byHand) >= 3:
-        #     pass
-        
         self.paintArea.set_pos_and_img(self.left_top_point, scaled_Pixmap)
         self.repaint()
+    
 
+    def findPolygonByID(self, id):
+        for idx, polygon in enumerate(self.polygons_stack):
+            if id == polygon.id:
+                return idx
+        return -1
 
     def mouseReleaseEvent(self, e):
         # print("before mouseReleaseEvent")
@@ -492,6 +441,7 @@ class ImageWithMouseControl(QWidget):
         text = "x: {0},  y: {1}".format(x, y)
         self.mousePos = QPoint(x, y)
         self.posInfoLabel.setText(text)
+        self.posInfoLabel.adjustSize()
 
         if self.cv_img is not None:
             flag, ptLocxy = self.getPtMapInImg(QPoint(x, y))
@@ -545,7 +495,8 @@ class ImageWithMouseControl(QWidget):
                         polygon = self.polygons_stack.pop()
                         self.polygons_undo_stack.append(polygon)
                     elif last_operation.operateType == Operation.drawPolygonByHandType:
-                        point = self.polygons_stack[-1].contour.pop()
+                        self.polygons_stack[-1].removeLastPoint()
+                        # self.operation_undo_stack.append(last_operation)
                         # self.polygons_undo_stack.append(polygon)
                     elif last_operation.operateType == Operation.mergePolygonsType:
                         pass
@@ -553,7 +504,7 @@ class ImageWithMouseControl(QWidget):
                 
             elif event.key() == Qt.Key_Y:
                 
-                if len(self.polygons_undo_stack) > 0:
+                if len(self.operation_undo_stack) > 0:
                     # redo
                     # polygon = self.polygons_undo_stack.pop()
                     # self.polygons_stack.append(polygon)
@@ -563,14 +514,27 @@ class ImageWithMouseControl(QWidget):
                         polygon = self.polygons_undo_stack.pop()
                         self.polygons_stack.append(polygon)
                     elif last_operation.operateType == Operation.drawPolygonByHandType:
-                        self.polygons_stack[-1].contour.append(last_operation.relatePosxy)  
+                        # self.polygons_stack[-1].contour.append(last_operation.relatePosxy)  
+                        self.polygons_stack[-1].addPoint([[last_operation.relatePos]])
                         # self.polygons_undo_stack.append(polygon)
                     elif last_operation.operateType == Operation.mergePolygonsType:
                         pass
                     self.operation_stack.append(last_operation)
 
-            
+            print("self.polygons_stack", len(self.polygons_stack))
             self.drawPolygonsOnCv()
+        
+        # elif enter 键 则形成polygon
+
+
+
+class Main(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.widget = InstanceLabelTool(self)
+        self.widget.setGeometry(10, 10, 1200, 1200)
+        self.setWindowTitle('Image with mouse control')
+
 
 
 

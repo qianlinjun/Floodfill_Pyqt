@@ -117,3 +117,10 @@ dist = nx.graph_edit_distance(G, H) #, node_subst_cost=lambda x,y:1
 print("G H dist:", dist)
 dist = nx.graph_edit_distance(G, K)
 print("G K dist:", dist)
+
+
+
+# 两个地物是否是同一个类别
+# node edit cost
+# 山体 水 平原 森林 房屋
+# 同一个类别计算相似度

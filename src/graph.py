@@ -22,7 +22,7 @@ class SceneNode(object):
         self.area    = area
 
     def compute_dist(self, node):
-        return math.sqrt(self.posXY[1] - node.posXY[1] , node.posXY[0] - self.posXY[0])
+        return math.sqrt(math.pow(self.posXY[1] - node.posXY[1],2) + math.pow(node.posXY[0] - self.posXY[0], 2) )
 
 
     def compute_angle(self, node):
@@ -47,7 +47,7 @@ class SceneGraph(object):
     def __init__(self):
         pass
 
-    def buildGraphFromJson(self, json_file, visualise = False):
+    def buildGraphFromJson(self, json_file, visualize = False):
         # 两个地物是否是同一个类别
         # node edit cost
         # 山体 水 平原 森林 房屋
@@ -70,21 +70,54 @@ class SceneGraph(object):
                 area_1    = other_polygon["area"]
                 momente_1 = other_polygon["momente"]
                 scene_node_1 = SceneNode(id_1, contour_1, momente_1, area_1)
-                angle = scene_node.compute_angle(scene_node_1)
-                print("angle:{}".format(angle/3.1415926*180))
-                scene_graph.add_edge(id_, id_1)
+                angle        = scene_node.compute_angle(scene_node_1)
+                dist         = scene_node.compute_dist(scene_node_1)
+
+                # print("{} -> {} angle:{}".format(id_, id_1, angle/3.1415926*180))
+                scene_graph.add_edge(id_, id_1, name='{} -> {}'.format(id_, id_1), angle=angle, dist=dist)
         
         # [1] add global nodes
         # scene_graph.add_node("g", contour = contour, area=1024*1024, momente=momente)
 
-        if visualise is True:
-            nx.draw(scene_graph, with_labels=True)                               #绘制网络G
+        if visualize is True:
+            pos = nx.spring_layout(scene_graph)
+            # nx.draw(G, pos)
+            nx.draw(scene_graph, pos, with_labels=True)#with_labels=True)                               #绘制网络G
+            # node_labels = nx.get_node_attributes(G, 'desc')
+            # nx.draw_networkx_labels(G, pos, labels=node_labels)
+            edge_labels = nx.get_edge_attributes(scene_graph, 'name')
+            nx.draw_networkx_edge_labels(scene_graph, pos, edge_labels=edge_labels)
+            
             plt.savefig("ba.png")           #输出方式1: 将图像存为一个png格式的图片文件
             plt.show()   
 
 
 
-if __name__ == "__main__":    
-    scene_graph = SceneGraph()
-    img1_res = "C:\qianlinjun\graduate\gen_dem\output\8.59262657_46.899601.json"
-    scene_graph.buildGraphFromJson(img1_res, True)
+
+def loadGraphsFromJson(save_path):
+    scene_graphs = []
+    for json_file in os.path.listdir(save_path):
+        json_path = os.path.join(save_path, json_file)
+        scene_graph = SceneGraph()
+        # img1_res = "C:\qianlinjun\graduate\gen_dem\output\8.59262657_46.899601.json"
+        scene_graph.buildGraphFromJson(json_path, visualize=True)
+        scene_graphs.append(scene_graphs)
+    
+    return scene_graphs
+
+
+def graph_index(query_G, scene_graphs):
+    minimum_cost = 100000000000
+    result_G = None
+    for scene_G in scene_graphs:
+        dist = nx.graph_edit_distance(query_G, scene_G)
+        if minimum_cost > dist:
+            minimum_cost = dist
+            result_G     = scene_G
+
+    print("search result:{}".format(minimum_cost))
+
+
+if __name__ == "__main__":
+    save_path = "C:\qianlinjun\graduate\gen_dem\output"
+    scene_graphs = loadGraphsFromJson(save_path)

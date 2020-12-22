@@ -60,7 +60,7 @@ class Polygon(object):
         cx = int(M['m10']/M['m00'])
         cy = int(M['m01']/M['m00'])
         # cv2.circle(dst, (cx, cy), 2, (0, 0, 255), -1)   # 绘制圆点
-        return [cx,cy]
+        return (cx,cy)
 
 
 
@@ -348,7 +348,7 @@ def savePolygons2Json(img_name, polygons_list):
         print("invalid for image:{}".format(img_name))
         return
 
-    save_file_path = os.path.join("./", img_name[:-4] + ".json") 
+    save_file_path = img_name[:-4] + ".json" #os.path.join("./", img_name[:-4] + ".json") 
     print("save to {}".format(save_file_path))
     with open(save_file_path, "w") as save_f:
         list_2_save = []
@@ -371,6 +371,28 @@ def savePolygons2Json(img_name, polygons_list):
             json.dump(list_2_save, save_f, ensure_ascii=False)
             # save_f.write(data_2_save.encode('utf-8'))
 
+
+def loadPolygonFromJson(json_path):
+    polygons = []
+    max_objectId = -1
+
+    if os.path.exists(json_path) is False:
+        return max_objectId, polygons
+    
+    try:
+        polygons_list = json.load(open(json_path,'r'))
+    except Exception as e:
+        print("load json file with error: {}".format(e))
+
+    # [1] add all nodes from image
+    for idx, object_ in enumerate(polygons_list):
+        id_     = object_["id"]
+        if id_ > max_objectId:
+            max_objectId = id_
+        contour = np.array(object_["contour"])
+        polygons.append(Polygon(contour, id_, ))
+    
+    return max_objectId, polygons
 
 
 

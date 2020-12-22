@@ -8,7 +8,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from utils import Polygon, PaintArea, getOnePolygon, mergePoly, Operation, savePolygons2Json, cvimg_to_qtimg
+from utils import Polygon, PaintArea, getOnePolygon, mergePoly, Operation, \
+                  cvimg_to_qtimg, savePolygons2Json, loadPolygonFromJson
 
 # f_handler=open('C:\qianlinjun\graduate\gen_dem\output\out.log', 'w')
 # sys.stdout=f_handler
@@ -30,14 +31,14 @@ class InstanceLabelTool(QWidget):
         self.operation_undo_stack = []
 
         # value
-        self.fname = None
-        self.floodFillthread = 10
-        # self.floodFillDowner = 5
+        self.fname = None #图片路径
+        # 4连通 填充颜色 FLOODFILL_FIXED_RANGE 为true 则填充和种子点像素相差floodFillthread 的点, 为false 则相邻点像素相差thread个值就填充
         self.floodfillFlags = 4|(252<<8)|cv2.FLOODFILL_FIXED_RANGE | cv2.FLOODFILL_MASK_ONLY
-        self.showMaskFlag = False
-        self.showTmpMask = False
-        self.drawByHand = False
-        self.handDrawing = False
+        self.floodFillthread = 10 #
+        self.showMaskFlag = False #是否显示mask
+        self.showTmpMask = False  #展示中间结果
+        self.drawByHand = False   #手绘标志
+        self.handDrawing = False  #标记手绘是否结束
 
         self.objectId = -1
         
@@ -148,6 +149,8 @@ class InstanceLabelTool(QWidget):
             return
 
         self.fname = fname
+        print("fname:{}".format(fname))
+
 
         self.qImg = QPixmap(fname)
         self.scaled_img = self.qImg#.scaled(self.qImg.size())
@@ -167,8 +170,17 @@ class InstanceLabelTool(QWidget):
         self.polygons_stack.clear()
         self.polygons_undo_stack.clear()
 
-        self.paintArea.set_pos_and_img(self.left_top_point, self.scaled_img)
-        self.repaint()
+        # if save file is exit then load it
+        json_file_path = fname[:-4] + ".json"
+        max_objectId, restore_polygons = loadPolygonFromJson(json_file_path) 
+        if max_objectId >= 0:
+            self.polygons_stack = restore_polygons
+            self.objectId = max_objectId
+        
+        self.cbDrawPolygon.setCheckState(Qt.Unchecked)#取消手动绘制
+        self.drawPolygonsOnCv()
+
+
 
     def switchFloodfillThread(self, v):
         # self.spinbox.setValue(v)
@@ -229,7 +241,6 @@ class InstanceLabelTool(QWidget):
         # print("after movement")
 
 
-
     def mousePressEvent(self, e):
         '''
         点击产生漫水填充算法
@@ -248,24 +259,25 @@ class InstanceLabelTool(QWidget):
             if validRegion is True:
                 if self.drawByHand is True:
                     # draw poly by hand
-                    curObjectIdx = self.findPolygonByID(self.objectId + 1)
-                    print("curObjectid:{}".format(curObjectIdx))
-                    objectId = self.objectId + 1
-                    if curObjectIdx >= 0:
+                    curObject_Id = self.objectId + 1
+                    curObject_Pos_In_stack = self.findPolygonByID(curObject_Id)
+                    print("curObjectid:{}".format(curObject_Pos_In_stack))
+                    
+                    if curObject_Pos_In_stack >= 0:
                         # pass
-                        self.polygons_stack[curObjectIdx].addPoint(ptLocxy)
+                        self.polygons_stack[curObject_Pos_In_stack].addPoint(ptLocxy)
                         # add operation for undo
-                        drawPolygonOpe = Operation(Operation.drawPolygonByHandType, objectId, ptLocxy)
+                        drawPolygonOpe = Operation(Operation.drawPolygonByHandType, curObject_Id, ptLocxy)
                         self.operation_stack.append(drawPolygonOpe)
                         self.operation_undo_stack.clear()
                     else:
                         # create a new poly
                         #双击的时候 object id 才增加
-                        polygon = Polygon(np.array([[ptLocxy]]), objectId)
+                        polygon = Polygon(np.array([[ptLocxy]]), curObject_Id)
                         self.polygons_stack.append(polygon)#将当前polygon加入到list中
                         self.polygons_undo_stack.clear()
                         # add operation for undo
-                        insertPolygonOpe = Operation(Operation.insertPolygonType, objectId, ptLocxy)
+                        insertPolygonOpe = Operation(Operation.insertPolygonType, curObject_Id, ptLocxy)
                         self.operation_stack.append(insertPolygonOpe)
                         self.operation_undo_stack.clear()
                         self.handDrawing = True
@@ -303,7 +315,7 @@ class InstanceLabelTool(QWidget):
         if self.drawByHand is True and len(self.polygons_stack[curObjectIdx].contour) > 0:
             self.objectId += 1
             self.handDrawing = False
-            print("双击")
+
 
     def mouseDoubieCiickEvent(self, event):
 #        if event.buttons () == QtCore.Qt.LeftButton:                           # 左键按下
@@ -378,6 +390,9 @@ class InstanceLabelTool(QWidget):
                     # print("draw polygon area:{}".format(polygon.area))
                     cv2.drawContours(dst, [polygon.contour], -1, polygon.fillColor, cv2.FILLED)# -1表示全画 (255, 0, 0)
                     cv2.drawContours(self.last_mask, [polygon.contour], -1, 255, cv2.FILLED)# -1表示全画 (255, 0, 0)
+                    font = cv2.FONT_HERSHEY_SIMPLEX
+                    imgzi = cv2.putText(dst, str(polygon.id), polygon.getMoments(), font, 1.2, (255, 255, 255), 2)
+                    # cv2.circle(dst, polygon.getMoments(), 5, polygon.fillColor, -1)   # 绘制圆点
                 elif len(polygon.contour) == 1:
                     cx = polygon.contour[0][0][0]
                     cy = polygon.contour[0][0][1]

@@ -71,7 +71,7 @@ class PaintArea(QWidget):
         super(PaintArea,self).__init__()
         self.left_top_point = None
         self.wait_paint_img     = None
-        self.setMinimumSize(800,800)
+        self.setMinimumSize(2000,800)
         
 
         self.setMouseTracking(True)#get mouse in real time
@@ -494,3 +494,15 @@ class Operation(object):
 
 # plt.show()
 
+
+def TestContourValid(contour):
+    
+    img_zero = np.zeros((2000, 2000, 3), dtype=np.uint8)
+    cv2.drawContours(img_zero, [contour], -1, (255, 255, 255), cv2.FILLED)#1)
+
+    cv2.imshow('contour', img_zero)
+    cv2.waitKey()
+
+if __name__ == "__main__":
+    global_contour = np.array([[[0,0]],[[0,1024]],[[1024,1024]],[[1024,0]]])
+    TestContourValid(global_contour)

@@ -114,18 +114,10 @@ K.add_edges_from([("a","b")])#, ("a","c")
 # plt.savefig("ba.png")           #输出方式1: 将图像存为一个png格式的图片文件
 # plt.show()
 
-dist = nx.graph_edit_distance(G, H) #, node_subst_cost=lambda x,y:1
+dist = nx.graph_edit_distance(G, H, node_subst_cost=lambda x,y:1) #, node_subst_cost=lambda x,y:1
 print("G H dist:", dist)
 dist = nx.graph_edit_distance(G, K)
 print("G K dist:", dist)
 
 
 
-# 两个地物是否是同一个类别
-# node edit cost
-# 山体 水 平原 森林 房屋
-# 同一个类别计算相似度
-
-img1_res = "C:\qianlinjun\graduate\gen_dem\output\8.59262657_46.899601.json"
-a_json = json.load(open(img1_res,'r'))
-print(a_json)

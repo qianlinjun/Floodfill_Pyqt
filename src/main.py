@@ -155,16 +155,17 @@ class InstanceLabelTool(QWidget):
         self.qImg = QPixmap(fname)
         self.scaled_img = self.qImg#.scaled(self.qImg.size())
         # resize paint area
-        self.paintArea.setMinimumSize(self.qImg.width(), self.qImg.height())
+        # self.paintArea.setMinimumSize(self.qImg.width(), self.qImg.height())
         
         # cv image to flood fill
         self.cv_img = cv2.imread(fname)
-        self.ori_img_wh = self.cv_img.shape
+        self.ori_img_hwc = self.cv_img.shape # h w c
         gray2 = cv2.cvtColor(self.cv_img, cv2.COLOR_BGR2RGB)       
         self.gray  = cv2.cvtColor(gray2, cv2.COLOR_RGB2GRAY)
         self.copyImg = self.gray.copy()
 
-        self.cur_mask = np.zeros([self.ori_img_wh[1]+2, self.ori_img_wh[0]+2], np.uint8)
+        # self.ori_img_hwc[0]
+        self.cur_mask = np.zeros([self.ori_img_hwc[0]+2, self.ori_img_hwc[1]+2], np.uint8)
         self.last_mask = self.cur_mask.copy()
 
         self.polygons_stack.clear()
@@ -333,7 +334,7 @@ class InstanceLabelTool(QWidget):
 
         # copyImg = self.gray.copy()
         # h, w = self.gray.shape[:2]
-        mask = np.zeros([self.ori_img_wh[1] + 2, self.ori_img_wh[0] + 2], np.uint8)
+        mask = np.zeros([self.ori_img_hwc[0] + 2, self.ori_img_hwc[1] + 2], np.uint8)
         
         # mask_fill = 175#252 #mask的填充值
         #floodFill充值标志
@@ -342,6 +343,7 @@ class InstanceLabelTool(QWidget):
         # mask 需要填充的位置设置为0
         # self.last_mask = self.cur_mask
         self.cur_mask = self.last_mask.copy()
+        # print("cur_mask {}".format(self.cur_mask.shape()))
         # self.cur_mask
         cv2.floodFill(self.copyImg, self.cur_mask, ptLocxy, 255, self.floodFillthread, self.floodFillthread, self.floodfillFlags)  #(836, 459) , cv2.FLOODFILL_FIXED_RANGE
         # cv2.imwrite("C:\qianlinjun\graduate\gen_dem\output\mask.png", mask)
@@ -349,7 +351,7 @@ class InstanceLabelTool(QWidget):
         # print(self.cur_mask.sum() , self.last_mask.sum())
         mask = self.cur_mask - self.last_mask
         # mask = np.vstack( (copyImg[:,:,np.newaxis], np.zeros([h, w, 2], np.uint8) ))
-        mask = cv2.resize(mask, (self.ori_img_wh[1], self.ori_img_wh[0]))
+        mask = cv2.resize(mask, (self.ori_img_hwc[0], self.ori_img_hwc[1]))
         
         # mask_rgb = np.concatenate((np.ones([h, w, 2], dtype=np.uint8),  mask[:,:,np.newaxis].astype(np.uint8) ), axis=-1)
         # mask_rgb[mask == 0] = [255,255,255]#[127,127,127]
@@ -380,10 +382,10 @@ class InstanceLabelTool(QWidget):
         beta = 1-alpha
         gamma = 0
         # scaled_img_last_mask
-        self.last_mask = np.zeros([self.ori_img_wh[1]+2, self.ori_img_wh[0]+2], np.uint8)
+        self.last_mask = np.zeros([self.ori_img_hwc[0]+2, self.ori_img_hwc[1]+2], np.uint8)
         if self.drawMaskFlag is True and len(self.polygons_stack) > 0:
             
-            dst = np.ones(self.cv_img.shape, dtype=np.uint8)
+            dst = np.ones(self.cv_img.shape, dtype=np.uint8)*255
 
             for polygon in self.polygons_stack[::-1]:
                 if len(polygon.contour) >= 3:
@@ -391,7 +393,7 @@ class InstanceLabelTool(QWidget):
                     cv2.drawContours(dst, [polygon.contour], -1, polygon.fillColor, cv2.FILLED)# -1表示全画 (255, 0, 0)
                     cv2.drawContours(self.last_mask, [polygon.contour], -1, 255, cv2.FILLED)# -1表示全画 (255, 0, 0)
                     font = cv2.FONT_HERSHEY_SIMPLEX
-                    imgzi = cv2.putText(dst, str(polygon.id), polygon.getMoments(), font, 1.2, (255, 255, 255), 2)
+                    cv2.putText(dst, str(polygon.id), polygon.getMoments(), font, 1.2, (0, 0, 0), 2)
                     # cv2.circle(dst, polygon.getMoments(), 5, polygon.fillColor, -1)   # 绘制圆点
                 elif len(polygon.contour) == 1:
                     cx = polygon.contour[0][0][0]
@@ -456,19 +458,19 @@ class InstanceLabelTool(QWidget):
         if e.angleDelta().y() < 0:
             # 放大图片
             self.scaled_img = self.qImg.scaled(self.scaled_img.width()-15, self.scaled_img.height()-15)
-            new_w = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() + 5)
-            new_h = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() + 5)
+            new_left = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() + 5)
+            new_top = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() + 5)
             # print(new_w, new_h)
-            self.left_top_point = QPoint(new_w, new_h)
+            self.left_top_point = QPoint(new_left, new_top)
 
             # self.drawPolygonsOnCv()
 
         elif e.angleDelta().y() > 0:
             # 缩小图片
             self.scaled_img = self.qImg.scaled(self.scaled_img.width()+15, self.scaled_img.height()+15)
-            new_w = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() - 5)
-            new_h = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() - 5)
-            self.left_top_point = QPoint(new_w, new_h)
+            new_left = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() - 5)
+            new_top = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() - 5)
+            self.left_top_point = QPoint(new_left, new_top)
 
         
         self.drawPolygonsOnCv()
@@ -522,9 +524,10 @@ class InstanceLabelTool(QWidget):
             
             if relat_pos.x() > 0 and relat_pos.x() < self.scaled_img.width() and relat_pos.y() > 0 and relat_pos.y() < self.scaled_img.height():
                 # 得到鼠标点击位置在原始图片上的位置 作为漫水填充算法种子点
-                point_map2_img_x = int(relat_pos.x()*1.0 / self.scaled_img.width() *  self.ori_img_wh[0])
-                point_map2_img_y = int(relat_pos.y()*1.0 / self.scaled_img.height() *  self.ori_img_wh[1] )
-                # print(curPos, (self.left_top_point.x(), self.left_top_point.y()), (point_map2_img_x, point_map2_img_y))
+                point_map2_img_x = int(relat_pos.x()*1.0 / self.scaled_img.width() *  self.ori_img_hwc[1])
+                point_map2_img_y = int(relat_pos.y()*1.0 / self.scaled_img.height() *  self.ori_img_hwc[0] )
+                print("self.scaled_img.width() {}   self.ori_img_hwc[1] {}".format(self.scaled_img.width(), self.ori_img_hwc[1]))
+                print("points", curPos, (self.left_top_point.x(), self.left_top_point.y()), (point_map2_img_x, point_map2_img_y))
                 # print("after getPtMapInImg")
                 return True, (point_map2_img_x, point_map2_img_y)
             else:

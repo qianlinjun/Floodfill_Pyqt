@@ -17,8 +17,9 @@ def compute_angle(G_node1, G_node2):
         return math.atan2(G_node2.posXY[1] - G_node1.posXY[1] , G_node1.posXY[0] - G_node2.posXY[0])
 
 class SceneNode(object):
-    def __init__(self, id, contour, pos, area):
+    def __init__(self, id, contour, pos, area, nodeType=None):
         self.id      = id
+        self.type    = nodeType
         self.contour = contour
         self.posXY   = pos
         self.area    = area
@@ -67,7 +68,7 @@ def DrawGraph(graph, node_color=None):
 #     def __init__(self):
 #         pass
 
-def buildGraphFromJson(json_file, visualize = False):
+def buildGraphFromJson(json_file):
     # 两个地物是否是同一个类别
     # node edit cost
     # 山体 水 平原 森林 房屋
@@ -84,7 +85,7 @@ def buildGraphFromJson(json_file, visualize = False):
         contour = polygon["contour"]
         area    = polygon["area"]
         momente = polygon["momente"]
-        object_node = SceneNode(id_, contour, momente, area)
+        object_node = SceneNode(id_, contour, momente, area, "object_node")
         scene_graph.add_node(id_, scene_node = object_node )#contour=contour, area=area, momente=momente)
         total_moment_x += momente[0]
         total_moment_y += momente[1]
@@ -107,7 +108,7 @@ def buildGraphFromJson(json_file, visualize = False):
     global_contour = [[[0,0]],[[0,1024]],[[1024,1024]],[[1024,0]]]
     global_moment  = [total_moment_x/len(polygons),total_moment_y/len(polygons)]
     area = img_w * img_h
-    global_node = SceneNode(global_id, global_contour, global_moment, area)
+    global_node = SceneNode(global_id, global_contour, global_moment, area, "global_node")
     scene_graph.add_node(global_id, scene_node = global_node)
     for other_polygon in polygons:
         id_1      = other_polygon["id"]
@@ -120,19 +121,13 @@ def buildGraphFromJson(json_file, visualize = False):
 
         # print("{} -> {} angle:{}".format(id_, id_1, angle/3.1415926*180))
         scene_graph.add_edge(global_id, id_1, name='{} - {}'.format(id_, id_1), angle=angle, dist=dist)
-
-
-    if visualize is True:
-        # color_map = [[255, 0, 51], [0, 255, 255],[0, 255, 0], [255, 0, 255], [0,0,255]]
-        color_map = ["pink", "Magenta", "green", "cyan", "orange"]
-        DrawGraph(scene_graph, node_color = color_map)
     
     return scene_graph
 
 
 
 
-def loadGraphsFromJson(save_path, test_name=None):
+def loadGraphsFromJson(save_path, test_name=None, visualize=False):
     scene_graphs = []
     for json_file in os.listdir(save_path):
         if "json" not in json_file:
@@ -143,8 +138,13 @@ def loadGraphsFromJson(save_path, test_name=None):
         json_path = os.path.join(save_path, json_file)
         # scene_graph = SceneGraph()
         # img1_res = "C:\qianlinjun\graduate\gen_dem\output\8.59262657_46.899601.json"
-        scene_graph = buildGraphFromJson(json_path, visualize=True)
+        scene_graph = buildGraphFromJson(json_path)
         scene_graphs.append(scene_graph)
+
+        if visualize is True:
+            # color_map = [[255, 0, 51], [0, 255, 255],[0, 255, 0], [255, 0, 255], [0,0,255]]
+            color_map = ["pink", "Magenta", "green", "cyan", "orange"]
+            DrawGraph(scene_graph, node_color = color_map)
     
     return scene_graphs
 
@@ -159,25 +159,41 @@ def search_graph(query_G, scene_graphs):
     '''
 
     def node_subst_cost(node1, node2):
-        # class cost
-        
-        # dist_cost = node1
+        #global 
+        if node1.type == "global_node" and node2.type == "global_node":
+            return node1.compute_dist(node2)
+        elif node1.type == "global_node" or node2.type == "global_node":
+            return 10000000000000
+        else:
+            cost  = 0
+            if 类别 不一致：
+                cost += 比较大的数
+            
+            # dist
+            dist_cost = node1.compute_dist(node2)
 
-        # angle cost  =lambda x,y:1
-        abs_area = abs(node1["scene_node"].area  - node2["scene_node"].area)
-        print("abs_area: {}".format(abs_area))
-        return abs_area
+            # area
+            abs_area = abs(node1["scene_node"].area  - node2["scene_node"].area)
+            
+            print("abs_area: {}".format(abs_area))
+        
+            return abs_area
     
+    def node_del_cost(node1):
+        return 10000
+
+    def node_ins_cost(node1):
+        return 10000
+    
+
     def edge_subst_cost(edge1, edge2):
         abs_angle = abs(edge1["angle"] - edge2["angle"])/3.1415926 * 180 # 3.14
         abs_dist  = abs(edge1["dist"] - edge2["dist"])
         print("edge cost:{}".format(abs_angle + abs_dist))
         return abs_angle + abs_dist
     
-    def node_del_cost(node1):
-        return 10000
-    def node_ins_cost(node1):
-        return 10000
+
+
     def edge_del_cost(node1):
         return 10000
     def edge_ins_cost(node1):
@@ -207,7 +223,7 @@ def search_graph(query_G, scene_graphs):
 
 if __name__ == "__main__":
     save_path = "C:\qianlinjun\graduate\gen_dem\output\img"
-    scene_graphs = loadGraphsFromJson(save_path, test_name="8.59262657_46.899601")
+    scene_graphs = loadGraphsFromJson(save_path, visualize=True) #"8.59262657_46.899601"
     print(len(scene_graphs))
     if len(scene_graphs) > 2:
         search_graph(scene_graphs[0], scene_graphs[1:])

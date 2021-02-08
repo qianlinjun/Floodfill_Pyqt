@@ -17,9 +17,10 @@ def compute_angle(G_node1, G_node2):
         return math.atan2(G_node2.posXY[1] - G_node1.posXY[1] , G_node1.posXY[0] - G_node2.posXY[0])
 
 class SceneNode(object):
-    def __init__(self, id, contour, pos, area, nodeType=None):
-        self.id      = id
-        self.type    = nodeType
+    def __init__(self, id, contour, pos, area, nodeType=None, objectClass=None):
+        self.id      = id 
+        self.objectClass = objectClass
+        self.nodeType    = nodeType
         self.contour = contour
         self.posXY   = pos
         self.area    = area
@@ -53,13 +54,13 @@ def DrawGraph(graph, node_color=None):
     # node_labels = nx.get_node_attributes(G, 'desc')
     # nx.draw_networkx_labels(G, pos, labels=node_labels)
     edge_labels = nx.get_edge_attributes(graph, 'name')
-    if node_color is not None:
-        nx.draw(graph, pos, with_labels=True, node_color=node_color,  node_size=1000, font_size=20) 
-        nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
+    # if node_color is not None:
+    #     nx.draw(graph, pos, with_labels=True, node_color=node_color,  node_size=1000, font_size=20) 
+    #     nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
         
-    else:
-        nx.draw(graph, pos, with_labels=True)
-        nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
+    # else:
+    nx.draw(graph, pos, with_labels=True)
+    nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
         
     plt.savefig("ba.png")           #输出方式1: 将图像存为一个png格式的图片文件
     plt.show()   
@@ -85,7 +86,7 @@ def buildGraphFromJson(json_file):
         contour = polygon["contour"]
         area    = polygon["area"]
         momente = polygon["momente"]
-        object_node = SceneNode(id_, contour, momente, area, "object_node")
+        object_node = SceneNode(id_, contour, momente, area, nodeType = "object", objectClass = "mountain")
         scene_graph.add_node(id_, scene_node = object_node )#contour=contour, area=area, momente=momente)
         total_moment_x += momente[0]
         total_moment_y += momente[1]
@@ -108,7 +109,7 @@ def buildGraphFromJson(json_file):
     global_contour = [[[0,0]],[[0,1024]],[[1024,1024]],[[1024,0]]]
     global_moment  = [total_moment_x/len(polygons),total_moment_y/len(polygons)]
     area = img_w * img_h
-    global_node = SceneNode(global_id, global_contour, global_moment, area, "global_node")
+    global_node = SceneNode(global_id, global_contour, global_moment, area, nodeType = "global")
     scene_graph.add_node(global_id, scene_node = global_node)
     for other_polygon in polygons:
         id_1      = other_polygon["id"]
@@ -153,36 +154,49 @@ def loadGraphsFromJson(save_path, test_name=None, visualize=False):
 # node edit cost
 # 山体 水 平原 森林 房屋
 # 同一个类别计算相似度
+# 归一化 到同一个尺度
 def search_graph(query_G, scene_graphs):
     '''
     search graph accord minimum edit cost
     '''
 
     def node_subst_cost(node1, node2):
+        node1 = node1["scene_node"]
+        node2 = node2["scene_node"]
+        # print(node1)
         #global 
-        if node1.type == "global_node" and node2.type == "global_node":
+        if node1.nodeType   == "global" and node2.nodeType == "global":
+            # 位置距离
+            # 整体的山脊线 差距
             return node1.compute_dist(node2)
-        elif node1.type == "global_node" or node2.type == "global_node":
+        elif node1.nodeType == "global" or  node2.nodeType == "global":
             return 10000000000000
         else:
-            cost  = 0
-            if 类别 不一致：
-                cost += 比较大的数
+            # 普通节点  
+            # 类别距离
+            class_cost  = 0
+            if node1.objectClass != node2.objectClass :
+                class_cost = 10000000000000 # 10000000000000
             
             # dist
-            dist_cost = node1.compute_dist(node2)
+            # dist_cost = node1.compute_dist(node2)
 
-            # area
-            abs_area = abs(node1["scene_node"].area  - node2["scene_node"].area)
+            # area 像素误差
+            area_cost = abs(node1.area  - node2.area)
             
-            print("abs_area: {}".format(abs_area))
-        
-            return abs_area
+            print("abs_area: {}".format(area_cost))
+
+            #shaply
+
+            #山脊线特征距离
+            skyline_cost = 0
+
+            return class_cost + area_cost + skyline_cost
     
     def node_del_cost(node1):
         return 10000
 
-    def node_ins_cost(node1):
+    def node_ins_cost(node2):
         return 10000
     
 
@@ -193,11 +207,13 @@ def search_graph(query_G, scene_graphs):
         return abs_angle + abs_dist
     
 
-
     def edge_del_cost(node1):
         return 10000
     def edge_ins_cost(node1):
         return 10000
+
+
+
 
 
     minimum_cost = 100000000000
@@ -222,8 +238,13 @@ def search_graph(query_G, scene_graphs):
 
 
 if __name__ == "__main__":
-    save_path = "C:\qianlinjun\graduate\gen_dem\output\img"
-    scene_graphs = loadGraphsFromJson(save_path, visualize=True) #"8.59262657_46.899601"
+    db_pic_w = 800
+    db_pic_h = 800
+    search_pic_w = 800
+    search_pic_h = 800
+    # save_path = "C:\qianlinjun\graduate\gen_dem\output\img"
+    save_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\switz-100-points"
+    scene_graphs = loadGraphsFromJson(save_path, visualize=False) #"8.59262657_46.899601"
     print(len(scene_graphs))
     if len(scene_graphs) > 2:
         search_graph(scene_graphs[0], scene_graphs[1:])

@@ -168,6 +168,7 @@ class InstanceLabelTool(QWidget):
         self.cur_mask = np.zeros([self.ori_img_hwc[0]+2, self.ori_img_hwc[1]+2], np.uint8)
         self.last_mask = self.cur_mask.copy()
 
+        self.objectId = -1
         self.polygons_stack.clear()
         self.polygons_undo_stack.clear()
 
@@ -178,6 +179,7 @@ class InstanceLabelTool(QWidget):
             self.polygons_stack = restore_polygons
             self.objectId = max_objectId
         
+        # self.setWindowTitle(fname)
         self.cbDrawPolygon.setCheckState(Qt.Unchecked)#取消手动绘制
         self.drawPolygonsOnCv()
 
@@ -494,7 +496,10 @@ class InstanceLabelTool(QWidget):
         receive mouse pos change signal 
         '''
         # print("before posChangeCallback")
-        text = "x: {0},  y: {1}".format(x, y)
+        if self.fname is not None:
+            text = "{0} \n x: {1},  y: {2}".format(str(self.fname), x, y)
+        else:
+            text = "x: {0},  y: {1}".format(x, y)
         self.mousePos = QPoint(x, y)
         self.posInfoLabel.setText(text)
         self.posInfoLabel.adjustSize()
@@ -526,8 +531,8 @@ class InstanceLabelTool(QWidget):
                 # 得到鼠标点击位置在原始图片上的位置 作为漫水填充算法种子点
                 point_map2_img_x = int(relat_pos.x()*1.0 / self.scaled_img.width() *  self.ori_img_hwc[1])
                 point_map2_img_y = int(relat_pos.y()*1.0 / self.scaled_img.height() *  self.ori_img_hwc[0] )
-                print("self.scaled_img.width() {}   self.ori_img_hwc[1] {}".format(self.scaled_img.width(), self.ori_img_hwc[1]))
-                print("points", curPos, (self.left_top_point.x(), self.left_top_point.y()), (point_map2_img_x, point_map2_img_y))
+                # print("self.scaled_img.width() {}   self.ori_img_hwc[1] {}".format(self.scaled_img.width(), self.ori_img_hwc[1]))
+                # print("points", curPos, (self.left_top_point.x(), self.left_top_point.y()), (point_map2_img_x, point_map2_img_y))
                 # print("after getPtMapInImg")
                 return True, (point_map2_img_x, point_map2_img_y)
             else:

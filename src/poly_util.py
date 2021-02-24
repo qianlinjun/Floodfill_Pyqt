@@ -7,14 +7,33 @@ from shapely.geometry import Polygon
 
 def get_iou(poly1, poly2):
     '''
+    将两个多边形根据质心对齐
     poly1: 多边形
     poly2: 多边形
 
     '''
+    m1 = cv2.moments(poly1)
+    cx1, cy1=m1['m10'] / m1['m00'], m1['m01'] / m1['m00']
+    print(cx1, cy1)
+
+    m2 = cv2.moments(poly2)
+    cx2, cy2=m2['m10'] / m2['m00'], m2['m01'] / m2['m00']
+    print(cx2, cy2)
+
+    #将poly2 移到 poly2
     polygon1 = Polygon(poly1)
+    polygon1 = polygon1.buffer(0.01) # 加一个较小的buffer
+    # print("old poly1", poly1)
+    # print("old poly2", poly2)
+    poly2[:,0] = poly2[:,0] - (cx2 - cx1)
+    poly2[:,1] = poly2[:,1] - (cy2 - cy1)
+    # print("new poly2", poly2)
+
     polygon2 = Polygon(poly2)
+    polygon2 = polygon2.buffer(0.01)
     inter_area = polygon1.intersection(polygon2).area  #相交面积
     union_area = polygon1.area + polygon2.area - inter_area
+    print("poly1 area {}  poly2 area {} inter area {}".format(polygon1.area , polygon2.area , inter_area))
     return inter_area*1.0/union_area
 
 def hu_moments(poly1, poly2):
@@ -35,8 +54,8 @@ if __name__ ==  "__main__":
 
     json_file1 = os.path.join(filedir, "83_8.58592987_46.6606636.json")#"10_8.51592159_46.602951.json"
     json_file2 = os.path.join(filedir, "83_8.58592987_46.6606636.json")#"11_8.53155708_46.60886.json"
-    point1_id = 8#1#8#0#4#3
-    point2_id = 5#5#2#6#5#0
+    point1_id = 2#8#2#1#8#0#4#3
+    point2_id = 1#11#5#5#2#6#5#0
 
     poly_json1 = json.load(open(json_file1,'r'))
     poly_json2 = json.load(open(json_file2,'r'))
@@ -50,26 +69,75 @@ if __name__ ==  "__main__":
                 id_     = polygon["id"]
                 if id_ == point2_id:
                     poly2 = polygon["contour"]
+                    
     if poly1 is not None and poly2 is not None:
         poly1 = np.array(poly1).squeeze()
         poly2 = np.array(poly2).squeeze()
-        print(cv2.matchShapes(poly1, poly2,  2, 0.0))
-        # hu = cv2.HuMoments( m ) hu 表示返回的Hu 矩阵，参数m 是cv2.moments() 
-        m = cv2.moments(poly1) # m原始 mu 中心化 nu 归一化
-        print(m["nu02"], m["nu20"])
-        m = cv2.moments(poly2) # m原始 mu 中心化 nu 归一化
-        print(m["nu02"], m["nu20"])
-        mu11 = m["nu11"]
-        mu02 = m["nu02"]
-        mu20 = m["nu20"]
-        angle = arctan(2*mu11/(mu20 - mu02))
 
-        # print(cv2.HuMoments( m ))
-        # m = cv2.moments(poly2)
-        print(cv2.HuMoments( m ))
+        iou = get_iou(poly1, poly2)
+        print(iou)
+        exit(0)
+        
+        # hu = cv2.HuMoments( m ) hu 表示返回的Hu 矩阵，参数m 是cv2.moments() 
+        m1 = cv2.moments(poly1) # m原始 mu 中心化 nu 归一化
+        hu1 = cv2.HuMoments( m1 )
+        # print(hu1)
+
+        # print(m1["nu02"], m1["nu20"])
+        # m = cv2.moments(poly2) # m原始 mu 中心化 nu 归一化
+        # print(m["nu02"], m["nu20"])
+        mu11 = m1["nu11"]
+        mu02 = m1["nu02"]
+        mu20 = m1["nu20"]
+        angle1 = math.atan(2*mu11/(mu20 - mu02))/2.*180/3.1415926
+        print("poly1 angle", angle1) #*180/3.1415926
+
+
+        m2 = cv2.moments(poly2)
+        hu2 = cv2.HuMoments( m2 )
+        mu11 = m2["nu11"]
+        mu02 = m2["nu02"]
+        mu20 = m2["nu20"]
+        angle2 = math.atan(2*mu11/(mu20 - mu02))/2.*180/3.1415926
+        print("poly2 angle", angle2) #*180/3.1415926
+
+        # print(hu2)
+        dis = 0
+
+        # if( ama > eps && amb > eps )
+        #     {
+        #         ama = sma * log10( ama );
+        #         amb = smb * log10( amb );
+        #         result += fabs( -ama + amb );
+        #     }
+        eps = 1e-5
+        idx = 0
+        for hu1_m, hu2_m in zip(hu1, hu2):
+            if idx == 4:
+                break
+            idx += 1
+            # print(hu1_m, hu2_m)
+            if abs(hu1_m) > eps and  abs(hu2_m) > eps:
+                # angle1 *  angle2 *
+                dis += abs(  angle2 *np.sign(hu2_m)*math.log10(abs(hu2_m)) -  angle1 *np.sign(hu1_m)*math.log10(abs(hu1_m)) )
+                # dis += abs(  hu2_m -  hu1_m )
+        
+        print("matchShapes", cv2.matchShapes(poly1, poly2,  1, 0.0))
+        print("hand dis", dis)
+    
     elif poly1 is None:
         print("poly1 is None")
     elif poly2 is None:
         print("poly2 is None")
 
+
+
+
+# 普通矩：
+# 0阶矩（m00）:目标区域的质量 
+# 1阶矩（m01,m10）：目标区域的质心 
+# 2阶矩（m02,m11,m20）：目标区域的旋转半径 
+# 3阶矩（m03,m12,m21,m30）：目标区域的方位和斜度，反应目标的扭曲
+
+# 质心对准之后计算iou
 

@@ -1,0 +1,1840 @@
+
+
+-----------------------------------------
+
+2 2
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 2.233090625
+iou_2:5604.619607843133
+2 2 matchShapes 2.553596657606469
+2 2 hand dis 494.05697077255934 
+hu_feature [12.57849454]
+
+
+2 3
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 9544.0 inter area 2911.0905961329954
+255 1 2.233090625
+iou_2:5604.619607843133
+2 3 matchShapes 5.461097727818117
+2 3 hand dis 44.259703250367764 
+hu_feature [11.58606633]
+
+
+2 4
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 2881.0 inter area 2477.7269419172467
+255 1 2.05489375
+iou_2:5157.380392156859
+2 4 matchShapes 2.3392468152537074
+2 4 hand dis 2.780963707837002 
+hu_feature [12.53744053]
+
+
+2 6
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 36001.0 inter area 2682.351738271423
+255 1 2.1382375
+iou_2:5366.556862745094
+2 6 matchShapes 3.964923728774167
+2 6 hand dis 282.1716296891183 
+hu_feature [14.16311744]
+
+
+2 10
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 1339.0 inter area 1014.6137026940892
+255 1 1.44846875
+iou_2:3635.372549019603
+2 10 matchShapes 2.3573890970894635
+2 10 hand dis 12.358996549235496 
+hu_feature [8.56532513]
+
+
+4 2
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 77388.0 inter area 8645.429969732442
+255 1 4.57505
+iou_2:11482.478431372547
+4 2 matchShapes 3.292471698567313
+4 2 hand dis 139.33344553088767 
+hu_feature [12.57849454]
+
+
+4 3
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 9544.0 inter area 7595.5266631818295
+255 1 4.11785
+iou_2:10334.996078431366
+4 3 matchShapes 5.6770459702136105
+4 3 hand dis 7.673254456267356 
+hu_feature [11.58606633]
+
+
+4 4
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 2881.0 inter area 2885.6681675116233
+255 1 2.22475625
+iou_2:5583.7019607843085
+4 4 matchShapes 4.201050138245272
+4 4 hand dis 29.000243211952665 
+hu_feature [12.53744053]
+
+
+4 6
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 36001.0 inter area 7058.052638762204
+255 1 3.885678125
+iou_2:9752.290196078427
+4 6 matchShapes 4.877094600602136
+4 6 hand dis 70.63182226828451 
+hu_feature [14.16311744]
+
+
+4 10
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 1339.0 inter area 1341.885270821262
+255 1 1.583803125
+iou_2:3975.0352941176416
+4 10 matchShapes 0.7206977145981559
+4 10 hand dis 18.200623523985595 
+hu_feature [8.56532513]
+
+
+5 2
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 77388.0 inter area 0.27168126719138846
+255 1 3.7320875
+iou_2:9366.807843137249
+5 2 matchShapes 3.2046501030768946
+5 2 hand dis 63.490956541767424 
+hu_feature [8.33119358]
+
+
+5 3
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 9544.0 inter area 0.0
+255 1 1.040084375
+iou_2:2610.40784313725
+5 3 matchShapes 2.0991595104890024
+5 3 hand dis 85.91069832324017 
+hu_feature [11.58606633]
+
+
+5 4
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 2881.0 inter area 0.0
+1 1 1.0
+iou_2:2509.803921568622
+5 4 matchShapes 3.926866654383746
+5 4 hand dis 532.3964301292228 
+hu_feature [7.60897703]
+
+
+5 6
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 36001.0 inter area 0.0
+255 1 3.073671875
+iou_2:7714.313725490191
+5 6 matchShapes 2.1217553652383057
+5 6 hand dis 23.020406257106252 
+hu_feature [9.41408832]
+
+
+5 10
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 1339.0 inter area 0.0
+1 1 1.0
+iou_2:2509.803921568622
+5 10 matchShapes 6.203054964394509
+5 10 hand dis 1809.4945997703476 
+hu_feature [5.33278872]
+
+
+8 2
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 77388.0 inter area 76716.62129968764
+255 1 31.734396875
+iou_2:79647.11372549018
+8 2 matchShapes 0.3689412959335277
+8 2 hand dis 0.5871189199204832 
+hu_feature [12.57849454]
+
+
+8 3
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 9544.0 inter area 9550.165501671598
+255 1 4.895725
+iou_2:12287.309803921562
+8 3 matchShapes 3.7085166109307353
+8 3 hand dis 208.3795431080575 
+hu_feature [11.58606633]
+
+
+8 4
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 2881.0 inter area 2885.6681675116115
+255 1 2.22475625
+iou_2:5583.701960784309
+8 4 matchShapes 2.6713853004324104
+8 4 hand dis 748.1443125111938 
+hu_feature [12.53744053]
+
+
+8 6
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 36001.0 inter area 32704.680754071305
+255 1 14.147675
+iou_2:35507.89019607843
+8 6 matchShapes 1.2156816061008406
+8 6 hand dis 8.565794872689601 
+hu_feature [14.16311744]
+
+
+8 10
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 1339.0 inter area 1341.8852708212585
+255 1 1.583803125
+iou_2:3975.035294117642
+8 10 matchShapes 4.3821107090952705
+8 10 hand dis 2990.0099050249128 
+hu_feature [8.56532513]
+
+
+
+
+-----------------------------------------
+
+2 2
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 2.233090625
+iou_2:5604.619607843138
+2 2 matchShapes 2.553596657606469
+2 2 hand dis 494.05697077255934 
+hu_feature [12.57849454]
+
+
+2 3
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 9544.0 inter area 2911.0905961329954
+255 1 2.233090625
+iou_2:5604.619607843138
+2 3 matchShapes 5.461097727818117
+2 3 hand dis 44.259703250367764 
+hu_feature [11.58606633]
+
+
+2 4
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 2881.0 inter area 2477.7269419172467
+255 1 2.05489375
+iou_2:5157.380392156862
+2 4 matchShapes 2.3392468152537074
+2 4 hand dis 2.780963707837002 
+hu_feature [12.53744053]
+
+
+2 6
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 36001.0 inter area 2682.351738271423
+255 1 2.1382375
+iou_2:5366.556862745098
+2 6 matchShapes 3.964923728774167
+2 6 hand dis 282.1716296891183 
+hu_feature [14.16311744]
+
+
+2 10
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 1339.0 inter area 1014.6137026940892
+255 1 1.44846875
+iou_2:3635.372549019608
+2 10 matchShapes 2.3573890970894635
+2 10 hand dis 12.358996549235496 
+hu_feature [8.56532513]
+
+
+4 2
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 77388.0 inter area 8645.429969732442
+255 1 4.57505
+iou_2:11482.478431372549
+4 2 matchShapes 3.292471698567313
+4 2 hand dis 139.33344553088767 
+hu_feature [12.57849454]
+
+
+4 3
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 9544.0 inter area 7595.5266631818295
+255 1 4.11785
+iou_2:10334.996078431372
+4 3 matchShapes 5.6770459702136105
+4 3 hand dis 7.673254456267356 
+hu_feature [11.58606633]
+
+
+4 4
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 2881.0 inter area 2885.6681675116233
+255 1 2.22475625
+iou_2:5583.701960784314
+4 4 matchShapes 4.201050138245272
+4 4 hand dis 29.000243211952665 
+hu_feature [12.53744053]
+
+
+4 6
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 36001.0 inter area 7058.052638762204
+255 1 3.885678125
+iou_2:9752.290196078431
+4 6 matchShapes 4.877094600602136
+4 6 hand dis 70.63182226828451 
+hu_feature [14.16311744]
+
+
+4 10
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 1339.0 inter area 1341.885270821262
+255 1 1.583803125
+iou_2:3975.035294117647
+4 10 matchShapes 0.7206977145981559
+4 10 hand dis 18.200623523985595 
+hu_feature [8.56532513]
+
+
+5 2
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 77388.0 inter area 0.27168126719138846
+255 1 3.7320875
+iou_2:9366.807843137254
+5 2 matchShapes 3.2046501030768946
+5 2 hand dis 63.490956541767424 
+hu_feature [8.33119358]
+
+
+5 3
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 9544.0 inter area 0.0
+255 1 1.040084375
+iou_2:2610.407843137255
+5 3 matchShapes 2.0991595104890024
+5 3 hand dis 85.91069832324017 
+hu_feature [11.58606633]
+
+
+5 4
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 2881.0 inter area 0.0
+1 1 1.0
+iou_2:2509.8039215686276
+5 4 matchShapes 3.926866654383746
+5 4 hand dis 532.3964301292228 
+hu_feature [7.60897703]
+
+
+5 6
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 36001.0 inter area 0.0
+255 1 3.073671875
+iou_2:7714.313725490196
+5 6 matchShapes 2.1217553652383057
+5 6 hand dis 23.020406257106252 
+hu_feature [9.41408832]
+
+
+5 10
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 1339.0 inter area 0.0
+1 1 1.0
+iou_2:2509.8039215686276
+5 10 matchShapes 6.203054964394509
+5 10 hand dis 1809.4945997703476 
+hu_feature [5.33278872]
+
+
+8 2
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 77388.0 inter area 76716.62129968764
+255 1 31.734396875
+iou_2:79647.1137254902
+8 2 matchShapes 0.3689412959335277
+8 2 hand dis 0.5871189199204832 
+hu_feature [12.57849454]
+
+
+8 3
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 9544.0 inter area 9550.165501671598
+255 1 4.895725
+iou_2:12287.30980392157
+8 3 matchShapes 3.7085166109307353
+8 3 hand dis 208.3795431080575 
+hu_feature [11.58606633]
+
+
+8 4
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 2881.0 inter area 2885.6681675116115
+255 1 2.22475625
+iou_2:5583.701960784314
+8 4 matchShapes 2.6713853004324104
+8 4 hand dis 748.1443125111938 
+hu_feature [12.53744053]
+
+
+8 6
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 36001.0 inter area 32704.680754071305
+255 1 14.147675
+iou_2:35507.89019607843
+8 6 matchShapes 1.2156816061008406
+8 6 hand dis 8.565794872689601 
+hu_feature [14.16311744]
+
+
+8 10
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 1339.0 inter area 1341.8852708212585
+255 1 1.583803125
+iou_2:3975.035294117647
+8 10 matchShapes 4.3821107090952705
+8 10 hand dis 2990.0099050249128 
+hu_feature [8.56532513]
+
+
+
+
+-----------------------------------------
+
+2 2
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 2.233090625
+iou_2:16813.858823529412
+2 2 matchShapes 2.553596657606469
+2 2 hand dis 494.05697077255934 
+hu_feature [12.57849454]
+
+
+2 3
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 9544.0 inter area 2911.0905961329954
+255 1 2.233090625
+iou_2:16813.858823529412
+2 3 matchShapes 5.461097727818117
+2 3 hand dis 44.259703250367764 
+hu_feature [11.58606633]
+
+
+2 4
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 2881.0 inter area 2477.7269419172467
+255 1 2.05489375
+iou_2:15472.141176470588
+2 4 matchShapes 2.3392468152537074
+2 4 hand dis 2.780963707837002 
+hu_feature [12.53744053]
+
+
+2 6
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 36001.0 inter area 2682.351738271423
+255 1 2.1382375
+iou_2:16099.670588235294
+2 6 matchShapes 3.964923728774167
+2 6 hand dis 282.1716296891183 
+hu_feature [14.16311744]
+
+
+2 10
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 1339.0 inter area 1014.6137026940892
+255 1 1.44846875
+iou_2:10906.117647058823
+2 10 matchShapes 2.3573890970894635
+2 10 hand dis 12.358996549235496 
+hu_feature [8.56532513]
+
+
+4 2
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 77388.0 inter area 8645.429969732442
+255 1 4.57505
+iou_2:34447.43529411765
+4 2 matchShapes 3.292471698567313
+4 2 hand dis 139.33344553088767 
+hu_feature [12.57849454]
+
+
+4 3
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 9544.0 inter area 7595.5266631818295
+255 1 4.11785
+iou_2:31004.988235294117
+4 3 matchShapes 5.6770459702136105
+4 3 hand dis 7.673254456267356 
+hu_feature [11.58606633]
+
+
+4 4
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 2881.0 inter area 2885.6681675116233
+255 1 2.22475625
+iou_2:16751.105882352942
+4 4 matchShapes 4.201050138245272
+4 4 hand dis 29.000243211952665 
+hu_feature [12.53744053]
+
+
+4 6
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 36001.0 inter area 7058.052638762204
+255 1 3.885678125
+iou_2:29256.870588235295
+4 6 matchShapes 4.877094600602136
+4 6 hand dis 70.63182226828451 
+hu_feature [14.16311744]
+
+
+4 10
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 1339.0 inter area 1341.885270821262
+255 1 1.583803125
+iou_2:11925.105882352942
+4 10 matchShapes 0.7206977145981559
+4 10 hand dis 18.200623523985595 
+hu_feature [8.56532513]
+
+
+5 2
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 77388.0 inter area 0.27168126719138846
+255 1 3.7320875
+iou_2:28100.423529411764
+5 2 matchShapes 3.2046501030768946
+5 2 hand dis 63.490956541767424 
+hu_feature [8.33119358]
+
+
+5 3
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 9544.0 inter area 0.0
+255 1 1.040084375
+iou_2:7831.2235294117645
+5 3 matchShapes 2.0991595104890024
+5 3 hand dis 85.91069832324017 
+hu_feature [11.58606633]
+
+
+5 4
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 2881.0 inter area 0.0
+1 1 1.0
+iou_2:7529.411764705882
+5 4 matchShapes 3.926866654383746
+5 4 hand dis 532.3964301292228 
+hu_feature [7.60897703]
+
+
+5 6
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 36001.0 inter area 0.0
+255 1 3.073671875
+iou_2:23142.941176470587
+5 6 matchShapes 2.1217553652383057
+5 6 hand dis 23.020406257106252 
+hu_feature [9.41408832]
+
+
+5 10
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 1339.0 inter area 0.0
+1 1 1.0
+iou_2:7529.411764705882
+5 10 matchShapes 6.203054964394509
+5 10 hand dis 1809.4945997703476 
+hu_feature [5.33278872]
+
+
+8 2
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 77388.0 inter area 76716.62129968764
+255 1 31.734396875
+iou_2:238941.3411764706
+8 2 matchShapes 0.3689412959335277
+8 2 hand dis 0.5871189199204832 
+hu_feature [12.57849454]
+
+
+8 3
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 9544.0 inter area 9550.165501671598
+255 1 4.895725
+iou_2:36861.92941176471
+8 3 matchShapes 3.7085166109307353
+8 3 hand dis 208.3795431080575 
+hu_feature [11.58606633]
+
+
+8 4
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 2881.0 inter area 2885.6681675116115
+255 1 2.22475625
+iou_2:16751.105882352942
+8 4 matchShapes 2.6713853004324104
+8 4 hand dis 748.1443125111938 
+hu_feature [12.53744053]
+
+
+8 6
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 36001.0 inter area 32704.680754071305
+255 1 14.147675
+iou_2:106523.6705882353
+8 6 matchShapes 1.2156816061008406
+8 6 hand dis 8.565794872689601 
+hu_feature [14.16311744]
+
+
+8 10
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 1339.0 inter area 1341.8852708212585
+255 1 1.583803125
+iou_2:11925.105882352942
+8 10 matchShapes 4.3821107090952705
+8 10 hand dis 2990.0099050249128 
+hu_feature [8.56532513]
+
+
+
+
+-----------------------------------------
+
+2 2
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 2.233090625
+pixel_and_iou poly1:5604.619607843138 poly2:63706.870588235295 merge:5604.619607843138
+iou_2:5604.619607843138
+2 2 matchShapes 2.553596657606469
+2 2 hand dis 494.05697077255934 
+hu_feature [12.57849454]
+
+
+2 3
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 9544.0 inter area 2911.0905961329954
+255 1 2.233090625
+pixel_and_iou poly1:5604.619607843138 poly2:12287.30980392157 merge:5604.619607843138
+iou_2:5604.619607843138
+2 3 matchShapes 5.461097727818117
+2 3 hand dis 44.259703250367764 
+hu_feature [11.58606633]
+
+
+2 4
+small_area:2881.0
+recal small_area:2678
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 2881.0 inter area 2477.7269419172467
+255 1 2.05489375
+pixel_and_iou poly1:5604.619607843138 poly2:5583.701960784314 merge:5157.380392156862
+iou_2:5157.380392156862
+2 4 matchShapes 2.3392468152537074
+2 4 hand dis 2.780963707837002 
+hu_feature [12.53744053]
+
+
+2 6
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 36001.0 inter area 2682.351738271423
+255 1 2.1382375
+pixel_and_iou poly1:5604.619607843138 poly2:37513.99215686275 merge:5366.556862745098
+iou_2:5366.556862745098
+2 6 matchShapes 3.964923728774167
+2 6 hand dis 282.1716296891183 
+hu_feature [14.16311744]
+
+
+2 10
+small_area:1339.0
+recal small_area:1209
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 1339.0 inter area 1014.6137026940892
+255 1 1.44846875
+pixel_and_iou poly1:5604.619607843138 poly2:3975.035294117647 merge:3635.372549019608
+iou_2:3635.372549019608
+2 10 matchShapes 2.3573890970894635
+2 10 hand dis 12.358996549235496 
+hu_feature [8.56532513]
+
+
+4 2
+small_area:8637.0
+recal small_area:8270
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 77388.0 inter area 8645.429969732442
+255 1 4.57505
+pixel_and_iou poly1:11482.478431372549 poly2:69823.78823529412 merge:11482.478431372549
+iou_2:11482.478431372549
+4 2 matchShapes 3.292471698567313
+4 2 hand dis 139.33344553088767 
+hu_feature [12.57849454]
+
+
+4 3
+small_area:8637.0
+recal small_area:8270
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 9544.0 inter area 7595.5266631818295
+255 1 4.11785
+pixel_and_iou poly1:11482.478431372549 poly2:12287.30980392157 merge:10334.996078431372
+iou_2:10334.996078431372
+4 3 matchShapes 5.6770459702136105
+4 3 hand dis 7.673254456267356 
+hu_feature [11.58606633]
+
+
+4 4
+small_area:2881.0
+recal small_area:2678
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 2881.0 inter area 2885.6681675116233
+255 1 2.22475625
+pixel_and_iou poly1:11482.478431372549 poly2:5583.701960784314 merge:5583.701960784314
+iou_2:5583.701960784314
+4 4 matchShapes 4.201050138245272
+4 4 hand dis 29.000243211952665 
+hu_feature [12.53744053]
+
+
+4 6
+small_area:8637.0
+
+
+-----------------------------------------
+
+2 2
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 2.233090625
+pixel_and_iou poly1:5604.619607843138 poly2:63706.870588235295 merge:5604.619607843138
+iou_2:5604.619607843138
+
+
+-----------------------------------------
+
+2 2
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 1.5480402777777778
+pixel_and_iou poly1:8741.874509803922 poly2:83485.60784313726 merge:8741.874509803922
+iou_2:8741.874509803922
+
+
+-----------------------------------------
+
+2 2
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 1.5480402777777778
+pixel_and_iou poly1:8741.874509803907 poly2:83485.60784313726 merge:8741.874509803907
+iou_2:8741.874509803922
+
+
+-----------------------------------------
+
+2 2
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 1.5480402777777778
+pixel_and_iou poly1:8741.874509803907 poly2:83485.60784313726 merge:8741.874509803907
+iou_2:8741.874509803922
+
+
+-----------------------------------------
+
+2 2
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 1.5480402777777778
+pixel_and_iou poly1:8741.874509803907 poly2:83485.60784313726 merge:8741.874509803907
+iou_2:8741.874509803922
+
+
+-----------------------------------------
+
+2 2
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 1.5480402777777778
+pixel_and_iou poly1:3107 poly2:78145 merge:3107
+iou_2:8741.874509803922
+
+
+-----------------------------------------
+
+2 2
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 1.5480402777777778
+pixel_and_iou poly1:3107 poly2:78145 merge:3107
+iou_2:8741.874509803922
+2 2 matchShapes 2.553596657606469
+2 2 hand dis 494.05697077255934 
+hu_feature [12.57849454]
+
+
+2 3
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 9544.0 inter area 2911.0905961329954
+255 1 1.5480402777777778
+pixel_and_iou poly1:3107 poly2:9816 merge:3107
+iou_2:8741.874509803922
+2 3 matchShapes 5.461097727818117
+2 3 hand dis 44.259703250367764 
+hu_feature [11.58606633]
+
+
+2 4
+small_area:2881.0
+recal small_area:2678
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 2881.0 inter area 2477.7269419172467
+255 1 1.5480402777777778
+pixel_and_iou poly1:3107 poly2:3086 merge:3107
+iou_2:8741.874509803922
+2 4 matchShapes 2.3392468152537074
+2 4 hand dis 2.780963707837002 
+hu_feature [12.53744053]
+
+
+2 6
+small_area:2906.5
+recal small_area:2708
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 36001.0 inter area 2682.351738271423
+255 1 1.5480402777777778
+pixel_and_iou poly1:3107 poly2:36469 merge:3107
+iou_2:8741.874509803922
+2 6 matchShapes 3.964923728774167
+2 6 hand dis 282.1716296891183 
+hu_feature [14.16311744]
+
+
+2 10
+small_area:1339.0
+recal small_area:1209
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 1339.0 inter area 1014.6137026940892
+255 1 1.5480402777777778
+pixel_and_iou poly1:3107 poly2:1471 merge:3107
+iou_2:8741.874509803922
+2 10 matchShapes 2.3573890970894635
+2 10 hand dis 12.358996549235496 
+hu_feature [8.56532513]
+
+
+4 2
+small_area:8637.0
+recal small_area:8270
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 77388.0 inter area 8645.429969732442
+255 1 2.588911111111111
+pixel_and_iou poly1:9008 poly2:78145 merge:9008
+iou_2:14619.733333333334
+4 2 matchShapes 3.292471698567313
+4 2 hand dis 139.33344553088767 
+hu_feature [12.57849454]
+
+
+4 3
+small_area:8637.0
+recal small_area:8270
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 9544.0 inter area 7595.5266631818295
+255 1 2.588911111111111
+pixel_and_iou poly1:9008 poly2:9816 merge:9008
+iou_2:14619.733333333334
+4 3 matchShapes 5.6770459702136105
+4 3 hand dis 7.673254456267356 
+hu_feature [11.58606633]
+
+
+4 4
+small_area:2881.0
+recal small_area:2678
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 2881.0 inter area 2885.6681675116233
+255 1 2.588911111111111
+pixel_and_iou poly1:9008 poly2:3086 merge:9008
+iou_2:14619.733333333334
+4 4 matchShapes 4.201050138245272
+4 4 hand dis 29.000243211952665 
+hu_feature [12.53744053]
+
+
+4 6
+small_area:8637.0
+recal small_area:8270
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 36001.0 inter area 7058.052638762204
+255 1 2.588911111111111
+pixel_and_iou poly1:9008 poly2:36469 merge:9008
+iou_2:14619.733333333334
+4 6 matchShapes 4.877094600602136
+4 6 hand dis 70.63182226828451 
+hu_feature [14.16311744]
+
+
+4 10
+small_area:1339.0
+recal small_area:1209
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 1339.0 inter area 1341.885270821262
+255 1 2.588911111111111
+pixel_and_iou poly1:9008 poly2:1471 merge:9008
+iou_2:14619.733333333334
+4 10 matchShapes 0.7206977145981559
+4 10 hand dis 18.200623523985595 
+hu_feature [8.56532513]
+
+
+5 2
+small_area:39060.0
+recal small_area:38603
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 77388.0 inter area 0.27168126719138846
+255 1 8.296679166666667
+pixel_and_iou poly1:41367 poly2:75329 merge:41367
+iou_2:46851.83529411765
+5 2 matchShapes 3.2046501030768946
+5 2 hand dis 63.490956541767424 
+hu_feature [8.33119358]
+
+
+5 3
+small_area:9544.0
+recal small_area:9274
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 9544.0 inter area 0.0
+255 1 8.296679166666667
+pixel_and_iou poly1:41367 poly2:9816 merge:41367
+iou_2:46851.83529411765
+5 3 matchShapes 2.0991595104890024
+5 3 hand dis 85.91069832324017 
+hu_feature [11.58606633]
+
+
+5 4
+small_area:2881.0
+recal small_area:2678
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 2881.0 inter area 0.0
+255 1 8.296679166666667
+pixel_and_iou poly1:41367 poly2:3086 merge:41367
+iou_2:46851.83529411765
+5 4 matchShapes 3.926866654383746
+5 4 hand dis 532.3964301292228 
+hu_feature [7.60897703]
+
+
+5 6
+small_area:36001.0
+recal small_area:35535
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 36001.0 inter area 0.0
+255 1 8.296679166666667
+pixel_and_iou poly1:41367 poly2:36469 merge:41367
+iou_2:46851.83529411765
+5 6 matchShapes 2.1217553652383057
+5 6 hand dis 23.020406257106252 
+hu_feature [9.41408832]
+
+
+5 10
+small_area:1339.0
+recal small_area:1209
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 1339.0 inter area 0.0
+255 1 8.296679166666667
+pixel_and_iou poly1:41367 poly2:1471 merge:41367
+iou_2:46851.83529411765
+5 10 matchShapes 6.203054964394509
+5 10 hand dis 1809.4945997703476 
+hu_feature [5.33278872]
+
+
+8 2
+small_area:77388.0
+recal small_area:77269
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 77388.0 inter area 76716.62129968764
+255 1 19.360495833333335
+pixel_and_iou poly1:104091 poly2:78145 merge:104091
+iou_2:109329.85882352942
+8 2 matchShapes 0.3689412959335277
+8 2 hand dis 0.5871189199204832 
+hu_feature [12.57849454]
+
+
+8 3
+small_area:9544.0
+recal small_area:9274
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 9544.0 inter area 9550.165501671598
+255 1 19.360495833333335
+pixel_and_iou poly1:104091 poly2:9816 merge:104091
+iou_2:109329.85882352942
+8 3 matchShapes 3.7085166109307353
+8 3 hand dis 208.3795431080575 
+hu_feature [11.58606633]
+
+
+8 4
+small_area:2881.0
+recal small_area:2678
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 2881.0 inter area 2885.6681675116115
+255 1 19.360495833333335
+pixel_and_iou poly1:104091 poly2:3086 merge:104091
+iou_2:109329.85882352942
+8 4 matchShapes 2.6713853004324104
+8 4 hand dis 748.1443125111938 
+hu_feature [12.53744053]
+
+
+8 6
+small_area:36001.0
+recal small_area:35535
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 36001.0 inter area 32704.680754071305
+255 1 19.360495833333335
+pixel_and_iou poly1:104091 poly2:36469 merge:104091
+iou_2:109329.85882352942
+8 6 matchShapes 1.2156816061008406
+8 6 hand dis 8.565794872689601 
+hu_feature [14.16311744]
+
+
+8 10
+small_area:1339.0
+recal small_area:1209
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 1339.0 inter area 1341.8852708212585
+255 1 19.360495833333335
+pixel_and_iou poly1:104091 poly2:1471 merge:104091
+iou_2:109329.85882352942
+8 10 matchShapes 4.3821107090952705
+8 10 hand dis 2990.0099050249128 
+hu_feature [8.56532513]
+
+
+
+
+-----------------------------------------
+
+2 2
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+255 1 1.5480402777777778
+pixel_and_iou poly1:3107 poly2:78145 merge:3107
+2 2 matchShapes 2.553596657606469
+2 2 hand dis 494.05697077255934 
+hu_feature [12.57849454]
+
+
+2 3
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 9544.0 inter area 2911.0905961329954
+255 1 1.5480402777777778
+pixel_and_iou poly1:3107 poly2:9816 merge:3107
+2 3 matchShapes 5.461097727818117
+2 3 hand dis 44.259703250367764 
+hu_feature [11.58606633]
+
+
+2 4
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 2881.0 inter area 2477.7269419172467
+255 1 1.4688416666666666
+pixel_and_iou poly1:3107 poly2:3086 merge:2658
+2 4 matchShapes 2.3392468152537074
+2 4 hand dis 2.780963707837002 
+hu_feature [12.53744053]
+
+
+2 6
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 36001.0 inter area 2682.351738271423
+255 1 1.5058833333333332
+pixel_and_iou poly1:3107 poly2:36469 merge:2868
+2 6 matchShapes 3.964923728774167
+2 6 hand dis 282.1716296891183 
+hu_feature [14.16311744]
+
+
+2 10
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 1339.0 inter area 1014.6137026940892
+255 1 1.1993194444444444
+pixel_and_iou poly1:3107 poly2:1471 merge:1130
+2 10 matchShapes 2.3573890970894635
+2 10 hand dis 12.358996549235496 
+hu_feature [8.56532513]
+
+
+4 2
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 77388.0 inter area 8645.429969732442
+255 1 2.588911111111111
+pixel_and_iou poly1:9008 poly2:78145 merge:9008
+4 2 matchShapes 3.292471698567313
+4 2 hand dis 139.33344553088767 
+hu_feature [12.57849454]
+
+
+4 3
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 9544.0 inter area 7595.5266631818295
+255 1 2.385711111111111
+pixel_and_iou poly1:9008 poly2:9816 merge:7856
+4 3 matchShapes 5.6770459702136105
+4 3 hand dis 7.673254456267356 
+hu_feature [11.58606633]
+
+
+4 4
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 2881.0 inter area 2885.6681675116233
+255 1 1.5443361111111111
+pixel_and_iou poly1:9008 poly2:3086 merge:3086
+4 4 matchShapes 4.201050138245272
+4 4 hand dis 29.000243211952665 
+hu_feature [12.53744053]
+
+
+4 6
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 36001.0 inter area 7058.052638762204
+255 1 2.282523611111111
+pixel_and_iou poly1:9008 poly2:36469 merge:7271
+4 6 matchShapes 4.877094600602136
+4 6 hand dis 70.63182226828451 
+hu_feature [14.16311744]
+
+
+4 10
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 1339.0 inter area 1341.885270821262
+255 1 1.2594680555555555
+pixel_and_iou poly1:9008 poly2:1471 merge:1471
+4 10 matchShapes 0.7206977145981559
+4 10 hand dis 18.200623523985595 
+hu_feature [8.56532513]
+
+
+5 2
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 77388.0 inter area 0.27168126719138846
+255 1 7.180843055555555
+pixel_and_iou poly1:41367 poly2:75329 merge:35041
+5 2 matchShapes 3.2046501030768946
+5 2 hand dis 63.490956541767424 
+hu_feature [8.33119358]
+
+
+5 3
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 9544.0 inter area 0.0
+255 1 2.6028458333333333
+pixel_and_iou poly1:41367 poly2:9816 merge:9087
+5 3 matchShapes 2.0991595104890024
+5 3 hand dis 85.91069832324017 
+hu_feature [11.58606633]
+
+
+5 4
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 2881.0 inter area 0.0
+255 1 1.5443361111111111
+pixel_and_iou poly1:41367 poly2:3086 merge:3086
+5 4 matchShapes 3.926866654383746
+5 4 hand dis 532.3964301292228 
+hu_feature [7.60897703]
+
+
+5 6
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 36001.0 inter area 0.0
+255 1 6.721526388888889
+pixel_and_iou poly1:41367 poly2:36469 merge:32437
+5 6 matchShapes 2.1217553652383057
+5 6 hand dis 23.020406257106252 
+hu_feature [9.41408832]
+
+
+5 10
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 39060.0  poly2 area 1339.0 inter area 0.0
+255 1 1.2594680555555555
+pixel_and_iou poly1:41367 poly2:1471 merge:1471
+5 10 matchShapes 6.203054964394509
+5 10 hand dis 1809.4945997703476 
+hu_feature [5.33278872]
+
+
+8 2
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 77388.0 inter area 76716.62129968764
+255 1 14.659731944444445
+pixel_and_iou poly1:104091 poly2:78145 merge:77441
+8 2 matchShapes 0.3689412959335277
+8 2 hand dis 0.5871189199204832 
+hu_feature [12.57849454]
+
+
+8 3
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 9544.0 inter area 9550.165501671598
+255 1 2.7314333333333334
+pixel_and_iou poly1:104091 poly2:9816 merge:9816
+8 3 matchShapes 3.7085166109307353
+8 3 hand dis 208.3795431080575 
+hu_feature [11.58606633]
+
+
+8 4
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 2881.0 inter area 2885.6681675116115
+255 1 1.5443361111111111
+pixel_and_iou poly1:104091 poly2:3086 merge:3086
+8 4 matchShapes 2.6713853004324104
+8 4 hand dis 748.1443125111938 
+hu_feature [12.53744053]
+
+
+8 6
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 36001.0 inter area 32704.680754071305
+255 1 6.843411111111111
+pixel_and_iou poly1:104091 poly2:36469 merge:33128
+8 6 matchShapes 1.2156816061008406
+8 6 hand dis 8.565794872689601 
+hu_feature [14.16311744]
+
+
+8 10
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 103238.5  poly2 area 1339.0 inter area 1341.8852708212585
+255 1 1.2594680555555555
+pixel_and_iou poly1:104091 poly2:1471 merge:1471
+8 10 matchShapes 4.3821107090952705
+8 10 hand dis 2990.0099050249128 
+hu_feature [8.56532513]
+
+
+
+
+-----------------------------------------
+
+2 2
+pixel_and_iou poly1:3107 poly2:78145 internal_area:0
+2 2 matchShapes 2.5535966576064735
+2 2 hand dis 642.2620238450527 
+hu_feature [12.57849454]
+
+
+2 3
+pixel_and_iou poly1:3107 poly2:9816 internal_area:844
+2 3 matchShapes 5.461097727819919
+2 3 hand dis 101.5659265246402 
+hu_feature [11.58606633]
+
+
+2 4
+pixel_and_iou poly1:3107 poly2:3086 internal_area:1731
+2 4 matchShapes 2.339246815246682
+2 4 hand dis 4.8267256988205 
+hu_feature [12.53744053]
+
+
+2 6
+pixel_and_iou poly1:3107 poly2:36469 internal_area:667
+2 6 matchShapes 3.9649237287761903
+2 6 hand dis 397.28550095692367 
+hu_feature [14.16311744]
+
+
+2 10
+pixel_and_iou poly1:3107 poly2:1471 internal_area:0
+2 10 matchShapes 2.357389097090259
+2 10 hand dis 49.79203211869091 
+hu_feature [8.56532513]
+
+
+4 2
+pixel_and_iou poly1:9008 poly2:78145 internal_area:35
+4 2 matchShapes 3.292471698567373
+4 2 hand dis 284.48119845082545 
+hu_feature [12.57849454]
+
+
+4 3
+pixel_and_iou poly1:9008 poly2:9816 internal_area:7218
+4 3 matchShapes 5.677045970215312
+4 3 hand dis 8.56918841531677 
+hu_feature [11.58606633]
+
+
+4 4
+pixel_and_iou poly1:9008 poly2:3086 internal_area:30
+4 4 matchShapes 4.20105013821931
+4 4 hand dis 119.65274121737824 
+hu_feature [12.53744053]
+
+
+4 6
+pixel_and_iou poly1:9008 poly2:36469 internal_area:1661
+4 6 matchShapes 4.877094600603894
+4 6 hand dis 143.17445498903788 
+hu_feature [14.16311744]
+
+
+4 10
+pixel_and_iou poly1:9008 poly2:1471 internal_area:0
+4 10 matchShapes 0.7206977145487686
+4 10 hand dis 44.13354869242222 
+hu_feature [8.56532513]
+
+
+5 2
+pixel_and_iou poly1:41367 poly2:78145 internal_area:0
+5 2 matchShapes 3.204650103076987
+5 2 hand dis 60.537960767024714 
+hu_feature [8.33119358]
+
+
+5 3
+pixel_and_iou poly1:41367 poly2:9816 internal_area:0
+5 3 matchShapes 2.09915951049388
+5 3 hand dis 88.46366286735973 
+hu_feature [11.58606633]
+
+
+5 4
+pixel_and_iou poly1:41367 poly2:3086 internal_area:0
+5 4 matchShapes 3.926866654389067
+5 4 hand dis 526.3859134546744 
+hu_feature [7.60897703]
+
+
+5 6
+pixel_and_iou poly1:41367 poly2:36469 internal_area:28194
+5 6 matchShapes 2.121755365238209
+5 6 hand dis 3.6031621269431495 
+hu_feature [9.41408832]
+
+
+5 10
+pixel_and_iou poly1:41367 poly2:1471 internal_area:0
+5 10 matchShapes 6.203054964402276
+5 10 hand dis 1744.4036350267093 
+hu_feature [5.33278872]
+
+
+8 2
+pixel_and_iou poly1:104091 poly2:78145 internal_area:71445
+8 2 matchShapes 0.36894129593351493
+8 2 hand dis 0.6597705708845667 
+hu_feature [12.57849454]
+
+
+8 3
+pixel_and_iou poly1:104091 poly2:9816 internal_area:1347
+8 3 matchShapes 3.7085166109382004
+8 3 hand dis 351.22790067168756 
+hu_feature [11.58606633]
+
+
+8 4
+pixel_and_iou poly1:104091 poly2:3086 internal_area:0
+8 4 matchShapes 2.671385300436933
+8 4 hand dis 901.0601662598211 
+hu_feature [12.53744053]
+
+
+8 6
+pixel_and_iou poly1:104091 poly2:36469 internal_area:544
+8 6 matchShapes 1.215681606103006
+8 6 hand dis 33.40067146372111 
+hu_feature [14.16311744]
+
+
+8 10
+pixel_and_iou poly1:104091 poly2:1471 internal_area:0
+8 10 matchShapes 4.382110709049657
+8 10 hand dis 3100.8720993588563 
+hu_feature [8.56532513]
+
+
+
+
+-----------------------------------------
+
+2 2
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 77388.0 inter area 2911.0905961329954
+pixel_and_iou poly1:3107 poly2:78145 merge:3107
+2 2 matchShapes 2.553596657606469
+2 2 hand dis 494.05697077255934 
+hu_feature [12.57849454]
+
+
+2 3
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 9544.0 inter area 2911.0905961329954
+pixel_and_iou poly1:3107 poly2:9816 merge:3107
+2 3 matchShapes 5.461097727818117
+2 3 hand dis 44.259703250367764 
+hu_feature [11.58606633]
+
+
+2 4
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 2881.0 inter area 2477.7269419172467
+pixel_and_iou poly1:3107 poly2:3086 merge:2658
+2 4 matchShapes 2.3392468152537074
+2 4 hand dis 2.780963707837002 
+hu_feature [12.53744053]
+
+
+2 6
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 36001.0 inter area 2682.351738271423
+pixel_and_iou poly1:3107 poly2:36469 merge:2868
+2 6 matchShapes 3.964923728774167
+2 6 hand dis 282.1716296891183 
+hu_feature [14.16311744]
+
+
+2 10
+poly1 isvalid::True poly2 isvalid:True
+poly1 area 2906.5  poly2 area 1339.0 inter area 1014.6137026940892
+pixel_and_iou poly1:3107 poly2:1471 merge:1130
+2 10 matchShapes 2.3573890970894635
+2 10 hand dis 12.358996549235496 
+hu_feature [8.56532513]
+
+
+4 2
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 77388.0 inter area 8645.429969732442
+pixel_and_iou poly1:9008 poly2:78145 merge:9008
+4 2 matchShapes 3.292471698567313
+4 2 hand dis 139.33344553088767 
+hu_feature [12.57849454]
+
+
+4 3
+poly1 isvalid::False poly2 isvalid:False
+poly1 area 8637.0  poly2 area 9544.0 inter area 7595.5266631818295
+pixel_and_iou poly1:9008 poly2:9816 merge:7856
+4 3 matchShapes 5.6770459702136105
+4 3 hand dis 7.673254456267356 
+hu_feature [11.58606633]
+
+
+4 4
+
+
+-----------------------------------------
+
+2 2
+pixel_and_iou poly1:3107 poly2:78145 merge:0
+
+
+-----------------------------------------
+
+2 2
+pixel_and_iou poly1:3107 poly2:78145 merge:0
+2 2 matchShapes 2.5535966576064735
+2 2 hand dis 642.2620238450527 
+hu_feature [12.57849454]
+
+
+2 3
+pixel_and_iou poly1:3107 poly2:9816 merge:844
+2 3 matchShapes 5.461097727819919
+2 3 hand dis 0.020439927198063645 
+hu_feature [11.58606633]
+
+
+2 4
+pixel_and_iou poly1:3107 poly2:3086 merge:1731
+2 4 matchShapes 2.339246815246682
+2 4 hand dis 0.0013605021174282548 
+hu_feature [12.53744053]
+
+
+2 6
+pixel_and_iou poly1:3107 poly2:36469 merge:667
+2 6 matchShapes 3.9649237287761903
+2 6 hand dis 0.06976321689489162 
+hu_feature [14.16311744]
+
+
+2 10
+pixel_and_iou poly1:3107 poly2:1471 merge:0
+2 10 matchShapes 2.357389097090259
+2 10 hand dis 49.79203211869091 
+hu_feature [8.56532513]
+
+
+4 2
+pixel_and_iou poly1:9008 poly2:78145 merge:35
+4 2 matchShapes 3.292471698567373
+4 2 hand dis 0.8137439113461266 
+hu_feature [12.57849454]
+
+
+4 3
+pixel_and_iou poly1:9008 poly2:9816 merge:7218
+4 3 matchShapes 5.677045970215312
+4 3 hand dis 0.0008570490713379315 
+hu_feature [11.58606633]
+
+
+4 4
+pixel_and_iou poly1:9008 poly2:3086 merge:30
+4 4 matchShapes 4.20105013821931
+4 4 hand dis 0.4074026268571121 
+hu_feature [12.53744053]
+
+
+4 6
+pixel_and_iou poly1:9008 poly2:36469 merge:1661
+4 6 matchShapes 4.877094600603894
+4 6 hand dis 0.01188668841693847 
+hu_feature [14.16311744]
+
+
+4 10
+pixel_and_iou poly1:9008 poly2:1471 merge:0
+4 10 matchShapes 0.7206977145487686
+4 10 hand dis 44.13354869242222 
+hu_feature [8.56532513]
+
+
+5 2
+pixel_and_iou poly1:41367 poly2:78145 merge:0
+5 2 matchShapes 3.204650103076987
+5 2 hand dis 60.537960767024714 
+hu_feature [8.33119358]
+
+
+5 3
+pixel_and_iou poly1:41367 poly2:9816 merge:0
+5 3 matchShapes 2.09915951049388
+5 3 hand dis 88.46366286735973 
+hu_feature [11.58606633]
+
+
+5 4
+pixel_and_iou poly1:41367 poly2:3086 merge:0
+5 4 matchShapes 3.926866654389067
+5 4 hand dis 526.3859134546744 
+hu_feature [7.60897703]
+
+
+5 6
+pixel_and_iou poly1:41367 poly2:36469 merge:28194
+5 6 matchShapes 2.121755365238209
+5 6 hand dis 8.53625233832271e-05 
+hu_feature [9.41408832]
+
+
+5 10
+pixel_and_iou poly1:41367 poly2:1471 merge:0
+5 10 matchShapes 6.203054964402276
+5 10 hand dis 1744.4036350267093 
+hu_feature [5.33278872]
+
+
+8 2
+pixel_and_iou poly1:104091 poly2:78145 merge:71445
+8 2 matchShapes 0.36894129593351493
+8 2 hand dis 6.878548531526303e-06 
+hu_feature [12.57849454]
+
+
+8 3
+pixel_and_iou poly1:104091 poly2:9816 merge:1347
+8 3 matchShapes 3.7085166109382004
+8 3 hand dis 0.02919301991694074 
+hu_feature [11.58606633]
+
+
+8 4
+pixel_and_iou poly1:104091 poly2:3086 merge:0
+8 4 matchShapes 2.671385300436933
+8 4 hand dis 901.0601662598211 
+hu_feature [12.53744053]
+
+
+8 6
+pixel_and_iou poly1:104091 poly2:36469 merge:544
+8 6 matchShapes 1.215681606103006
+8 6 hand dis 0.006377205994672651 
+hu_feature [14.16311744]
+
+
+8 10
+pixel_and_iou poly1:104091 poly2:1471 merge:0
+8 10 matchShapes 4.382110709049657
+8 10 hand dis 3100.8720993588563 
+hu_feature [8.56532513]
+
+
+
+
+-----------------------------------------
+
+2 2
+pixel_and_iou poly1:3107 poly2:78145 merge:3107
+poly1 area 3107  poly2 area 78145 inter area 3107
+2 2 matchShapes 2.553596657606469
+2 2 hand dis 459.5482841493527 
+hu_feature [12.57849454]
+
+
+2 3
+pixel_and_iou poly1:3107 poly2:9816 merge:3107
+poly1 area 3107  poly2 area 9816 inter area 3107
+2 3 matchShapes 5.461097727818117
+2 3 hand dis 41.42220086337339 
+hu_feature [11.58606633]
+
+
+2 4
+pixel_and_iou poly1:3107 poly2:3086 merge:2658
+poly1 area 3107  poly2 area 3086 inter area 2658
+2 4 matchShapes 2.3392468152537074
+2 4 hand dis 2.7645721523317235 
+hu_feature [12.53744053]
+
+
+2 6
+pixel_and_iou poly1:3107 poly2:36469 merge:2868
+poly1 area 3107  poly2 area 36469 inter area 2868
+2 6 matchShapes 3.964923728774167
+2 6 hand dis 261.264322718147 
+hu_feature [14.16311744]
+
+
+2 10
+pixel_and_iou poly1:3107 poly2:1471 merge:1130
+poly1 area 3107  poly2 area 1471 inter area 1130
+2 10 matchShapes 2.3573890970894635
+2 10 hand dis 11.641098911390586 
+hu_feature [8.56532513]
+
+
+4 2
+pixel_and_iou poly1:9008 poly2:78145 merge:9008
+poly1 area 9008  poly2 area 78145 inter area 9008
+4 2 matchShapes 3.292471698567313
+4 2 hand dis 132.68001962372895 
+hu_feature [12.57849454]
+
+
+4 3
+pixel_and_iou poly1:9008 poly2:9816 merge:7856
+poly1 area 9008  poly2 area 9816 inter area 7856
+4 3 matchShapes 5.6770459702136105
+4 3 hand dis 7.578742338842467 
+hu_feature [11.58606633]
+
+
+4 4
+pixel_and_iou poly1:9008 poly2:3086 merge:3086
+poly1 area 9008  poly2 area 3086 inter area 3086
+4 4 matchShapes 4.201050138245272
+4 4 hand dis 27.707302640920418 
+hu_feature [12.53744053]
+
+
+4 6
+pixel_and_iou poly1:9008 poly2:36469 merge:7271
+poly1 area 9008  poly2 area 36469 inter area 7271
+4 6 matchShapes 4.877094600602136
+4 6 hand dis 68.01332850181095 
+hu_feature [14.16311744]
+
+
+4 10
+pixel_and_iou poly1:9008 poly2:1471 merge:1471
+poly1 area 9008  poly2 area 1471 inter area 1471
+4 10 matchShapes 0.7206977145981559
+4 10 hand dis 16.761742417091767 
+hu_feature [8.56532513]
+
+
+5 2
+pixel_and_iou poly1:41367 poly2:75329 merge:35041
+poly1 area 41367  poly2 area 75329 inter area 35041
+5 2 matchShapes 3.2046501030768946
+5 2 hand dis 11.02865345015763 
+hu_feature [8.33119358]
+
+
+5 3
+pixel_and_iou poly1:41367 poly2:9816 merge:9087
+poly1 area 41367  poly2 area 9816 inter area 9087
+5 3 matchShapes 2.0991595104890024
+5 3 hand dis 28.006906668289055 
+hu_feature [11.58606633]
+
+
+5 4
+pixel_and_iou poly1:41367 poly2:3086 merge:3086
+poly1 area 41367  poly2 area 3086 inter area 3086
+5 4 matchShapes 3.926866654383746
+5 4 hand dis 301.4801401394216 
+hu_feature [7.60897703]
+
+
+5 6
+pixel_and_iou poly1:41367 poly2:36469 merge:32437
+poly1 area 41367  poly2 area 36469 inter area 32437
+5 6 matchShapes 2.1217553652383057
+5 6 hand dis 2.9548896611681617 
+hu_feature [9.41408832]
+
+
+5 10
+pixel_and_iou poly1:41367 poly2:1471 merge:1471
+poly1 area 41367  poly2 area 1471 inter area 1471
+5 10 matchShapes 6.203054964394509
+5 10 hand dis 1286.8153640540602 
+hu_feature [5.33278872]
+
+
+8 2
+pixel_and_iou poly1:104091 poly2:78145 merge:77441
+poly1 area 104091  poly2 area 78145 inter area 77441
+8 2 matchShapes 0.3689412959335277
+8 2 hand dis 0.585759939911046 
+hu_feature [12.57849454]
+
+
+8 3
+pixel_and_iou poly1:104091 poly2:9816 merge:9816
+poly1 area 104091  poly2 area 9816 inter area 9816
+8 3 matchShapes 3.7085166109307353
+8 3 hand dis 202.39573796827355 
+hu_feature [11.58606633]
+
+
+8 4
+pixel_and_iou poly1:104091 poly2:3086 merge:3086
+poly1 area 104091  poly2 area 3086 inter area 3086
+8 4 matchShapes 2.6713853004324104
+8 4 hand dis 695.0096980829505 
+hu_feature [12.53744053]
+
+
+8 6
+pixel_and_iou poly1:104091 poly2:36469 merge:33128
+poly1 area 104091  poly2 area 36469 inter area 33128
+8 6 matchShapes 1.2156816061008406
+8 6 hand dis 8.496955008367216 
+hu_feature [14.16311744]
+
+
+8 10
+pixel_and_iou poly1:104091 poly2:1471 merge:1471
+poly1 area 104091  poly2 area 1471 inter area 1471
+8 10 matchShapes 4.3821107090952705
+8 10 hand dis 2716.9205452624346 
+hu_feature [8.56532513]
+
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+

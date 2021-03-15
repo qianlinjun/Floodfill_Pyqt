@@ -101,13 +101,87 @@ def get_iou(poly1, poly2):
     union_area = poly1_area + poly2_area - inter_area
     print("poly1 area {}  poly2 area {} inter area {}".format(poly1_area , poly2_area , inter_area))
 
-
-
-    
     # exit(0)
 
     return poly1_area , poly2_area, inter_area*1.0/union_area
 
+def get_dist(poly1, poly1_id, poly2, poly2_id):
+    # # if point1_id == 4:
+    # #     show_polygon(poly1)
+    poly1_area, poly2_area, iou = get_iou(poly1, poly2)
+    # poly1_area, poly2_area, iou = bitwise_and_iou(poly1, poly2)
+    # print("iou", iou)
+    # # exit(0)
+    
+    # hu = cv2.HuMoments( m ) hu 表示返回的Hu 矩阵，参数m 是cv2.moments() 
+    m1 = cv2.moments(poly1) # m原始 mu 中心化 nu 归一化
+    # print("m1", m1)
+
+    hu1 = cv2.HuMoments( m1 )
+    # print(hu1)
+
+    # print(m1["nu02"], m1["nu20"])
+    # m = cv2.moments(poly2) # m原始 mu 中心化 nu 归一化
+    # print(m["nu02"], m["nu20"])
+    mu11 = m1["nu11"]
+    mu02 = m1["nu02"]
+    mu20 = m1["nu20"]
+    angle1 = math.atan(2*mu11/(mu20 - mu02))/2.*180/3.1415926
+    # print("poly1 angle", angle1) #*180/3.1415926
+
+
+    m2 = cv2.moments(poly2)
+    # print("m2", m2)
+    hu2 = cv2.HuMoments( m2 )
+    mu11 = m2["nu11"]
+    mu02 = m2["nu02"]
+    mu20 = m2["nu20"]
+    angle2 = math.atan(2*mu11/(mu20 - mu02))/2.*180/3.1415926
+    # print("poly2 angle", angle2) #*180/3.1415926
+
+    # print(hu2)
+    dis = 0
+    hu_feature = 0
+
+    # if( ama > eps && amb > eps )
+    #     {
+    #         ama = sma * log10( ama );
+    #         amb = smb * log10( amb );
+    #         result += fabs( -ama + amb );
+    #     }
+
+    # 手动计算
+    # eps = 1e-5
+    # idx = 0
+    # for hu1_m, hu2_m in zip(hu1, hu2):
+    #     print("hu1_m", hu1_m, "log:", np.sign(hu2_m)*math.log10(abs(hu2_m)), np.sign(hu1_m)*math.log10(abs(hu1_m)),"hu2_m", hu2_m)
+    #     # if idx == 4:
+    #     #     break
+    #     idx += 1
+    #     # print(hu1_m, hu2_m)
+    #     if abs(hu1_m) > eps and  abs(hu2_m) > eps:
+    #         # angle1 *  angle2 *
+    #         dis += abs(  np.sign(hu2_m)*math.log10(abs(hu2_m)) -  np.sign(hu1_m)*math.log10(abs(hu1_m)) ) * 1. / (iou + 0.1) * max(poly1_area, poly2_area) / min(poly1_area, poly2_area) * abs(angle1-angle2)
+    #         # hu_feature += abs(  np.sign(hu2_m)*math.log10(abs(hu2_m)) -  np.sign(hu1_m)*math.log10(abs(hu1_m)) )  ##-np.sign(hu2_m)*math.log10(abs(hu2_m))
+    #         # dis += abs(  hu2_m -  hu1_m )
+    
+  
+    
+    # humoments = cv2.matchShapes(poly1, poly2,  2, 0.0)
+    # iou_factor = 1. / (iou + 0.1)
+    # angle_factor = abs(angle1-angle2)
+    # area_factor = max(poly1_area, poly2_area) / min(poly1_area, poly2_area)
+    # shape_cost =  humoments *  iou_factor * area_factor * angle_factor
+
+    humoments = cv2.matchShapes(poly1, poly2,  2, 0.0)
+    iou_factor = 2. / (iou + 0.01)
+    angle_factor = abs(angle1-angle2) if abs(angle1-angle2) > 10 else 1
+    area_factor = max(poly1_area, poly2_area) / min(poly1_area, poly2_area)
+    shape_cost =  humoments *  iou_factor * area_factor * angle_factor
+    
+    print("node:{} --> {} humoments: {:.2f} iou: {:.1f} iou_factor: {:.1f} area_factor: {:.1f} angle_factor:{} shape_cost: {:.1f} \n".format(poly1_id, poly2_id, humoments, iou, iou_factor, area_factor, angle_factor, shape_cost))
+    
+    return shape_cost
 
 
 def bitwise_and_iou(poly1, poly2):
@@ -154,12 +228,12 @@ if __name__ ==  "__main__":
 
     # 85_8.58807087_46.664257
     json_file1 = os.path.join(filedir, "83_8.58592987_46.6606636.json")#"10_8.51592159_46.602951.json"
-    json_file2 = os.path.join(filedir, "85_8.58807087_46.664257.json")#"11_8.53155708_46.60886.json"
+    json_file2 = os.path.join(filedir, "83_8.58592987_46.6606636.json")#"11_8.53155708_46.60886.json" 85_8.58807087_46.664257.json
 
-    # 2,4,
-    # 
-    for point1_id in [2,4,5,8]:
-        for point2_id in [2,3,4,6,10]:
+    # 8,2,4,5,
+    # 2,3,4,6,10
+    for point1_id in [8]:
+        for point2_id in [5]:
             print(point1_id, point2_id)
             # point1_id = 8#2#8#2#1#8#0#4#3
             # point2_id = 2#1#11#5#5#2#6#5#0
@@ -181,62 +255,9 @@ if __name__ ==  "__main__":
                 poly1 = np.array(poly1).squeeze()
                 poly2 = np.array(poly2).squeeze()
 
-                # # if point1_id == 4:
-                # #     show_polygon(poly1)
-                poly1_area, poly2_area, iou = get_iou(poly1, poly2)
-                # poly1_area, poly2_area, iou = bitwise_and_iou(poly1, poly2)
-                # print("iou", iou)
-                # # exit(0)
+                shape_cost = get_dist(poly1, poly2)
+
                 
-                # hu = cv2.HuMoments( m ) hu 表示返回的Hu 矩阵，参数m 是cv2.moments() 
-                m1 = cv2.moments(poly1) # m原始 mu 中心化 nu 归一化
-                hu1 = cv2.HuMoments( m1 )
-                # print(hu1)
-
-                # print(m1["nu02"], m1["nu20"])
-                # m = cv2.moments(poly2) # m原始 mu 中心化 nu 归一化
-                # print(m["nu02"], m["nu20"])
-                mu11 = m1["nu11"]
-                mu02 = m1["nu02"]
-                mu20 = m1["nu20"]
-                angle1 = math.atan(2*mu11/(mu20 - mu02))/2.*180/3.1415926
-                # print("poly1 angle", angle1) #*180/3.1415926
-
-
-                m2 = cv2.moments(poly2)
-                hu2 = cv2.HuMoments( m2 )
-                mu11 = m2["nu11"]
-                mu02 = m2["nu02"]
-                mu20 = m2["nu20"]
-                angle2 = math.atan(2*mu11/(mu20 - mu02))/2.*180/3.1415926
-                # print("poly2 angle", angle2) #*180/3.1415926
-
-                # print(hu2)
-                dis = 0
-                hu_feature = 0
-
-                # if( ama > eps && amb > eps )
-                #     {
-                #         ama = sma * log10( ama );
-                #         amb = smb * log10( amb );
-                #         result += fabs( -ama + amb );
-                #     }
-                eps = 1e-5
-                idx = 0
-                for hu1_m, hu2_m in zip(hu1, hu2):
-                    # if idx == 4:
-                    #     break
-                    idx += 1
-                    # print(hu1_m, hu2_m)
-                    if abs(hu1_m) > eps and  abs(hu2_m) > eps:
-                        # angle1 *  angle2 *
-                        dis += abs(  np.sign(hu2_m)*math.log10(abs(hu2_m)) -  np.sign(hu1_m)*math.log10(abs(hu1_m)) ) * 1. / (iou + 0.1) * max(poly1_area, poly2_area) / min(poly1_area, poly2_area)
-                        # hu_feature += abs(  np.sign(hu2_m)*math.log10(abs(hu2_m)) -  np.sign(hu1_m)*math.log10(abs(hu1_m)) )  ##-np.sign(hu2_m)*math.log10(abs(hu2_m))
-                        # dis += abs(  hu2_m -  hu1_m )
-                
-
-                print("{} {} matchShapes {}".format( point1_id, point2_id, cv2.matchShapes(poly1, poly2,  2, 0.0))) # 相似度越大 matchshape值越小 iou 越靠近1
-                print("{} {} hand dis {} ".format( point1_id, point2_id, dis[0]))
                 # print("hu_feature", hu_feature)
                 print("\n")
             

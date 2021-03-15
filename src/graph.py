@@ -8,7 +8,7 @@ import networkx as nx
 # import gmatch4py as gm
 import matplotlib.pyplot as plt 
 
-from poly_util import get_iou
+from poly_util import get_iou, get_dist
 
 img_w , img_h = 1024, 1024
 
@@ -115,23 +115,24 @@ def buildGraphFromJson(json_file):
     
     # [2] add global nodes
     # print("len poly:{}".format(len(polygons)))
-    global_id      = "global" 
-    global_contour = [[[0,0]],[[0,1024]],[[1024,1024]],[[1024,0]]]
-    global_moment  = [total_moment_x/len(polygons),total_moment_y/len(polygons)]
-    area = img_w * img_h
-    global_node = SceneNode(global_id, global_contour, global_moment, area, nodeType = "global")
-    scene_graph.add_node(global_id, scene_node = global_node)
-    for other_polygon in polygons:
-        id_1      = other_polygon["id"]
-        contour_1 = other_polygon["contour"]
-        area_1    = other_polygon["area"]
-        momente_1 = other_polygon["momente"]
-        object_node_1 = SceneNode(id_1, contour_1, momente_1, area_1)
-        angle        = global_node.compute_angle(object_node_1)
-        dist         = global_node.compute_dist(object_node_1)
 
-        # print("{} -> {} angle:{}".format(id_, id_1, angle/3.1415926*180))
-        scene_graph.add_edge(global_id, id_1, name='{} - {}'.format(id_, id_1), angle=angle, dist=dist)
+    # global_id      = "global" 
+    # global_contour = [[[0,0]],[[0,1024]],[[1024,1024]],[[1024,0]]]
+    # global_moment  = [total_moment_x/len(polygons),total_moment_y/len(polygons)]
+    # area = img_w * img_h
+    # global_node = SceneNode(global_id, global_contour, global_moment, area, nodeType = "global")
+    # scene_graph.add_node(global_id, scene_node = global_node)
+    # for other_polygon in polygons:
+    #     id_1      = other_polygon["id"]
+    #     contour_1 = other_polygon["contour"]
+    #     area_1    = other_polygon["area"]
+    #     momente_1 = other_polygon["momente"]
+    #     object_node_1 = SceneNode(id_1, contour_1, momente_1, area_1)
+    #     angle        = global_node.compute_angle(object_node_1)
+    #     dist         = global_node.compute_dist(object_node_1)
+
+    #     # print("{} -> {} angle:{}".format(id_, id_1, angle/3.1415926*180))
+    #     scene_graph.add_edge(global_id, id_1, name='{} - {}'.format(id_, id_1), angle=angle, dist=dist)
     
     return scene_graph
 
@@ -185,7 +186,7 @@ def search_graph(query_G, scene_graphs):
         elif node1.nodeType == "global" or  node2.nodeType == "global":
             # return 10000000000000
             cost = 10000000000000
-            print("global node dist:{}".format(cost))
+            # print("global node dist:{}".format(cost))
         else:
             # 普通节点  
             # 类别距离
@@ -201,12 +202,18 @@ def search_graph(query_G, scene_graphs):
             
             # hu 矩具有
             poly1 = node1.contour
+            # # print(poly1)
             poly2 = node2.contour
             poly1 = np.array(poly1).squeeze()
             poly2 = np.array(poly2).squeeze()
-            poly1_area, poly2_area, iou = get_iou(poly1, poly2)
-            shape_cost = cv2.matchShapes(poly1, poly2,  2, 0.0) *  1. / (iou + 0.1) * max(poly1_area, poly2_area) / min(poly1_area, poly2_area)
-            print("node:{} node:{} shape_cost: {}".format(node1.id, node2.id, shape_cost))
+            # poly1_area, poly2_area, iou = get_iou(poly1, poly2)
+            # iou_factor = 1. / (iou + 0.1)
+            # humoments = cv2.matchShapes(poly1, poly2,  2, 0.0)
+            # # print("insert hu moments:", cv2.matchShapes(poly1, np.array([[[0,0]]]),  2, 0.0))
+            # area_factor = max(poly1_area, poly2_area) / min(poly1_area, poly2_area)
+            # shape_cost =  humoments *  iou_factor * area_factor
+            shape_cost = get_dist(poly1, node1.id, poly2, node2.id)
+            
 
             #shaply
 
@@ -251,7 +258,7 @@ def search_graph(query_G, scene_graphs):
         # 自定义替换损失
         # 自定义插入 删除损失
         
-        print("\n calculate dist between {} {}".format(query_G.name, scene_G.name))
+        
         ge_dist, vertex_path, edge_path = nx.graph_edit_distance(query_G, scene_G, 
                                         node_subst_cost = node_subst_cost, 
                                         node_del_cost = node_del_cost,
@@ -266,6 +273,8 @@ def search_graph(query_G, scene_graphs):
             result_G     = scene_G
             best_vertex_path = vertex_path
             best_edge_path   = edge_path
+        
+        print("G1: {} G2: {} dist:{}  edit_path{}\n\n".format(query_G.name.split("\\")[-1], scene_G.name.split("\\")[-1], ge_dist, vertex_path))
     
     DrawGraph(result_G)
     
@@ -282,8 +291,12 @@ if __name__ == "__main__":
     save_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\switz-100-points"
     scene_graphs = loadGraphsFromJson(save_path, visualize=False) #"8.59262657_46.899601"
     
-    if len(scene_graphs) > 2:
-        search_graph(scene_graphs[0], scene_graphs[1:])
+    if len(scene_graphs) <= 2:
+        print("len(scene_graphs) <= 2")
+        exit(0)
+    
+    search_graph_id = 2 # 1 2  
+    search_graph(scene_graphs[search_graph_id], scene_graphs[0:search_graph_id] + scene_graphs[search_graph_id+1:])
 
-    print("total: {} search: {} \n\n".format(len(scene_graphs), scene_graphs[0].name))
+    print("total: {} search: {} \n\n".format(len(scene_graphs), scene_graphs[search_graph_id].name))
     fsock.close()

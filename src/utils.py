@@ -9,14 +9,12 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-colorList = [[255, 0, 51],
-            [0, 0, 255],# Blue 
+colorList = [[0, 0, 255],# Blue 
             [0, 255, 0],# Green 
             [0, 255, 255],# Cyan 
             [255, 0, 0],# Red 
             [255, 0, 255],# Magenta 
             [255, 255, 0],# Yellow 
-            [255, 255, 255],# White 
             [0, 0, 128],# Dark blue 
             [0, 128, 0],# Dark green 
             [0, 128, 128],# Dark cyan 
@@ -24,7 +22,7 @@ colorList = [[255, 0, 51],
             [128, 0, 128],# Dark magenta 
             [128, 128, 0],# Dark yellow 
             [128, 128, 128],# Dark gray 
-            [192, 192, 192]]# Light gray 
+            [192, 192, 192],[255, 0, 51]]# Light gray 
 
 class Polygon(object):
     # id = 0

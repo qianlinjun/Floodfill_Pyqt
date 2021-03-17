@@ -286,10 +286,11 @@ if __name__ == "__main__":
     db_pic_h = 800
     search_pic_w = 800
     search_pic_h = 800
-    # save_path = "C:\qianlinjun\graduate\gen_dem\output\img"
+    # data_path = "C:\qianlinjun\graduate\gen_dem\output\img"
 
-    save_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\switz-100-points"
-    scene_graphs = loadGraphsFromJson(save_path, visualize=False) #"8.59262657_46.899601"
+    # data_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\switz-100-points"
+    data_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\screen_100"
+    scene_graphs = loadGraphsFromJson(data_path, visualize=False) #"8.59262657_46.899601"
     
     if len(scene_graphs) <= 2:
         print("len(scene_graphs) <= 2")

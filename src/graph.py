@@ -4,6 +4,8 @@ import cv2
 import math
 import json
 import numpy as np
+np.set_printoptions(suppress=True)
+
 import networkx as nx
 # import gmatch4py as gm
 import matplotlib.pyplot as plt 
@@ -160,6 +162,38 @@ def loadGraphsFromJson(save_path, test_name=None, visualize=False):
     
     return scene_graphs
 
+def update_cost(g1, g2, veterx_edit_path, Cost_matrix):
+    '''
+    根据得到的编辑路径，重新更新结果
+    '''
+    cost_total = 0
+    cost_detail = []
+
+    g1_nodes = list(g1.nodes)
+    g2_nodes = list(g2.nodes)
+    for e in veterx_edit_path:
+        n1, n2 = e
+        cost = 0
+        if n1 == None:
+            #insert n2
+            cost = g2.nodes[n2]["scene_node"].area    
+        elif n2 == None:
+            #del n1
+            cost = g1.nodes[n1]["scene_node"].area
+        else:
+            # n1 substitute n2
+            # Cost_matrix
+            n1_row = g1_nodes.index(n1)
+            n2_col = g2_nodes.index(n2)
+            cost = Cost_matrix.C[n1_row, n2_col]
+        
+        cost_detail.append((e, cost))
+        cost_total += cost
+    # print("cost_detail", cost_detail)
+    return cost_total, cost_detail
+
+
+
 
 # 两个地物是否是同一个类别
 # node edit cost
@@ -226,25 +260,23 @@ def search_graph(query_G, scene_graphs):
     
     def node_del_cost(node1):
         # 当前节点和所有对方节点的替换损失最小值*0.9
-        
+        node1 = node1["scene_node"]
         return math.sqrt(node1.area)
 
-
-
     def node_ins_cost(node2):
-
-        return math.sqrt(node2.area)
-    
+        node2 = node2["scene_node"]
+        return math.sqrt(node2.area)    
 
     def edge_subst_cost(edge1, edge2):
-        # abs_angle = abs(edge1["angle"] - edge2["angle"])/3.1415926 * 180 # 3.14
-        # abs_dist  = abs(edge1["dist"] - edge2["dist"])
+        abs_angle = abs(edge1["angle"] - edge2["angle"])/3.1415926 * 180 * 0.4 # 3.14
+        abs_dist  = abs(edge1["dist"] - edge2["dist"]) * 0.2
         # print("edge cost:{}".format(abs_angle + abs_dist))
-        return 0 #abs_angle + abs_dist
+        return 0#abs_angle + abs_dist
     
 
     def edge_del_cost(node1):
         return 0
+
     def edge_ins_cost(node1):
         return 0
 
@@ -258,14 +290,15 @@ def search_graph(query_G, scene_graphs):
         # 自定义替换损失
         # 自定义插入 删除损失
         
-        
-        ge_dist, vertex_path, edge_path = nx.graph_edit_distance(query_G, scene_G, 
+        ge_dist, vertex_path, edge_path, Cv, Ce = nx.graph_edit_distance(query_G, scene_G, 
                                         node_subst_cost = node_subst_cost, 
                                         node_del_cost = node_del_cost,
                                         node_ins_cost = node_ins_cost,
                                         edge_subst_cost = edge_subst_cost,
                                         edge_del_cost = edge_del_cost,
                                         edge_ins_cost = edge_ins_cost)
+
+        update_cost(query_G, scene_G, vertex_path, Cv)
 
         # print("dist:{}".format(ge_dist))
         if minimum_cost > ge_dist:
@@ -289,14 +322,24 @@ if __name__ == "__main__":
     # data_path = "C:\qianlinjun\graduate\gen_dem\output\img"
 
     # data_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\switz-100-points"
-    data_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\screen_100"
+    data_path = "C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60"
     scene_graphs = loadGraphsFromJson(data_path, visualize=False) #"8.59262657_46.899601"
     
     if len(scene_graphs) <= 2:
         print("len(scene_graphs) <= 2")
         exit(0)
     
-    search_graph_id = 2 # 1 2  
+
+    search_graph_id = None
+    for idx, G in enumerate(scene_graphs):
+        # if "11_8.53155708_46.60886" in G.name:
+        # if "15_8.56048775_46.6160736" in G.name:
+        # if "118_8.67111206_46.7680435" in G.name:
+        if "143_8.63542366_46.6530571" in G.name:
+            search_graph_id = idx # 1 2
+    
+    print("search_graph_id:", search_graph_id)
+      
     search_graph(scene_graphs[search_graph_id], scene_graphs[0:search_graph_id] + scene_graphs[search_graph_id+1:])
 
     print("total: {} search: {} \n\n".format(len(scene_graphs), scene_graphs[search_graph_id].name))

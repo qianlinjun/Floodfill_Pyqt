@@ -143,7 +143,7 @@ class InstanceLabelTool(QWidget):
     def loadFileCallBack(self):
 
         # load qpixmap
-        fname, ret = QFileDialog.getOpenFileName(self, '选择图片', 'c:\\', 'Image files(*.jpg *.gif *.png)')
+        fname, ret = QFileDialog.getOpenFileName(self, '选择图片', 'C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60', 'Image files(*.jpg *.gif *.png)')
         if fname == "":
             print("no valid image")
             return
@@ -192,10 +192,10 @@ class InstanceLabelTool(QWidget):
     def switchFloodfillMode(self, e):
         if e > 0:
             self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_FIXED_RANGE | cv2.FLOODFILL_MASK_ONLY
-            self.spinbox.setValue(self.floodFillthread) #10
+            # self.spinbox.setValue(self.floodFillthread) #10
         else:
             self.floodfillFlags = 4 | (252<<8) | cv2.FLOODFILL_MASK_ONLY
-            self.spinbox.setValue(self.floodFillthread) # 5
+            # self.spinbox.setValue(self.floodFillthread) # 5
     
     def switchShowMask(self, e):
         if e > 0:

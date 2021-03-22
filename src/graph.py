@@ -3,6 +3,7 @@ import sys
 import cv2
 import math
 import json
+import heapq
 import numpy as np
 np.set_printoptions(suppress=True)
 
@@ -56,6 +57,22 @@ class SceneNode(object):
 
     def node_sub_cost(self, G1_node, G2_node):
         pass
+
+
+class  Edit():
+    def __init__(self, ori_cost, update_cost, G, vertex_path, edge_path):
+        self.ori_cost = ori_cost
+        self.ori_rank = None
+        self.update_cost = update_cost
+        self.update_rank = None
+        self.G    = G
+        self.vertex_path = vertex_path
+        self.edge_path   = edge_path
+    # def __lt__(self, other):
+    #     if self.cost < other.cost:
+    #         return True
+    #     else:
+    #         return False
 
 
 
@@ -176,10 +193,10 @@ def update_cost(g1, g2, veterx_edit_path, Cost_matrix):
         cost = 0
         if n1 == None:
             #insert n2
-            cost = g2.nodes[n2]["scene_node"].area    
+            cost = math.sqrt( g2.nodes[n2]["scene_node"].area )    
         elif n2 == None:
             #del n1
-            cost = g1.nodes[n1]["scene_node"].area
+            cost = math.sqrt( g1.nodes[n1]["scene_node"].area )
         else:
             # n1 substitute n2
             # Cost_matrix
@@ -286,32 +303,58 @@ def search_graph(query_G, scene_graphs):
     best_vertex_path = None 
     best_edge_path   = None
     
+    cal_result = []
     for scene_G in scene_graphs:
         # 自定义替换损失
         # 自定义插入 删除损失
         
-        ge_dist, vertex_path, edge_path, Cv, Ce = nx.graph_edit_distance(query_G, scene_G, 
-                                        node_subst_cost = node_subst_cost, 
-                                        node_del_cost = node_del_cost,
-                                        node_ins_cost = node_ins_cost,
-                                        edge_subst_cost = edge_subst_cost,
-                                        edge_del_cost = edge_del_cost,
-                                        edge_ins_cost = edge_ins_cost)
+        ori_cost, vertex_path, edge_path, Cv, Ce = nx.graph_edit_distance(query_G, scene_G, 
+                                                                        node_subst_cost = node_subst_cost, 
+                                                                        node_del_cost = node_del_cost,
+                                                                        node_ins_cost = node_ins_cost,
+                                                                        edge_subst_cost = edge_subst_cost,
+                                                                        edge_del_cost = edge_del_cost,
+                                                                        edge_ins_cost = edge_ins_cost)
 
-        update_cost(query_G, scene_G, vertex_path, Cv)
+        cost_update, cost_detail = update_cost(query_G, scene_G, vertex_path, Cv)
 
-        # print("dist:{}".format(ge_dist))
-        if minimum_cost > ge_dist:
-            minimum_cost = ge_dist
+        cal_result.append(Edit(ori_cost, cost_update, scene_G, vertex_path, edge_path))
+        
+
+        # heapq.nlargest()
+
+        # print("dist:{}".format(ori_cost))
+        if minimum_cost > cost_update:
+            minimum_cost = cost_update
             result_G     = scene_G
             best_vertex_path = vertex_path
             best_edge_path   = edge_path
         
-        print("G1: {} G2: {} dist:{}  edit_path{}\n\n".format(query_G.name.split("\\")[-1], scene_G.name.split("\\")[-1], ge_dist, vertex_path))
+        print("G1: {} G2: {} dist:{}  edit_path{}".format(query_G.name.split("\\")[-1], scene_G.name.split("\\")[-1], ori_cost, vertex_path))
+        print("update cost before:{} after:{} detail:{} \n\n".format(ori_cost, cost_update, cost_detail))
     
-    DrawGraph(result_G)
+
+    # DrawGraph(result_G)
     
     print("search result:{} cost:{} vertex path:{} edge path:{} \n".format(result_G.name, minimum_cost, best_vertex_path, edge_path))
+
+    # heapq.heapify(heap)
+    # sort_result = heapq.nsmallest(50, heap)
+    ori_sorted = sorted(cal_result, key = lambda edit : edit.ori_cost)
+    for idx, edit in enumerate(ori_sorted):
+        # print(item.G.name, item.cost)
+        edit.ori_rank = idx
+        ori_sorted[idx] = edit
+        # rank_result.append(edit)
+    
+    update_sorted = sorted(ori_sorted, key = lambda edit : edit.update_cost)
+    for idx, edit in enumerate(update_sorted):
+        # print(item.G.name, item.cost)
+        edit.update_rank = idx
+        # update_sorted[idx] = edit
+        print("{} {} ==> {}    {} ==> {}".format(edit.G.name, edit.ori_rank, edit.update_rank, edit.ori_cost, edit.update_cost))
+    
+
 
 
 if __name__ == "__main__":
@@ -333,9 +376,15 @@ if __name__ == "__main__":
     search_graph_id = None
     for idx, G in enumerate(scene_graphs):
         # if "11_8.53155708_46.60886" in G.name:
-        # if "15_8.56048775_46.6160736" in G.name:
+        
         # if "118_8.67111206_46.7680435" in G.name:
-        if "143_8.63542366_46.6530571" in G.name:
+        # if "143_8.63542366_46.6530571" in G.name:
+        # if "102_8.62759018_46.7402039" in G.name: no
+        # if "183_8.74401855_46.6736794" in G.name: ok
+        # if "15_8.56048775_46.6160736" in G.name: ok
+        # if "20_8.5722723_46.6212234" in G.name: no
+        # if "30_8.59407043_46.639164" in G.name: ok
+        if "100_8.62820911_46.7310219" in G.name:
             search_graph_id = idx # 1 2
     
     print("search_graph_id:", search_graph_id)

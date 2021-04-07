@@ -384,7 +384,12 @@ if __name__ == "__main__":
         # if "15_8.56048775_46.6160736" in G.name: ok
         # if "20_8.5722723_46.6212234" in G.name: no
         # if "30_8.59407043_46.639164" in G.name: ok
-        if "100_8.62820911_46.7310219" in G.name:
+        # if "100_8.62820911_46.7310219" in G.name: 
+        # if "110_8.64444923_46.7556992" in G.name: ok
+        # if "120_8.66698265_46.7730026" in G.name: ok
+        # if "130_8.72838211_46.6656761" in G.name: ok
+        # if "150_8.67672729_46.6547318" in G.name: ok
+        if 
             search_graph_id = idx # 1 2
     
     print("search_graph_id:", search_graph_id)

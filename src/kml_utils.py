@@ -85,7 +85,7 @@ def modify_kml_file(kml_path):
                 look_latitude=look_latitude, look_altitude = look_altitude, \
                 heading= heading, tilt=tilt, range=range_, latitude=lat, longitude=lon)
             
-            with open(r'C:\qianlinjun\graduate\switz-test-pts-3-17-11\{}.kml'.format(name),'w') as fp:
+            with open(r'C:\qianlinjun\graduate\data\switz-test-pts-3-23-fin\{}.kml'.format(name),'w') as fp:
                 fp.write(content)
             # idx += 1
         print(len(kml.Document.Placemark)) # 216地标
@@ -95,5 +95,5 @@ def modify_kml_file(kml_path):
 
 
 if __name__ == '__main__':
-    modify_kml_file("C:\qianlinjun\graduate\switz-test-pts-3-17-11.kml")
+    modify_kml_file("C:\qianlinjun\graduate\data\switz-test-pts-3-23-fin.kml")
 

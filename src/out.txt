@@ -2460,3 +2460,87 @@ node:5 --> 10 humoments: 15.54 iou: 0.6 iou_factor: 3.1 area_factor: 1.0 angle_f
 
 -----------------------------------------
 
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+5 10
+pixel_and_iou poly1:4797 poly2:4778 merge:3696
+poly1 area 4797  poly2 area 4778 inter area 3696
+poly1 angle -12.695058007820318
+node:5 --> 10 humoments: 15.54 iou: 0.6 iou_factor: 3.1 area_factor: 1.0 angle_factor:1 shape_cost: 48.9 
+
+
+
+
+
+-----------------------------------------
+
+11 12
+pixel_and_iou poly1:67648 poly2:60610 merge:51756
+poly1 area 67648  poly2 area 60610 inter area 51756
+poly1 angle -6.459081207778411
+poly2 angle -4.168142778860056
+node:11 --> 12 humoments: 1.05 iou: 0.7 iou_factor: 2.9 area_factor: 1.1 angle_factor:1 shape_cost: 3.4 
+
+
+
+
+
+-----------------------------------------
+
+11 12
+pixel_and_iou poly1:67648 poly2:60610 merge:51756
+poly1 area 67648  poly2 area 60610 inter area 51756
+poly1 angle -6.459081207778411 0.2905881822556676 0.030288696058963324
+poly2 angle -4.168142778860056 0.3793907553996838 0.021226052181510878
+node:11 --> 12 humoments: 1.05 iou: 0.7 iou_factor: 2.9 area_factor: 1.1 angle_factor:1 shape_cost: 3.4 
+
+
+
+
+
+-----------------------------------------
+
+11 12
+pixel_and_iou poly1:67648 poly2:60610 merge:51756
+poly1 area 67648  poly2 area 60610 inter area 51756
+poly1 angle -6.459081207778411 0.2905881822556676 0.030288696058963324 0.05842961570971696
+poly2 angle -4.168142778860056 0.3793907553996838 0.021226052181510878 0.05842961570971696
+node:11 --> 12 humoments: 1.05 iou: 0.7 iou_factor: 2.9 area_factor: 1.1 angle_factor:1 shape_cost: 3.4 
+
+
+
+
+
+-----------------------------------------
+
+11 12
+pixel_and_iou poly1:67648 poly2:60610 merge:51756
+poly1 area 67648  poly2 area 60610 inter area 51756
+poly1 angle -6.459081207778411 0.2905881822556676 0.030288696058963324 0.05842961570971696
+poly2 angle -4.168142778860056 0.3793907553996838 0.021226052181510878 -0.06644898903275005
+node:11 --> 12 humoments: 1.05 iou: 0.7 iou_factor: 2.9 area_factor: 1.1 angle_factor:1 shape_cost: 3.4 
+
+
+

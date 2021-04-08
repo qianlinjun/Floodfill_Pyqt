@@ -389,8 +389,7 @@ if __name__ == "__main__":
         # if "120_8.66698265_46.7730026" in G.name: ok
         # if "130_8.72838211_46.6656761" in G.name: ok
         # if "150_8.67672729_46.6547318" in G.name: ok
-        if 
-            search_graph_id = idx # 1 2
+        if search_graph_id = idx # 1 2
     
     print("search_graph_id:", search_graph_id)
       

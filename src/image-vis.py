@@ -1,5 +1,5 @@
 # encoding:utf8
-
+import os
 import sys
 import cv2
 from pathlib import Path
@@ -10,7 +10,7 @@ from utils import Polygon, PaintArea, getOnePolygon, mergePoly, Operation, \
                   cvimg_to_qtimg, savePolygons2Json, loadPolygonFromJson
 
 
-def loadJsonAndDraw(img_path):
+def loadJsonAndDraw(img_path, specify_poly_id=None):
     img_path = str(img_path)
     if "json" in img_path or "mask" in img_path:
         return
@@ -22,6 +22,8 @@ def loadJsonAndDraw(img_path):
         return
     
     json_path = img_path[:-4] + ".json"
+    if os.path.exists(json_path) is False:
+        return
 
     ori_img_hwc = cv_img.shape # h w c
     gray2 = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)       
@@ -46,6 +48,9 @@ def loadJsonAndDraw(img_path):
     dst = np.ones(cv_img.shape, dtype=np.uint8)*255
 
     for polygon in restore_polygons:
+        if specify_poly_id is not None and polygon.id != specify_poly_id:
+            continue
+
         #polygons_stack[::-1]:
         if len(polygon.contour) >= 3:
             # print("draw polygon area:{}".format(polygon.area))
@@ -70,15 +75,24 @@ def loadJsonAndDraw(img_path):
     #     mergePoly(ori_img_wh, polygons[0].contour, polygons[1].contour)
 
     img_add  = cv2.addWeighted(cv_img, alpha, dst, beta, gamma)# add mask
-    cv2.imwrite(img_path.replace(".png","_mask.png"), img_add)
-    # cv2.imshow("img_add", img_add)
-    # cv2.waitKey()
+    # cv2.imwrite(img_path.replace(".png","_mask.png"), img_add)
+    cv2.imshow("img_add", img_add)
+    cv2.imshow("dst", dst)
+    cv2.waitKey()
 
-
-if __name__ == '__main__':
-    # img_path = r"C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60\1_8.63674355_46.8405838.png"
+def vis_all():
     img_dir = r"C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60"
     for img_path in Path(img_dir).iterdir():
         print(img_path)
         loadJsonAndDraw(img_path)
+
+def vis_poly():
+    img_path = r"C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60\12_8.5369873_46.6108665.png"
+    specify_poly_id = 13
+    loadJsonAndDraw(img_path, specify_poly_id)
+
+if __name__ == '__main__':
+    vis_poly()
+
+
         

@@ -417,7 +417,7 @@ class InstanceLabelTool(QWidget):
             scaled_qimg   = qt_add_img.scaled(self.scaled_img.size())
             scaled_Pixmap = QPixmap.fromImage(scaled_qimg)
         else:
-            scaled_Pixmap   = self.scaled_img
+            scaled_Pixmap = self.scaled_img
         
         self.paintArea.set_pos_and_img(self.left_top_point, scaled_Pixmap)
         self.repaint()

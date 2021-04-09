@@ -229,22 +229,35 @@ def fillColor(img, imgh, imgw, cropRow, mean_pixel=None):
 
     # if mean_pixel is not None:
     gray = img[:,:,1]
-    max_pix = 250
-    last_pix = 180
+    max_pix = 230
+    last_pix = 230
     for w in range(imgw):
         for h in range(cropRow, -1, -1):
             # mountain 0  blank 255
             #停止条件
-            if h< cropRow and gray[h,w] < 250:
+            if h< cropRow and gray[h,w] < 240:
+                cur_pix = int(gray[h,w])
+                if  cur_pix < 50:
+                    cur_pix = 50
+                start_pix = 0.9 * last_pix + 0.1*cur_pix #和上一个像素也有关系
+
                 
-                start_pix = 0.9*last_pix + 0.1*int(gray[h,w]) #和上一个像素也有关系
-                last_pix = gray[h,w]#start_pix
 
                 k_slope = (max_pix - start_pix)*1.0/(cropRow - h)
+                # print( "info： {} {} {} {} {} {} {}".format(last_pix,  gray[h,w],  max_pix ,start_pix, cropRow ,h, k_slope)  )
+                last_pix = start_pix#gray[h,w]#start_pix
+
                 img[h:cropRow,w] = [ [k_slope*(r - h)+start_pix] * 3 for r in range(h, cropRow)]  #int(mean_pixel)#min(int(gray[h,w]), 255)
+
+                
+                # if last_pix == 255:
+                #     print("last_pix = gray[h,w] {} {}".format(h,w))
+
                 break
-            elif h == cropRow:
-                last_pix = int(gray[h,w]) #255
+            # elif h == cropRow:
+            #     last_pix = int(gray[h,w]) #255
+            #     if last_pix == 255:
+            #         print("last_pix = int(gray[h,w]) {} {}".format(h,w))
     
     
     img[cropRow:, :] = [255,255,255]
@@ -256,9 +269,9 @@ def fillColor(img, imgh, imgw, cropRow, mean_pixel=None):
     return img
 
 
-def main():
-    for imgPath in Path(r"C:\qianlinjun\graduate\test-data\test-simple").iterdir():
-        # for imgPath in imgPaths:
+def main(imgPaths=None):
+    # for imgPath in Path(r"C:\qianlinjun\graduate\test-data\test-simple").iterdir():
+    for imgPath in imgPaths:
         imgPath = str(imgPath)
         if any(["rgb" not in imgPath , "crop" in imgPath , "line" in imgPath, os.path.isdir(imgPath) is True]):
             continue
@@ -292,24 +305,24 @@ def main():
         fill_img = fillColor(renderImg, img_h, img_w, simple_row, mean_pixel)
         cv2.imwrite(render_imgPath.replace(".png", "_crop.png"), fill_img)
     
-# def muti_process_run(worker_num=10):
-#     imgPaths = list(Path(r"C:\qianlinjun\graduate\test-data\test-simple").iterdir())
-#     print(imgPaths)
-#     workPerProcess = len(imgPaths)//worker_num
-#     folders_per_worker = []
-#     for i in range(worker_num):
-#         _list = imgPaths[i*workPerProcess:(i+1)*workPerProcess ]
-#         folders_per_worker.append(_list)
+def muti_process_run(worker_num=10):
+    imgPaths = list(Path(r"C:\qianlinjun\graduate\test-data\test-simple").iterdir())
+    # print(imgPaths)
+    workPerProcess = len(imgPaths)//worker_num
+    # folders_per_worker = []
+    # for i in range(worker_num):
+    #     _list = imgPaths[i*workPerProcess:(i+1)*workPerProcess ]
+    #     folders_per_worker.append(_list)
         
-#     work_list = []
-#     for i in range(worker_num):
-#         # print(data, len(data))
-#         work_list.append(Process(target=target,name="worker"+str(i), args=( folders_per_worker[i])))
+    work_list = []
+    for i in range(worker_num):
+        # print(data, len(data))
+        work_list.append(Process(target=main,args=[imgPaths[i*workPerProcess:(i+1)*workPerProcess ] ] )) #name="worker"+str(i), 
     
-#     for work in work_list:
-#         work.start()
-#     for work in work_list:
-#         work.join()
+    for work in work_list:
+        work.start()
+    for work in work_list:
+        work.join()
 
 
 
@@ -320,5 +333,5 @@ def main():
 
 if __name__ == "__main__":
     # testImgPath = r"C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60 -debug\218_rgb_8.57135487_46.6658058.png"
-    main()
-    # muti_process_run()
+    # main()
+    muti_process_run()

@@ -377,6 +377,7 @@ def loadPolygonFromJson(json_path):
     if os.path.exists(json_path) is False:
         return max_objectId, polygons
     
+    polygons_list=[]
     try:
         polygons_list = json.load(open(json_path,'r'))
     except Exception as e:

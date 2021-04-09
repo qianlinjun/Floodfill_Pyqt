@@ -303,7 +303,7 @@ def main(imgPaths=None):
         
 
         fill_img = fillColor(renderImg, img_h, img_w, simple_row, mean_pixel)
-        cv2.imwrite(render_imgPath.replace(".png", "_crop.png"), fill_img)
+        cv2.imwrite(render_imgPath.replace("test-simple", "crop"), fill_img)
     
 def muti_process_run(worker_num=10):
     imgPaths = list(Path(r"C:\qianlinjun\graduate\test-data\test-simple").iterdir())

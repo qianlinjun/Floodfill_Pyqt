@@ -16,10 +16,6 @@ from poly_util import get_iou, get_dist
 img_w , img_h = 1024, 1024
 
 
-fsock = open('C:\qianlinjun\graduate\gen_dem\output\src\graph_match_out.txt', 'a+')
-sys.stdout = fsock
-print("\n\n-----------------------------------------\n")
-
 def compute_angle(G_node1, G_node2):
     '''
     return anti-clockwise raidus
@@ -104,8 +100,9 @@ def buildGraphFromJson(json_file):
     # 山体 水 平原 森林 房屋
     # 同一个类别计算相似度
     scene_graph = nx.Graph(name=json_file) # 建立一个空的无向图G
-    
     polygons = json.load(open(json_file,'r'))
+    if len(polygons) == 0:
+        return None
 
     # [1] add object nodes from image
     total_moment_x = 0
@@ -166,11 +163,16 @@ def loadGraphsFromJson(save_path, test_name=None, visualize=False):
         if test_name is not None and test_name not in json_file:
             continue
         
+        
         json_path = os.path.join(save_path, json_file)
+
+        print("{} \n".format(json_path))
+
         # scene_graph = SceneGraph()
         # img1_res = "C:\qianlinjun\graduate\gen_dem\output\8.59262657_46.899601.json"
         scene_graph = buildGraphFromJson(json_path)
-        scene_graphs.append(scene_graph)
+        if scene_graph is not None:
+            scene_graphs.append(scene_graph)
 
         if visualize is True:
             # color_map = [[255, 0, 51], [0, 255, 255],[0, 255, 0], [255, 0, 255], [0,0,255]]
@@ -358,6 +360,10 @@ def search_graph(query_G, scene_graphs):
 
 
 if __name__ == "__main__":
+    fsock = open('C:\qianlinjun\graduate\src\src\graph_match_out.txt', 'a+')
+    sys.stdout = fsock
+    print("\n\n-----------------------------------------\n")
+
     db_pic_w = 800
     db_pic_h = 800
     search_pic_w = 800
@@ -365,7 +371,7 @@ if __name__ == "__main__":
     # data_path = "C:\qianlinjun\graduate\gen_dem\output\img"
 
     # data_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\switz-100-points"
-    data_path = "C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60"
+    data_path = r"C:\qianlinjun\graduate\test-data\crop"
     scene_graphs = loadGraphsFromJson(data_path, visualize=False) #"8.59262657_46.899601"
     
     if len(scene_graphs) <= 2:
@@ -389,7 +395,8 @@ if __name__ == "__main__":
         # if "120_8.66698265_46.7730026" in G.name: ok
         # if "130_8.72838211_46.6656761" in G.name: ok
         # if "150_8.67672729_46.6547318" in G.name: ok
-        if search_graph_id = idx # 1 2
+        if "15_8.56048775_46.6160736" in G.name:
+           search_graph_id = idx # 1 2
     
     print("search_graph_id:", search_graph_id)
       

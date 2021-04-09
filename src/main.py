@@ -143,7 +143,7 @@ class InstanceLabelTool(QWidget):
     def loadFileCallBack(self):
 
         # load qpixmap
-        fname, ret = QFileDialog.getOpenFileName(self, '选择图片', 'C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60', 'Image files(*.jpg *.gif *.png)')
+        fname, ret = QFileDialog.getOpenFileName(self, '选择图片', 'C:\qianlinjun\graduate\test-data\crop', 'Image files(*.jpg *.gif *.png)')
         if fname == "":
             print("no valid image")
             return

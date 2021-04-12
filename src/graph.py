@@ -373,14 +373,17 @@ if __name__ == "__main__":
     # data_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\switz-100-points"
     data_path = r"C:\qianlinjun\graduate\test-data\crop"
     scene_graphs = loadGraphsFromJson(data_path, visualize=False) #"8.59262657_46.899601"
-    
+
+    query_path = r"C:\qianlinjun\graduate\test-data\query"
+    query_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601"
+
     if len(scene_graphs) <= 2:
         print("len(scene_graphs) <= 2")
         exit(0)
     
 
     search_graph_id = None
-    for idx, G in enumerate(scene_graphs):
+    for idx, G in enumerate(query_graphs):
         # if "11_8.53155708_46.60886" in G.name:
         
         # if "118_8.67111206_46.7680435" in G.name:
@@ -395,12 +398,17 @@ if __name__ == "__main__":
         # if "120_8.66698265_46.7730026" in G.name: ok
         # if "130_8.72838211_46.6656761" in G.name: ok
         # if "150_8.67672729_46.6547318" in G.name: ok
-        if "15_8.56048775_46.6160736" in G.name:
+        if "15-near" in G.name:
+
            search_graph_id = idx # 1 2
     
     print("search_graph_id:", search_graph_id)
+
+    queryGraph = query_graphs[search_graph_id]#scene_graphs[search_graph_id]
+    GraphGallery = scene_graphs #scene_graphs[0:search_graph_id] + scene_graphs[search_graph_id+1:]
+
       
-    search_graph(scene_graphs[search_graph_id], scene_graphs[0:search_graph_id] + scene_graphs[search_graph_id+1:])
+    search_graph(queryGraph, GraphGallery)
 
     print("total: {} search: {} \n\n".format(len(scene_graphs), scene_graphs[search_graph_id].name))
     fsock.close()

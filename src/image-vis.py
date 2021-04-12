@@ -75,13 +75,13 @@ def loadJsonAndDraw(img_path, specify_poly_id=None):
     #     mergePoly(ori_img_wh, polygons[0].contour, polygons[1].contour)
 
     img_add  = cv2.addWeighted(cv_img, alpha, dst, beta, gamma)# add mask
-    # cv2.imwrite(img_path.replace(".png","_mask.png"), img_add)
-    cv2.imshow("img_add", img_add)
-    cv2.imshow("dst", dst)
-    cv2.waitKey()
+    cv2.imwrite(img_path.replace(".png","_mask.png"), img_add)
+    # cv2.imshow("img_add", img_add)
+    # cv2.imshow("dst", dst)
+    # cv2.waitKey()
 
 def vis_all():
-    img_dir = r"C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60"
+    img_dir = r"C:\qianlinjun\graduate\test-data\crop"
     for img_path in Path(img_dir).iterdir():
         print(img_path)
         loadJsonAndDraw(img_path)
@@ -92,7 +92,7 @@ def vis_poly():
     loadJsonAndDraw(img_path, specify_poly_id)
 
 if __name__ == '__main__':
-    vis_poly()
+    vis_all()
 
 
         

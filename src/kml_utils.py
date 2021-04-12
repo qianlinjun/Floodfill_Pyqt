@@ -2,6 +2,7 @@ import os
 import numpy as np
 from pykml import parser
 from jinja2 import Environment, FileSystemLoader
+from pathlib import Path
 
 path = '{}/templates/'.format(os.path.dirname(__file__))
 
@@ -92,8 +93,40 @@ def modify_kml_file(kml_path):
 
 
 
+def create_kml_from_txt(txtDir):
+    from lxml import etree  #将KML节点输出为字符串
+    import xlrd             #操作Excel
+    from pykml.factory import KML_ElementMaker as KML #使用factory模块
+    #使用第一个点创建Folder
+    fold = KML.Folder(KML.Placemark(
+        KML.Point(KML.coordinates('0,0,0'))
+        )
+    )
+
+
+    txtPathObj = Path(txtDir)
+    for filePath in txtPathObj.iterdir():
+        filePath = str(filePath)
+        if "txt" in filePath:
+            with open(filePath, "r") as txt_f:
+                txt_conts = txt_f.readlines()
+                name = txt_conts[6].strip() 
+                lon = txt_conts[2].strip()
+                lat = txt_conts[1].strip()
+                fold.append(KML.Placemark(KML.name(name),
+                KML.Point(KML.coordinates(str(lon) +','+ str(lat) +',0')))
+                )
+
+    #使用etree将KML节点输出为字符串数据
+    content = etree.tostring(etree.ElementTree(fold),pretty_print=True)
+    # print(content)
+    #保存到文件，然后就可以在Google地球中打开了
+    with open(r'C:\qianlinjun\graduate\test-data\R4\R4.kml', 'wb') as fp:
+        fp.write(content)
+
 
 
 if __name__ == '__main__':
-    modify_kml_file("C:\qianlinjun\graduate\data\switz-test-pts-3-23-fin.kml")
+    # modify_kml_file("C:\qianlinjun\graduate\data\switz-test-pts-3-23-fin.kml")
+    create_kml_from_txt(r"C:\qianlinjun\graduate\test-data\R4")
 

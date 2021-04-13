@@ -4,9 +4,11 @@ import cv2
 import math
 import json
 import heapq
+import time
 import numpy as np
 np.set_printoptions(suppress=True)
 
+from pykml import parser
 import networkx as nx
 # import gmatch4py as gm
 import matplotlib.pyplot as plt 
@@ -14,6 +16,9 @@ import matplotlib.pyplot as plt
 from poly_util import get_iou, get_dist
 
 img_w , img_h = 1024, 1024
+
+
+__console__=sys.stdout
 
 
 def compute_angle(G_node1, G_node2):
@@ -166,7 +171,7 @@ def loadGraphsFromJson(save_path, test_name=None, visualize=False):
         
         json_path = os.path.join(save_path, json_file)
 
-        print("{} \n".format(json_path))
+        # print("{} \n".format(json_path))
 
         # scene_graph = SceneGraph()
         # img1_res = "C:\qianlinjun\graduate\gen_dem\output\8.59262657_46.899601.json"
@@ -293,11 +298,12 @@ def search_graph(query_G, scene_graphs):
         return 0#abs_angle + abs_dist
     
 
-    def edge_del_cost(node1):
-        return 0
+    def edge_del_cost(edge1):
+        
+        return 0#edge1["dist"]*0.2
 
-    def edge_ins_cost(node1):
-        return 0
+    def edge_ins_cost(edge2):
+        return 0#edge2["dist"]*0.2
 
 
     minimum_cost = 100000000000
@@ -357,13 +363,23 @@ def search_graph(query_G, scene_graphs):
         print("{} {} ==> {}    {} ==> {}".format(edit.G.name, edit.ori_rank, edit.update_rank, edit.ori_cost, edit.update_cost))
     
 
+# def load_meta(kmlPath):
+#     meatDict = {}
+#     with open(kmlPath, 'r') as f:
+#         kml = parser.parse(f).getroot()
+#         for pt in kml.Document.Placemark: # 遍历所有的Placemark Document.Placemark  
+#             print(pt)
+#             name = pt.name
+#             coods = str(pt.Point.coordinates)
+
+#             lon = float(coods.split(",")[0])
+#             lat = float(coods.split(",")[1])
+
+#             # heading = pt.LookAt.heading
+#             meatDict
 
 
-if __name__ == "__main__":
-    fsock = open('C:\qianlinjun\graduate\src\src\graph_match_out.txt', 'a+')
-    sys.stdout = fsock
-    print("\n\n-----------------------------------------\n")
-
+def test(result_save_dir):
     db_pic_w = 800
     db_pic_h = 800
     search_pic_w = 800
@@ -374,23 +390,52 @@ if __name__ == "__main__":
     data_path = r"C:\qianlinjun\graduate\test-data\crop"
     scene_graphs = loadGraphsFromJson(data_path, visualize=False) #"8.59262657_46.899601"
 
+    # query_path = r"C:\qianlinjun\graduate\test-data\query"
+    # query_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601"
+    
+    # R4
     query_path = r"C:\qianlinjun\graduate\test-data\query"
-    query_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601"
+    query_graphs = loadGraphsFromJson(data_path, visualize=False) #"8.59262657_46.899601"
 
     if len(scene_graphs) <= 2:
         print("len(scene_graphs) <= 2")
         exit(0)
     
 
-    search_graph_id = None
     for idx, G in enumerate(query_graphs):
+        sys.stdout = __console__
+        print("query_graph_id:", idx)
+
+        queryGraph = query_graphs[idx]#scene_graphs[idx]
+        queryName = queryGraph.name
+        # lon lat
+        queryLoc  = list(map(float, queryName.split("\\")[-1].replace(".json","").split("_")[1:]))
+        queryResultName = queryName.split("\\")[-1].replace(".json","")
+        queryResultFile = os.path.join(result_save_dir, "{}.txt".format(queryResultFile))
+
+        fsock = open(queryResultFile, 'a+')
+        sys.stdout = fsock
+        print("\n\n-----------------------------------------\n")
+
+        #*******# search
+        GraphGallery =scene_graphs[0:idx] + scene_graphs[idx+1:]# scene_graphs #
+        search_graph(queryGraph, GraphGallery)
+        
+        print("total: {} search: {} \n\n".format(len(scene_graphs), queryName))
+        fsock.close()
+
+
+        #*******# validation
+        val_res = validate(queryLoc, queryResultFile)
+        
+        
         # if "11_8.53155708_46.60886" in G.name:
         
         # if "118_8.67111206_46.7680435" in G.name:
         # if "143_8.63542366_46.6530571" in G.name:
         # if "102_8.62759018_46.7402039" in G.name: no
         # if "183_8.74401855_46.6736794" in G.name: ok
-        # if "15_8.56048775_46.6160736" in G.name: ok
+        # if "15_8.56048775_46.6160736" in G.name: #ok
         # if "20_8.5722723_46.6212234" in G.name: no
         # if "30_8.59407043_46.639164" in G.name: ok
         # if "100_8.62820911_46.7310219" in G.name: 
@@ -398,17 +443,27 @@ if __name__ == "__main__":
         # if "120_8.66698265_46.7730026" in G.name: ok
         # if "130_8.72838211_46.6656761" in G.name: ok
         # if "150_8.67672729_46.6547318" in G.name: ok
-        if "15-near" in G.name:
+        # if "2011-10-04_14.42.53_01024" in G.name:
+        # if "dsc02737_01024" in G.name:ok
+        # if "dsc02729_01024" in G.name: ok
+        # if "2011-10-04_14.26.13_01024" in G.name: ok
+        # if "183_8.74401855_46.6736794" in G.name:
 
-           search_graph_id = idx # 1 2
+        
+        
+
+
+
+
+
+if __name__ == "__main__":
+    exper_name = "first"
+    exper_folder = time.strftime("%Y-%m-%d_%H_%M_%S", time.localtime()) + "_" + exper_name
+    exper_dir = os.path.join("C:\qianlinjun\graduate\src\src\output"  , exper_folder)
+    if os.path.exists(exper_dir) is False:
+        os.makedirs(exper_dir)
     
-    print("search_graph_id:", search_graph_id)
+    test(exper_dir)
+   
 
-    queryGraph = query_graphs[search_graph_id]#scene_graphs[search_graph_id]
-    GraphGallery = scene_graphs #scene_graphs[0:search_graph_id] + scene_graphs[search_graph_id+1:]
-
-      
-    search_graph(queryGraph, GraphGallery)
-
-    print("total: {} search: {} \n\n".format(len(scene_graphs), scene_graphs[search_graph_id].name))
-    fsock.close()
+   

@@ -459,7 +459,11 @@ class InstanceLabelTool(QWidget):
 
         if e.angleDelta().y() < 0:
             # 放大图片
-            self.scaled_img = self.qImg.scaled(self.scaled_img.width()-15, self.scaled_img.height()-15)
+            # new_w/w = new_h/h
+            new_width = self.scaled_img.width()-15
+            new_height = new_width * self.ori_img_hwc[0]/self.ori_img_hwc[1]
+
+            self.scaled_img = self.qImg.scaled(new_width, new_height)
             new_left = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() + 5)
             new_top = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() + 5)
             # print(new_w, new_h)
@@ -469,7 +473,9 @@ class InstanceLabelTool(QWidget):
 
         elif e.angleDelta().y() > 0:
             # 缩小图片
-            self.scaled_img = self.qImg.scaled(self.scaled_img.width()+15, self.scaled_img.height()+15)
+            new_width = self.scaled_img.width()+15
+            new_height = new_width * self.ori_img_hwc[0]/self.ori_img_hwc[1]
+            self.scaled_img = self.qImg.scaled(new_width, new_height)
             new_left = e.x() - (self.scaled_img.width() * (e.x() - self.left_top_point.x())) / (self.scaled_img.width() - 5)
             new_top = e.y() - (self.scaled_img.height() * (e.y() - self.left_top_point.y())) / (self.scaled_img.height() - 5)
             self.left_top_point = QPoint(new_left, new_top)

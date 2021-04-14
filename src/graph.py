@@ -295,15 +295,15 @@ def search_graph(query_G, scene_graphs):
         abs_angle = abs(edge1["angle"] - edge2["angle"])/3.1415926 * 180 * 0.4 # 3.14
         abs_dist  = abs(edge1["dist"] - edge2["dist"]) * 0.2
         # print("edge cost:{}".format(abs_angle + abs_dist))
-        return 0#abs_angle + abs_dist
+        return abs_angle + abs_dist
     
 
     def edge_del_cost(edge1):
         
-        return 0#edge1["dist"]*0.2
+        return edge1["dist"]*0.2
 
     def edge_ins_cost(edge2):
-        return 0#edge2["dist"]*0.2
+        return edge2["dist"]*0.2
 
 
     minimum_cost = 100000000000
@@ -324,22 +324,23 @@ def search_graph(query_G, scene_graphs):
                                                                         edge_del_cost = edge_del_cost,
                                                                         edge_ins_cost = edge_ins_cost)
 
-        cost_update, cost_detail = update_cost(query_G, scene_G, vertex_path, Cv)
-
+        # cost_update, cost_detail = update_cost(query_G, scene_G, vertex_path, Cv)
+        cost_update = ori_cost
         cal_result.append(Edit(ori_cost, cost_update, scene_G, vertex_path, edge_path))
         
 
         # heapq.nlargest()
 
         # print("dist:{}".format(ori_cost))
-        if minimum_cost > cost_update:
-            minimum_cost = cost_update
+        if minimum_cost > ori_cost:
+            minimum_cost = ori_cost
             result_G     = scene_G
             best_vertex_path = vertex_path
             best_edge_path   = edge_path
         
         print("G1: {} G2: {} dist:{}  edit_path{}".format(query_G.name.split("\\")[-1], scene_G.name.split("\\")[-1], ori_cost, vertex_path))
-        print("update cost before:{} after:{} detail:{} \n\n".format(ori_cost, cost_update, cost_detail))
+        # print("update cost before:{} after:{} detail:{} \n\n".format(ori_cost, cost_update, cost_detail))
+        print("update cost before:{} after:{} \n\n".format(ori_cost, cost_update))
     
 
     # DrawGraph(result_G)
@@ -354,13 +355,17 @@ def search_graph(query_G, scene_graphs):
         edit.ori_rank = idx
         ori_sorted[idx] = edit
         # rank_result.append(edit)
-    
+        # print("{} {}    {} ==> {}".format(edit.G.name, edit.ori_rank, edit.ori_cost))
+
+
     update_sorted = sorted(ori_sorted, key = lambda edit : edit.update_cost)
     for idx, edit in enumerate(update_sorted):
         # print(item.G.name, item.cost)
         edit.update_rank = idx
         # update_sorted[idx] = edit
         print("{} {} ==> {}    {} ==> {}".format(edit.G.name, edit.ori_rank, edit.update_rank, edit.ori_cost, edit.update_cost))
+    
+    return ori_sorted
     
 
 # def load_meta(kmlPath):
@@ -377,6 +382,52 @@ def search_graph(query_G, scene_graphs):
 
 #             # heading = pt.LookAt.heading
 #             meatDict
+
+
+from math import radians, cos, sin, asin, sqrt
+def meters_from_latlon(lon1, lat1, lon2, lat2): # 经度1，纬度1，经度2，纬度2 （十进制度数）
+    """
+    Calculate the great circle distance between two points 
+    on the earth (specified in decimal degrees)
+    """
+    # 将十进制度数转化为弧度
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+
+    # haversine公式
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    r = 6371 # 地球平均半径，单位为公里
+    return c * r * 1000
+
+val_count = 0
+
+
+
+def validate(queryLoc, searchResut):
+    # global val_count
+    val_count = 0
+    resDistList = []
+    for idx, res in enumerate(searchResut):
+        res_name = res.G.name.split("\\")[-1].replace(".json","")
+        resLoc = res_name.split("_")[1:]
+        # lon lat
+        resLoc = list(map(float, resLoc))
+
+        dist = meters_from_latlon(queryLoc[0], queryLoc[1], resLoc[0], resLoc[1])
+        # print("dist", , queryLoc[0], queryLoc[1], resLoc[0], resLoc[1], dist)
+        # print()
+        resDistList.append(res_name+"|"+str(dist))
+        if dist < 1000 and idx  < 25:
+            val_count += 1
+            print("id:{} {} {}".format(idx, res_name, dist))
+
+    return val_count, resDistList
+
+
+
+
 
 
 def test(result_save_dir):
@@ -403,15 +454,15 @@ def test(result_save_dir):
     
 
     for idx, G in enumerate(query_graphs):
-        sys.stdout = __console__
-        print("query_graph_id:", idx)
+        
+        print("query_graph_id:", idx," ", G.name)
 
         queryGraph = query_graphs[idx]#scene_graphs[idx]
         queryName = queryGraph.name
         # lon lat
         queryLoc  = list(map(float, queryName.split("\\")[-1].replace(".json","").split("_")[1:]))
         queryResultName = queryName.split("\\")[-1].replace(".json","")
-        queryResultFile = os.path.join(result_save_dir, "{}.txt".format(queryResultFile))
+        queryResultFile = os.path.join(result_save_dir, "{}.txt".format(queryResultName))
 
         fsock = open(queryResultFile, 'a+')
         sys.stdout = fsock
@@ -419,14 +470,23 @@ def test(result_save_dir):
 
         #*******# search
         GraphGallery =scene_graphs[0:idx] + scene_graphs[idx+1:]# scene_graphs #
-        search_graph(queryGraph, GraphGallery)
+        search_result = search_graph(queryGraph, GraphGallery)
         
         print("total: {} search: {} \n\n".format(len(scene_graphs), queryName))
         fsock.close()
 
+        sys.stdout = __console__
+
 
         #*******# validation
-        val_res = validate(queryLoc, queryResultFile)
+        # top 1 5 10 20
+        # fsock = open(queryResultFile, 'a+')
+        # sys.stdout = fsock
+        resDistList = validate(queryLoc, search_result)
+        # fsock.close()
+
+        with open(os.path.join(result_save_dir, "validate.txt"), "a+") as res_f:
+            res_f.write(" ".join(resDistList) + "\n")
         
         
         # if "11_8.53155708_46.60886" in G.name:
@@ -443,27 +503,182 @@ def test(result_save_dir):
         # if "120_8.66698265_46.7730026" in G.name: ok
         # if "130_8.72838211_46.6656761" in G.name: ok
         # if "150_8.67672729_46.6547318" in G.name: ok
-        # if "2011-10-04_14.42.53_01024" in G.name:
+        # if "2011-10-04_14.42.53_01024" in G.name: ok
         # if "dsc02737_01024" in G.name:ok
         # if "dsc02729_01024" in G.name: ok
         # if "2011-10-04_14.26.13_01024" in G.name: ok
         # if "183_8.74401855_46.6736794" in G.name:
 
+
+
+def analysis_result():
+    # with open(path, "r") as f:
+    #     resList = f.readlines()
+    #     for res in resList:
+    #         res = res.strip()
+    data_path = r"C:\qianlinjun\graduate\test-data\crop"
+    scene_graphs = loadGraphsFromJson(data_path, visualize=False) #"8.59262657_46.899601"
+
+    if len(scene_graphs) <= 2:
+        print("len(scene_graphs) <= 2")
+        exit(0)
+    
+    resutPath = r"C:\qianlinjun\graduate\src\src\output\2021-04-13_14_59_32_first\validate.txt"
+    with open(resutPath, "r") as f:
+        allResList = f.readlines()
+        # for res in allResList:
+        #     res = res.strip().spilt(" ")
+
+    
+    count = 0
+    for g_idx, G in enumerate(scene_graphs):
+        ifvalid = False
+        resList = allResList[g_idx]
+        resList = resList.strip().split(" ")
+        for res_idx, res in enumerate(resList):
+            filename, ged_dist = res.split("|")
+            ged_dist = float(ged_dist)
+            if ged_dist < 1500 and res_idx < topk :
+                if ifvalid is False:
+                    ifvalid = True
+                    print("query{}".format(G.name))
+                print(filename, ged_dist)
         
+        if ifvalid is True:
+            count += 1
+                
+        print("\n")
+    print("valid query", count)
+
+
+
+
+
+
+def query_one():
+    
+
+    # db_pic_w = 800
+    # db_pic_h = 800
+    # search_pic_w = 800
+    # search_pic_h = 800
+    # data_path = "C:\qianlinjun\graduate\gen_dem\output\img"
+
+    # data_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\switz-100-points"
+    data_path = r"C:\qianlinjun\graduate\test-data\crop"
+    scene_graphs = loadGraphsFromJson(data_path, visualize=False) #"8.59262657_46.899601"
+    query_path = r"C:\qianlinjun\graduate\test-data\query"
+    query_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601"
+
+
+    if len(scene_graphs) <= 2:
+        print("len(scene_graphs) <= 2")
+        exit(0)
+    
+
+    search_graph_id = None
+    result_save_dir = r'C:\qianlinjun\graduate\src\src\output\4_14_with_edge_cost'
+    for idx, G in enumerate(query_graphs):
         
+
+        queryGraph = query_graphs[idx]#scene_graphs[idx]
+        queryName = queryGraph.name
+        # lon lat
+        queryLoc  = list(map(float, queryName.split("\\")[-1].replace(".json","").split("_")[1:]))
+
+        queryResultName = queryName.split("\\")[-1].replace(".json","")
+        queryResultFile = os.path.join(result_save_dir, "{}.txt".format(queryResultName))
+
+        fsock = open(queryResultFile, 'w')
+        sys.stdout = fsock
+
+        print("query_graph_id:", idx," ", G.name)
+
+        # if "11_8.53155708_46.60886" in G.name:
+        
+        # if "118_8.67111206_46.7680435" in G.name:
+        # if "143_8.63542366_46.6530571" in G.name:
+        # if "102_8.62759018_46.7402039" in G.name: no
+        # if "183_8.74401855_46.6736794" in G.name: ok
+        # if "15_8.56048775_46.6160736" in G.name: ok
+        # if "20_8.5722723_46.6212234" in G.name: no
+        # if "30_8.59407043_46.639164" in G.name: ok
+        # if "100_8.62820911_46.7310219" in G.name: 
+        # if "110_8.64444923_46.7556992" in G.name: ok
+        # if "120_8.66698265_46.7730026" in G.name: ok
+        # if "130_8.72838211_46.6656761" in G.name: ok
+        # if "150_8.67672729_46.6547318" in G.name: ok
+
+
+
+        # query data
+        # edit dist
+        # if "0_8.627420884109522_46.73040070850499" in G.name: no
+        # if "2_8.661549221648235_46.762191499942716" in G.name: ok
+        # if "3_8.668588417513178_46.76605412564999" in G.name: ok 7
+        # if "4_8.667804120073523_46.77264779281908" in G.name: ok
+        # if "5_8.666104611927661_46.777990354059405" in G.name: no
+        # if "6_8.721228366639377_46.67035726569055" in G.name:ok
+        # if "7_8.536763342504853_46.6108559967464" in G.name: 22
+        # if "8_8.726834071907735_46.665046847857845" in G.name: ok
+        # if "10_8.589164277703366_46.63544153957453" in G.name: no
+        # if "11_8.559510636370614_46.61598001188686" in G.name:ok
+        # if "13_8.689715478122594_46.649111059882486" in G.name: 9
+        # if "14_8.69324112991896_46.64961928081463" in G.name: ok
+        # if "15_8.560242080624269_46.61605531981419" in G.name:ok
+
+        
+        # if "16_8.589176594608503_46.66248885460725" in G.name: 12
+        # if "18_8.6339998_46.737" in G.name:ok 350
+        # if "19_8.6204996_46.886002" in G.name: ok 300 top8
+        # if "20_8.643_46.817" in G.name:no
+        # if "21_8.6160002_46.719002" in G.name: no 
+        # if "25_8.59218502_46.6390839" in G.name: ok
+        # if "29_8.598801261984727_46.702605316063114" in G.name: #ok 24 232 加了边代价之后提升
+        search_graph_id = idx # 1 2
+    
+        if search_graph_id is None:
+            print("search_graph_id is None")
+        else:
+            print("search_graph_id is:", search_graph_id)
+
+        
+        search_result = search_graph(queryGraph, scene_graphs)
+
+        valid_count, resDistList = validate(queryLoc, search_result)
+
+        print("valid: {} search: {} \n\n".format(valid_count, query_graphs[search_graph_id].name))
+
+        fsock.close()
+        
+
+
 
 
 
 
 
 if __name__ == "__main__":
-    exper_name = "first"
-    exper_folder = time.strftime("%Y-%m-%d_%H_%M_%S", time.localtime()) + "_" + exper_name
-    exper_dir = os.path.join("C:\qianlinjun\graduate\src\src\output"  , exper_folder)
-    if os.path.exists(exper_dir) is False:
-        os.makedirs(exper_dir)
+    # exper_name = "first"
+    # exper_folder = time.strftime("%Y-%m-%d_%H_%M_%S", time.localtime()) + "_" + exper_name
+    # exper_dir = os.path.join("C:\qianlinjun\graduate\src\src\output"  , exper_folder)
+    # if os.path.exists(exper_dir) is False:
+    #     os.makedirs(exper_dir)
     
-    test(exper_dir)
+    # test(exper_dir)
+    # topk = 5
+    # fsock = open(r"C:\qianlinjun\graduate\src\src\output\analysis_top{}.txt".format(topk), 'w')
+    # sys.stdout = fsock
+    # analysis_result()
+    # fsock.close()
+
+
+    query_one()
+
+
+
+
+
    
 
    

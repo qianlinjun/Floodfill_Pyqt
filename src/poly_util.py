@@ -20,7 +20,7 @@ from shapely.geometry import Polygon
 #     union_area = polygon1.area + polygon2.area - inter_area
 #     return inter_area*1.0/union_area
 
-def bitwise_and_iou(poly1, poly2):
+def bitwise_and_iou(poly1, poly2, verbose=False):
     dst1 = np.ones([1200,1200], dtype=np.uint8)
     cv2.drawContours(dst1, [poly1], -1, (255, 0, 0), cv2.FILLED)#1)
     
@@ -39,10 +39,13 @@ def bitwise_and_iou(poly1, poly2):
     # cv2.imshow("dst2:{}".format(np.sum(dst2==255)), dst2)
     # cv2.imshow("img1_bg:{}".format(np.sum(img1_bg==255)), img1_bg)
     # cv2.waitKey()
-    print("pixel_and_iou poly1:{} poly2:{} merge:{}".format(dst1_area, dst2_area, merge_area))
+
+    if verbose is True:
+        print("pixel_and_iou poly1:{} poly2:{} merge:{}".format(dst1_area, dst2_area, merge_area))
+
     return dst1_area, dst2_area, merge_area
 
-def get_iou(poly1, poly2):
+def get_iou(poly1, poly2, verbose):
     '''
     将两个多边形根据质心对齐
     poly1: 多边形
@@ -106,19 +109,20 @@ def get_iou(poly1, poly2):
     # # inter_area = (inter_area + itersec_area
     
 
-    poly1_area , poly2_area, inter_area = bitwise_and_iou(poly1, poly2)
+    poly1_area , poly2_area, inter_area = bitwise_and_iou(poly1, poly2, verbose)
     union_area = poly1_area + poly2_area - inter_area
-    print("poly1 area {}  poly2 area {} inter area {}".format(poly1_area , poly2_area , inter_area))
+    if verbose is True:
+        print("poly1 area {}  poly2 area {} inter area {}".format(poly1_area , poly2_area , inter_area))
 
     # exit(0)
 
     return poly1_area , poly2_area, inter_area*1.0/union_area
 
 
-def get_dist(poly1, poly1_id, poly2, poly2_id):
+def get_dist(poly1, poly1_id, poly2, poly2_id, verbose = False):
     # # if point1_id == 4:
     # #     show_polygon(poly1)
-    poly1_area, poly2_area, iou = get_iou(poly1, poly2)
+    poly1_area, poly2_area, iou = get_iou(poly1, poly2, verbose)
     # poly1_area, poly2_area, iou = bitwise_and_iou(poly1, poly2)
     # print("iou", iou)
     # # exit(0)
@@ -191,7 +195,8 @@ def get_dist(poly1, poly1_id, poly2, poly2_id):
     area_factor = max(poly1_area, poly2_area) / min(poly1_area, poly2_area)
     shape_cost =  humoments *  iou_factor * area_factor * angle_factor
 
-    print("node:{} --> {} humoments: {:.2f} iou: {:.1f} iou_factor: {:.1f} area_factor: {:.1f} angle_factor:{} shape_cost: {:.1f} \n".format(poly1_id, poly2_id, humoments, iou, iou_factor, area_factor, angle_factor, shape_cost))
+    if verbose is True:
+        print("node:{} --> {} humoments: {:.2f} iou: {:.1f} iou_factor: {:.1f} area_factor: {:.1f} angle_factor:{} shape_cost: {:.1f} \n".format(poly1_id, poly2_id, humoments, iou, iou_factor, area_factor, angle_factor, shape_cost))
 
     return shape_cost
 

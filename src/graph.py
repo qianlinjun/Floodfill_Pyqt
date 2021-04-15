@@ -45,12 +45,20 @@ class SceneNode(object):
 
     def compute_angle(self, node):
         '''
-        return anti-clockwise raidus
+        return anti-clockwise raidus   
         '''
         if self.posXY[1] > node.posXY[1]:
-            return math.atan2(self.posXY[1] - node.posXY[1] , node.posXY[0] - self.posXY[0])
+            angle =  math.atan2(self.posXY[1] - node.posXY[1] , node.posXY[0] - self.posXY[0])
         else:
-            return math.atan2(node.posXY[1] - self.posXY[1] , self.posXY[0] - node.posXY[0])
+            angle = math.atan2(node.posXY[1] - self.posXY[1] , self.posXY[0] - node.posXY[0])
+        
+        # angle = angle / 3.1415926 * 180
+        
+        # [-90,90]
+        # if angle > 90 :
+        #     angle = angle -180
+        
+        return angle
 
     # calculate difference
     def compute_iou(self, G1_node, G2_node):
@@ -99,7 +107,8 @@ def DrawGraph(graph, node_color=None):
 #     def __init__(self):
 #         pass
 
-def buildGraphFromJson(json_file):
+
+def buildGraphFromJson(json_file, skipPolyID=None):
     # 两个地物是否是同一个类别
     # node edit cost
     # 山体 水 平原 森林 房屋
@@ -114,6 +123,8 @@ def buildGraphFromJson(json_file):
     total_moment_y = 0
     for idx, polygon in enumerate(polygons):
         id_     = polygon["id"]
+        if skipPolyID is not None and id_ == skipPolyID:
+            continue
         contour = polygon["contour"]
         area    = polygon["area"]
         momente = polygon["momente"]
@@ -124,6 +135,8 @@ def buildGraphFromJson(json_file):
         
         for other_polygon in polygons[idx+1:]:
             id_1      = other_polygon["id"]
+            if skipPolyID is not None and id_1 == skipPolyID:
+                continue
             contour_1 = other_polygon["contour"]
             area_1    = other_polygon["area"]
             momente_1 = other_polygon["momente"]
@@ -160,7 +173,7 @@ def buildGraphFromJson(json_file):
 
 
 
-def loadGraphsFromJson(save_path, test_name=None, visualize=False):
+def loadGraphsFromJson(save_path, test_name=None, visualize=False, skipPolyID = None):
     scene_graphs = []
     for json_file in os.listdir(save_path):
         if "json" not in json_file:
@@ -175,7 +188,7 @@ def loadGraphsFromJson(save_path, test_name=None, visualize=False):
 
         # scene_graph = SceneGraph()
         # img1_res = "C:\qianlinjun\graduate\gen_dem\output\8.59262657_46.899601.json"
-        scene_graph = buildGraphFromJson(json_path)
+        scene_graph = buildGraphFromJson(json_path, skipPolyID)
         if scene_graph is not None:
             scene_graphs.append(scene_graph)
 
@@ -271,7 +284,7 @@ def search_graph(query_G, scene_graphs):
             # area_factor = max(poly1_area, poly2_area) / min(poly1_area, poly2_area)
             # shape_cost =  humoments *  iou_factor * area_factor
             shape_cost = get_dist(poly1, node1.id, poly2, node2.id, verbose)
-            
+            # print(shape_cost)
 
             #shaply
 
@@ -291,19 +304,20 @@ def search_graph(query_G, scene_graphs):
         node2 = node2["scene_node"]
         return math.sqrt(node2.area)    
 
-    def edge_subst_cost(edge1, edge2):
-        abs_angle = abs(edge1["angle"] - edge2["angle"])/3.1415926 * 180 * 0.4 # 3.14
-        abs_dist  = abs(edge1["dist"] - edge2["dist"]) * 0.2
-        # print("edge cost:{}".format(abs_angle + abs_dist))
-        return 0#abs_angle + abs_dist
-    
 
+
+    def edge_subst_cost(edge1, edge2):
+        abs_angle = 0 # abs(edge1["angle"] - edge2["angle"]) /3.1415926 * 180  #* 0.4 # 3.14
+        # print("absangle", edge1["angle"]/3.1415926 * 180, edge2["angle"]/3.1415926 * 180)
+        abs_dist  = abs(edge1["dist"] - edge2["dist"]) * 0.3
+        # print("edge cost:{} {}".format(abs_angle , abs_dist))
+        return  0#abs_angle + abs_dist  
+    
     def edge_del_cost(edge1):
-        
-        return 0#edge1["dist"]*0.2
+        return 0#edge1["dist"]* 0.3   #+ edge1["angle"]/3.1415926 * 180 * 3#*0.2
 
     def edge_ins_cost(edge2):
-        return 0#edge2["dist"]*0.2
+        return 0#edge2["dist"]* 0.3 #+ edge2["angle"]/3.1415926 * 180 * 3#*0.2
 
 
     minimum_cost = 100000000000
@@ -516,8 +530,24 @@ def cal_dist(queryLoc, searchResut):
 #         # if "2011-10-04_14.26.13_01024" in G.name: ok
 #         # if "183_8.74401855_46.6736794" in G.name:
 
+def cal_two_dist(name1, name2):
+    query_path = r"C:\qianlinjun\graduate\test-data\query"
+    query_graphs = loadGraphsFromJson(query_path, visualize=False, skipPolyID=0) #"8.59262657_46.899601"
+    search_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601"
+    g1_id = None
+    g2_id = None
+    for idx, G in enumerate(query_graphs):
+        if name1 in G.name:
+            g1_id = idx
+        elif name2 in G.name:
+            g2_id = idx
+    
+    search_graph(query_graphs[g1_id], search_graphs[g1_id:g1_id+1])
 
-def query_one():
+
+
+
+def query_all():
     # db_pic_w = 800
     # db_pic_h = 800
     # search_pic_w = 800
@@ -537,12 +567,11 @@ def query_one():
     
 
     search_graph_id = None
-    result_save_dir = r'C:\qianlinjun\graduate\src\src\output\4_14_with_edge_cost'
+    
 
     valid_count = 0
     for idx, G in enumerate(query_graphs):
-        
-
+        time1 = time.time()
         queryGraph = query_graphs[idx]#scene_graphs[idx]
         queryName = queryGraph.name
         # lon lat
@@ -551,13 +580,11 @@ def query_one():
         queryResultName = queryName.split("\\")[-1].replace(".json","")
         queryResultFile = os.path.join(result_save_dir, "{}.txt".format(queryResultName))
 
-        # fsock = open(queryResultFile, 'w')
-        # sys.stdout = fsock
+        if verbose is True:
+            fsock = open(queryResultFile, 'w')
+            sys.stdout = fsock
 
         print("query_graph_id:", idx," ", G.name)
-
-
-
 
         search_graph_id = idx # 1 2
     
@@ -575,13 +602,17 @@ def query_one():
             valid_count += 1
             print("find")
 
-        if verbose is True:
-            print("valid: {} search: {} \n\n".format(valid_count, query_graphs[search_graph_id].name))
+        
         
         with open(os.path.join(result_save_dir, "validate.txt"), "a+") as res_f:
             res_f.write(" ".join(resDistList) + "\n")
-
-        # fsock.close()
+        
+        if verbose is True:
+            print("valid: {} search: {} \n\n".format(valid_count, query_graphs[search_graph_id].name))
+            fsock.close()
+        
+        time2 = time.time()
+        # print("run time", time2 - time1)
         
 
         # if "11_8.53155708_46.60886" in G.name:
@@ -630,7 +661,7 @@ def query_one():
 
 
 
-
+N = 25
 def analysis_result(res_path):
     # with open(path, "r") as f:
     #     resList = f.readlines()
@@ -643,8 +674,7 @@ def analysis_result(res_path):
         print("len(query_graphs) <= 2")
         exit(0)
     
-    resutPath = res_path
-    with open(resutPath, "r") as f:
+    with open(res_path, "r") as f:
         allResList = f.readlines()
         # for res in allResList:
         #     res = res.strip().spilt(" ")
@@ -653,27 +683,39 @@ def analysis_result(res_path):
     # count = 0
     query_topN = []
     for g_idx, G in enumerate(query_graphs):
+        if g_idx >= len(allResList):
+            continue
+
         ifvalid = False
         print("analysis {}".format(G.name))
         resList = allResList[g_idx]
         resList = resList.strip().split(" ")
         
-        topN_findlist = [0,0,0,0,0,0] # 0 5 10 15 20 25
+        topN_findlist = [0 for i in range(N)] # 0 5 10 15 20 25
 
         for res_idx, res in enumerate(resList):
             filename, ged_dist = res.split("|")
             ged_dist = float(ged_dist)
-            for n_idx in range(6):
-                topN = n_idx * 5
-                if topN == 0:
-                    topN = 1
+            for topN in range(N):
+                # topN = n_idx * 5
+                # if topN == 0:
+                #     topN = 1
             
-                if ged_dist < 1000 and res_idx < topN :
-                    topN_findlist[n_idx] += 1
+                if ged_dist < 1000 and res_idx <= topN :
+                    topN_findlist[topN] += 1
                     # if ifvalid is False:
                     #     ifvalid = True
                     #     print("query{}".format(G.name))
-                    # print(filename, ged_dist)
+                    query_loc = G.name.split("\\")[-1].replace(".json","").split("_")[1:3]
+                    query_lon = round(float(query_loc[0]), 6)
+                    query_lat = round(float(query_loc[1]), 6)
+                    res_loc = filename.split("_")[1:]
+                    res_lon = round(float(res_loc[0]), 6)
+                    res_lat = round(float(res_loc[1]), 6)
+
+                    # print( "{},{} {},{} {}".format(query_lon, query_lat, res_lon, res_lat, res_idx+1))
+                    # break
+
         
         # if ifvalid is True:
         #     count += 1
@@ -684,8 +726,8 @@ def analysis_result(res_path):
 
     query_topN = np.array(query_topN)
 
-    for i in range(6):
-        print("recall_topN", np.sum(query_topN[:, i]>0))
+    
+    print("recall_topN", [np.sum(query_topN[:, i]>0) for i in range(N)])
 
     return query_topN
 
@@ -706,8 +748,24 @@ if __name__ == "__main__":
     # analysis_result()
     # fsock.close()
 
-    verbose = False
-    query_one()
+    verbose = True
+    
+    # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_no_humoments" #
+    # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_no_ioufactor" #
+    # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_no_area_factor" #
+    # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_no_angle_factor"
+    result_save_dir = r"D:\qianlinjun\graduate\src\src\output\debug" #4_14_with_edge_cost_3angle_1_3dist_1_5insdel"
+    # result_save_dir = r"C:\qianlinjun\graduate\src\src\output\4_14_with_edge_cost_no_angle"
+    res_path = os.path.join(result_save_dir, "validate.txt")
+    query_all()
+    # analysis_result(res_path)
+
+
+    # name1 = "19_8.6204996_46.886002"#5
+    # name2 = "6_8.721228366639377_46.67035726569055" #2
+    # cal_two_dist(name1,name2)
+
+
 
 
 

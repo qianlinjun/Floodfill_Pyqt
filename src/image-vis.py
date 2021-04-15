@@ -81,7 +81,7 @@ def loadJsonAndDraw(img_path, specify_poly_id=None):
     # cv2.waitKey()
 
 def vis_all():
-    img_dir = r"C:\qianlinjun\graduate\test-data\crop"
+    img_dir = r"D:\qianlinjun\graduate\test-data\query"
     for img_path in Path(img_dir).iterdir():
         print(img_path)
         loadJsonAndDraw(img_path)

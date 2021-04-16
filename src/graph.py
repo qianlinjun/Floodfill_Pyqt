@@ -108,15 +108,26 @@ def DrawGraph(graph, node_color=None):
 #         pass
 
 
-def buildGraphFromJson(json_file, skipPolyID=None):
+def build_Graph_From_Polygons(polygons, name, skipPolyID=None, reverse_order=False):
     # 两个地物是否是同一个类别
     # node edit cost
     # 山体 水 平原 森林 房屋
     # 同一个类别计算相似度
-    scene_graph = nx.Graph(name=json_file) # 建立一个空的无向图G
-    polygons = json.load(open(json_file,'r'))
+    scene_graph = nx.Graph(name=name) # 建立一个空的无向图G
+    # polygons = json.load(open(json_file,'r'))
     if len(polygons) == 0:
         return None
+
+    # polygons = polygons[::-1]
+    # sorted by area
+    # if reverse_order is False:
+    #     # 1 2 3 4
+    #     areaSorted_polygons = sorted(polygons, key=lambda item: item["area"])
+    # else:
+    #     # 4 3 2 1
+    #     areaSorted_polygons = sorted(polygons, key=lambda item: item["area"], reverse=True)
+    # polygons = areaSorted_polygons
+    # for areaSorted_polygons
 
     # [1] add object nodes from image
     total_moment_x = 0
@@ -127,6 +138,7 @@ def buildGraphFromJson(json_file, skipPolyID=None):
             continue
         contour = polygon["contour"]
         area    = polygon["area"]
+        # print("area",area)
         momente = polygon["momente"]
         object_node = SceneNode(id_, contour, momente, area, nodeType = "object", objectClass = "mountain")
         scene_graph.add_node(id_, scene_node = object_node )#contour=contour, area=area, momente=momente)
@@ -146,7 +158,7 @@ def buildGraphFromJson(json_file, skipPolyID=None):
 
             # print("{} -> {} angle:{}".format(id_, id_1, angle/3.1415926*180))
             scene_graph.add_edge(id_, id_1, name='{} - {}'.format(id_, id_1), angle=angle, dist=dist)
-    
+    # print("\n\n\n")
     # [2] add global nodes
     # print("len poly:{}".format(len(polygons)))
 
@@ -188,7 +200,8 @@ def loadGraphsFromJson(save_path, test_name=None, visualize=False, skipPolyID = 
 
         # scene_graph = SceneGraph()
         # img1_res = "C:\qianlinjun\graduate\gen_dem\output\8.59262657_46.899601.json"
-        scene_graph = buildGraphFromJson(json_path, skipPolyID)
+        polygons = json.load(open(json_path,'r'))
+        scene_graph = build_Graph_From_Polygons(polygons, json_path, skipPolyID)
         if scene_graph is not None:
             scene_graphs.append(scene_graph)
 
@@ -230,7 +243,29 @@ def update_cost(g1, g2, veterx_edit_path, Cost_matrix):
     return cost_total, cost_detail
 
 
+def build_from_graph(G, reverse=False):
+    polygons = []
+    name = G.name
+    for node_id in G.nodes:
+        
+        scene_node = G.nodes[node_id]["scene_node"]
+        polygons.append({"id":scene_node.id,"contour":scene_node.contour,"area":scene_node.area, "momente":scene_node.momente})
+        # id_     
+        # = polygon["id"]
+        # contour = polygon["contour"]
+        # area    = polygon["area"]
+        # print("area",area)
+        # momente = polygon["momente"]
 
+        # self.id      = id 
+        # self.objectClass = objectClass
+        # self.nodeType    = nodeType
+        # self.contour = contour
+        # self.posXY   = pos
+        # self.area    = area
+    new_G = build_Graph_From_Polygons(polygons, name, reverse)
+    # scene_graph = build_Graph_From_Polygons(polygons, json_file, skipPolyID)
+    return new_G
 
 # 两个地物是否是同一个类别
 # node edit cost
@@ -311,13 +346,13 @@ def search_graph(query_G, scene_graphs):
         # print("absangle", edge1["angle"]/3.1415926 * 180, edge2["angle"]/3.1415926 * 180)
         abs_dist  = abs(edge1["dist"] - edge2["dist"]) * 0.3
         # print("edge cost:{} {}".format(abs_angle , abs_dist))
-        return  0#abs_angle + abs_dist  
+        return  abs_angle + abs_dist  
     
     def edge_del_cost(edge1):
-        return 0#edge1["dist"]* 0.3   #+ edge1["angle"]/3.1415926 * 180 * 3#*0.2
+        return edge1["dist"]* 0.3   #+ edge1["angle"]/3.1415926 * 180 * 3#*0.2
 
     def edge_ins_cost(edge2):
-        return 0#edge2["dist"]* 0.3 #+ edge2["angle"]/3.1415926 * 180 * 3#*0.2
+        return edge2["dist"]* 0.3 #+ edge2["angle"]/3.1415926 * 180 * 3#*0.2
 
 
     minimum_cost = 100000000000
@@ -330,6 +365,19 @@ def search_graph(query_G, scene_graphs):
         # 自定义替换损失
         # 自定义插入 删除损失
         
+        # 匹配前排一下序列
+        pending_u = list(query_G.nodes)
+        pending_v = list(scene_G.nodes)
+        # print(query_G.nodes[0]) #pending_u[0]
+        # print(scene_G.nodes[0])
+        # exit(0)
+        # smallest_poly_diff = node_subst_cost(query_G.nodes[pending_u[0]], scene_G.nodes[pending_v[0]])
+        # largest_poly_diff  = node_subst_cost(query_G.nodes[pending_u[-1]], scene_G.nodes[pending_v[-1]])
+        # if smallest_poly_diff > largest_poly_diff:
+        #     query_G = build_from_graph(query_G, reverse=True)
+        #     scene_G = build_from_graph(scene_G,reverse=True)
+
+
         ori_cost, vertex_path, edge_path, Cv, Ce = nx.graph_edit_distance(query_G, scene_G, 
                                                                         node_subst_cost = node_subst_cost, 
                                                                         node_del_cost = node_del_cost,
@@ -532,7 +580,7 @@ def cal_dist(queryLoc, searchResut):
 
 def cal_two_dist(name1, name2):
     query_path = r"C:\qianlinjun\graduate\test-data\query"
-    query_graphs = loadGraphsFromJson(query_path, visualize=False, skipPolyID=0) #"8.59262657_46.899601"
+    query_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601" , skipPolyID=0
     search_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601"
     g1_id = None
     g2_id = None
@@ -542,7 +590,7 @@ def cal_two_dist(name1, name2):
         elif name2 in G.name:
             g2_id = idx
     
-    search_graph(query_graphs[g1_id], search_graphs[g1_id:g1_id+1])
+    search_graph(query_graphs[g1_id], search_graphs[g2_id:g2_id+1])
 
 
 
@@ -555,9 +603,9 @@ def query_all():
     # data_path = "C:\qianlinjun\graduate\gen_dem\output\img"
 
     # data_path = "C:\qianlinjun\graduate\gen_dem\output\img_with_mask\switz-100-points"
-    data_path = r"C:\qianlinjun\graduate\test-data\crop"
+    data_path = r"D:\qianlinjun\graduate\test-data\crop"
     scene_graphs = loadGraphsFromJson(data_path, visualize=False) #"8.59262657_46.899601"
-    query_path = r"C:\qianlinjun\graduate\test-data\query"
+    query_path = r"D:\qianlinjun\graduate\test-data\query"
     query_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601"
 
 
@@ -571,6 +619,9 @@ def query_all():
 
     valid_count = 0
     for idx, G in enumerate(query_graphs):
+        if "25_8.59218502_46.6390839" not in G.name:
+            continue
+
         time1 = time.time()
         queryGraph = query_graphs[idx]#scene_graphs[idx]
         queryName = queryGraph.name
@@ -656,6 +707,7 @@ def query_all():
         # if "21_8.6160002_46.719002" in G.name: no 
         # if "25_8.59218502_46.6390839" in G.name: ok
         # if "29_8.598801261984727_46.702605316063114" in G.name: #ok 24 232 加了边代价之后提升
+    sys.stdout = __console__
     print("toral search:{} valid_count:{}".format(len(query_graphs), valid_count))
 
 
@@ -696,6 +748,12 @@ def analysis_result(res_path):
         for res_idx, res in enumerate(resList):
             filename, ged_dist = res.split("|")
             ged_dist = float(ged_dist)
+
+            # for vis
+            if ged_dist < 1000 and res_idx <= 25 :
+                print(filename, res_idx)
+            continue
+
             for topN in range(N):
                 # topN = n_idx * 5
                 # if topN == 0:
@@ -720,7 +778,7 @@ def analysis_result(res_path):
         # if ifvalid is True:
         #     count += 1
         query_topN.append(topN_findlist)
-        print(topN_findlist) 
+        # print(topN_findlist) 
         # print("\n")
     # print("valid query", count)
 
@@ -754,16 +812,16 @@ if __name__ == "__main__":
     # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_no_ioufactor" #
     # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_no_area_factor" #
     # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_no_angle_factor"
-    result_save_dir = r"D:\qianlinjun\graduate\src\src\output\debug" #4_14_with_edge_cost_3angle_1_3dist_1_5insdel"
-    # result_save_dir = r"C:\qianlinjun\graduate\src\src\output\4_14_with_edge_cost_no_angle"
+    # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_del_1_5" #4_14_with_edge_cost_3angle_1_3dist_1_5insdel"
+    result_save_dir = r"D:\qianlinjun\graduate\src\src\output\debug"
     res_path = os.path.join(result_save_dir, "validate.txt")
-    query_all()
+    # query_all()
     # analysis_result(res_path)
 
 
-    # name1 = "19_8.6204996_46.886002"#5
-    # name2 = "6_8.721228366639377_46.67035726569055" #2
-    # cal_two_dist(name1,name2)
+    name1 = "19_8.6204996_46.886002"#5
+    name2 = "6_8.721228366639377_46.67035726569055" #2
+    cal_two_dist(name1,name2)
 
 
 

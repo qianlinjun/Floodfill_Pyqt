@@ -1,0 +1,1153 @@
+query_graph_id: 0   C:\qianlinjun\graduate\test-data\query\0_8.627420884109522_46.73040070850499.json
+pixel_and_iou poly1:241778 poly2:41464 merge:41414
+poly1 area 241778  poly2 area 41464 inter area 41414
+node:0 --> 1 humoments: 10.22 iou: 0.2 iou_factor: 11.0 area_factor: 5.8 angle_factor:21.92812013819362 shape_cost: 14418.9 
+
+pixel_and_iou poly1:241778 poly2:88545 merge:88545
+poly1 area 241778  poly2 area 88545 inter area 88545
+node:0 --> 2 humoments: 3.83 iou: 0.4 iou_factor: 5.3 area_factor: 2.7 angle_factor:1 shape_cost: 55.6 
+
+pixel_and_iou poly1:241778 poly2:36235 merge:36235
+poly1 area 241778  poly2 area 36235 inter area 36235
+node:0 --> 3 humoments: 1.87 iou: 0.1 iou_factor: 12.5 area_factor: 6.7 angle_factor:34.89623591238643 shape_cost: 5439.5 
+
+pixel_and_iou poly1:180007 poly2:29859 merge:29859
+poly1 area 180007  poly2 area 29859 inter area 29859
+node:1 --> 1 humoments: 3.62 iou: 0.2 iou_factor: 11.4 area_factor: 6.0 angle_factor:22.248477210683028 shape_cost: 5516.4 
+
+pixel_and_iou poly1:180007 poly2:63325 merge:60990
+poly1 area 180007  poly2 area 63325 inter area 60990
+node:1 --> 2 humoments: 3.44 iou: 0.3 iou_factor: 5.8 area_factor: 2.8 angle_factor:38.94083251828062 shape_cost: 2208.1 
+
+pixel_and_iou poly1:180007 poly2:30005 merge:30005
+poly1 area 180007  poly2 area 30005 inter area 30005
+node:1 --> 3 humoments: 2.22 iou: 0.2 iou_factor: 11.3 area_factor: 6.0 angle_factor:1 shape_cost: 150.8 
+
+pixel_and_iou poly1:94602 poly2:41467 merge:39379
+poly1 area 94602  poly2 area 41467 inter area 39379
+node:2 --> 1 humoments: 7.48 iou: 0.4 iou_factor: 4.8 area_factor: 2.3 angle_factor:11.557718456725686 shape_cost: 945.0 
+
+pixel_and_iou poly1:94602 poly2:88545 merge:42444
+poly1 area 94602  poly2 area 88545 inter area 42444
+node:2 --> 2 humoments: 2.15 iou: 0.3 iou_factor: 6.4 area_factor: 1.1 angle_factor:28.250073764323453 shape_cost: 417.2 
+
+pixel_and_iou poly1:94602 poly2:36235 merge:27501
+poly1 area 94602  poly2 area 36235 inter area 27501
+node:2 --> 3 humoments: 1.92 iou: 0.3 iou_factor: 7.2 area_factor: 2.6 angle_factor:1 shape_cost: 36.2 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 100_8.62820911_46.7310219.json dist:1264.1821350816685  edit_path[(0, 2), (1, 3), (2, 1)]
+update cost before:1264.1821350816685 after:1264.1821350816685 
+
+
+pixel_and_iou poly1:241778 poly2:35386 merge:35169
+poly1 area 241778  poly2 area 35386 inter area 35169
+node:0 --> 0 humoments: 10.46 iou: 0.1 iou_factor: 12.9 area_factor: 6.8 angle_factor:22.2023354317699 shape_cost: 20425.1 
+
+pixel_and_iou poly1:241778 poly2:50192 merge:49174
+poly1 area 241778  poly2 area 50192 inter area 49174
+node:0 --> 1 humoments: 5.08 iou: 0.2 iou_factor: 9.4 area_factor: 4.8 angle_factor:35.41639800948889 shape_cost: 8155.7 
+
+pixel_and_iou poly1:241778 poly2:83937 merge:83937
+poly1 area 241778  poly2 area 83937 inter area 83937
+node:0 --> 2 humoments: 2.98 iou: 0.3 iou_factor: 5.6 area_factor: 2.9 angle_factor:1 shape_cost: 48.1 
+
+pixel_and_iou poly1:180007 poly2:25857 merge:25857
+poly1 area 180007  poly2 area 25857 inter area 25857
+node:1 --> 0 humoments: 4.17 iou: 0.1 iou_factor: 13.0 area_factor: 7.0 angle_factor:21.971774499920283 shape_cost: 8296.3 
+
+pixel_and_iou poly1:180007 poly2:37944 merge:37944
+poly1 area 180007  poly2 area 37944 inter area 37944
+node:1 --> 1 humoments: 4.31 iou: 0.2 iou_factor: 9.1 area_factor: 4.7 angle_factor:1 shape_cost: 185.1 
+
+pixel_and_iou poly1:180007 poly2:60702 merge:58988
+poly1 area 180007  poly2 area 60702 inter area 58988
+node:1 --> 2 humoments: 2.89 iou: 0.3 iou_factor: 6.0 area_factor: 3.0 angle_factor:39.95213902003909 shape_cost: 2047.8 
+
+pixel_and_iou poly1:94602 poly2:35386 merge:33955
+poly1 area 94602  poly2 area 35386 inter area 33955
+node:2 --> 0 humoments: 16.50 iou: 0.4 iou_factor: 5.5 area_factor: 2.7 angle_factor:11.281015745963206 shape_cost: 2737.0 
+
+pixel_and_iou poly1:94602 poly2:51632 merge:35730
+poly1 area 94602  poly2 area 51632 inter area 35730
+node:2 --> 1 humoments: 12.93 iou: 0.3 iou_factor: 6.0 area_factor: 1.8 angle_factor:1 shape_cost: 142.1 
+
+pixel_and_iou poly1:94602 poly2:83937 merge:40645
+poly1 area 94602  poly2 area 83937 inter area 40645
+node:2 --> 2 humoments: 1.71 iou: 0.3 iou_factor: 6.6 area_factor: 1.1 angle_factor:29.261380266082206 shape_cost: 369.1 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 101_8.6335516_46.7356758.json dist:3088.803914309227  edit_path[(0, 2), (1, 1), (2, 0)]
+update cost before:3088.803914309227 after:3088.803914309227 
+
+
+pixel_and_iou poly1:241778 poly2:143071 merge:133663
+poly1 area 241778  poly2 area 143071 inter area 133663
+node:0 --> 0 humoments: 5.35 iou: 0.5 iou_factor: 3.7 area_factor: 1.7 angle_factor:1 shape_cost: 33.3 
+
+pixel_and_iou poly1:241778 poly2:3628 merge:3628
+poly1 area 241778  poly2 area 3628 inter area 3628
+node:0 --> 1 humoments: 0.75 iou: 0.0 iou_factor: 80.0 area_factor: 66.6 angle_factor:35.357340449178814 shape_cost: 140444.2 
+
+pixel_and_iou poly1:241778 poly2:53451 merge:51947
+poly1 area 241778  poly2 area 53451 inter area 51947
+node:0 --> 2 humoments: 5.94 iou: 0.2 iou_factor: 8.9 area_factor: 4.5 angle_factor:12.826469179096653 shape_cost: 3081.8 
+
+pixel_and_iou poly1:180007 poly2:105041 merge:87807
+poly1 area 180007  poly2 area 105041 inter area 87807
+node:1 --> 0 humoments: 4.44 iou: 0.4 iou_factor: 4.4 area_factor: 1.7 angle_factor:37.31706718743712 shape_cost: 1248.6 
+
+pixel_and_iou poly1:180007 poly2:3628 merge:3628
+poly1 area 180007  poly2 area 3628 inter area 3628
+node:1 --> 1 humoments: 0.49 iou: 0.0 iou_factor: 66.3 area_factor: 49.6 angle_factor:1 shape_cost: 1618.2 
+
+pixel_and_iou poly1:180007 poly2:38768 merge:36654
+poly1 area 180007  poly2 area 38768 inter area 36654
+node:1 --> 2 humoments: 4.83 iou: 0.2 iou_factor: 9.5 area_factor: 4.6 angle_factor:31.349185052848167 shape_cost: 6655.6 
+
+pixel_and_iou poly1:94602 poly2:154031 merge:59186
+poly1 area 94602  poly2 area 154031 inter area 59186
+node:2 --> 0 humoments: 3.21 iou: 0.3 iou_factor: 6.2 area_factor: 1.6 angle_factor:26.626308433480148 shape_cost: 864.1 
+
+pixel_and_iou poly1:94602 poly2:3628 merge:3484
+poly1 area 94602  poly2 area 3628 inter area 3484
+node:2 --> 1 humoments: 3.69 iou: 0.0 iou_factor: 42.8 area_factor: 26.1 angle_factor:1 shape_cost: 4117.1 
+
+pixel_and_iou poly1:94602 poly2:56049 merge:36358
+poly1 area 94602  poly2 area 56049 inter area 36358
+node:2 --> 2 humoments: 13.89 iou: 0.3 iou_factor: 6.1 area_factor: 1.7 angle_factor:20.65842629889126 shape_cost: 2952.9 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 102_8.62759018_46.7402039.json dist:4742.310070515732  edit_path[(0, 0), (1, 1), (2, 2)]
+update cost before:4742.310070515732 after:4742.310070515732 
+
+
+pixel_and_iou poly1:241778 poly2:148327 merge:142744
+poly1 area 241778  poly2 area 148327 inter area 142744
+node:0 --> 0 humoments: 4.50 iou: 0.6 iou_factor: 3.4 area_factor: 1.6 angle_factor:1 shape_cost: 25.0 
+
+pixel_and_iou poly1:241778 poly2:69161 merge:67507
+poly1 area 241778  poly2 area 69161 inter area 67507
+node:0 --> 1 humoments: 4.33 iou: 0.3 iou_factor: 7.0 area_factor: 3.5 angle_factor:12.279614507934248 shape_cost: 1294.2 
+
+pixel_and_iou poly1:180007 poly2:105401 merge:89927
+poly1 area 180007  poly2 area 105401 inter area 89927
+node:1 --> 0 humoments: 3.87 iou: 0.5 iou_factor: 4.3 area_factor: 1.7 angle_factor:39.028041596058245 shape_cost: 1098.5 
+
+pixel_and_iou poly1:180007 poly2:48295 merge:45635
+poly1 area 180007  poly2 area 48295 inter area 45635
+node:1 --> 1 humoments: 3.78 iou: 0.2 iou_factor: 7.7 area_factor: 3.7 angle_factor:31.90079900482717 shape_cost: 3459.5 
+
+pixel_and_iou poly1:94602 poly2:153395 merge:60093
+poly1 area 94602  poly2 area 153395 inter area 60093
+node:2 --> 0 humoments: 2.67 iou: 0.3 iou_factor: 6.1 area_factor: 1.6 angle_factor:28.33728284210135 shape_cost: 744.8 
+
+pixel_and_iou poly1:94602 poly2:72338 merge:42922
+poly1 area 94602  poly2 area 72338 inter area 42922
+node:2 --> 1 humoments: 2.74 iou: 0.3 iou_factor: 5.6 area_factor: 1.3 angle_factor:21.210040250870208 shape_cost: 426.5 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 103_8.62925816_46.7434387.json dist:1989.186885381317  edit_path[(0, None), (1, 0), (2, 1)]
+update cost before:1989.186885381317 after:1989.186885381317 
+
+
+pixel_and_iou poly1:241778 poly2:160691 merge:154190
+poly1 area 241778  poly2 area 160691 inter area 154190
+node:0 --> 0 humoments: 4.04 iou: 0.6 iou_factor: 3.2 area_factor: 1.5 angle_factor:1 shape_cost: 19.2 
+
+pixel_and_iou poly1:241778 poly2:63114 merge:61621
+poly1 area 241778  poly2 area 63114 inter area 61621
+node:0 --> 1 humoments: 4.09 iou: 0.3 iou_factor: 7.6 area_factor: 3.8 angle_factor:1 shape_cost: 119.0 
+
+pixel_and_iou poly1:180007 poly2:116015 merge:96752
+poly1 area 180007  poly2 area 116015 inter area 96752
+node:1 --> 0 humoments: 3.57 iou: 0.5 iou_factor: 4.0 area_factor: 1.6 angle_factor:38.697034943218156 shape_cost: 865.6 
+
+pixel_and_iou poly1:180007 poly2:45008 merge:42879
+poly1 area 180007  poly2 area 45008 inter area 42879
+node:1 --> 1 humoments: 3.65 iou: 0.2 iou_factor: 8.1 area_factor: 4.0 angle_factor:34.88104589371179 shape_cost: 4144.2 
+
+pixel_and_iou poly1:94602 poly2:171327 merge:64327
+poly1 area 94602  poly2 area 171327 inter area 64327
+node:2 --> 0 humoments: 2.27 iou: 0.3 iou_factor: 6.1 area_factor: 1.8 angle_factor:28.00627618926121 shape_cost: 698.4 
+
+pixel_and_iou poly1:94602 poly2:65116 merge:37533
+poly1 area 94602  poly2 area 65116 inter area 37533
+node:2 --> 1 humoments: 2.62 iou: 0.3 iou_factor: 6.3 area_factor: 1.5 angle_factor:24.190287139754947 shape_cost: 580.6 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 104_8.62709808_46.7468452.json dist:1902.602367279926  edit_path[(0, None), (1, 0), (2, 1)]
+update cost before:1902.602367279926 after:1902.602367279926 
+
+
+pixel_and_iou poly1:241778 poly2:165957 merge:158039
+poly1 area 241778  poly2 area 165957 inter area 158039
+node:0 --> 0 humoments: 4.61 iou: 0.6 iou_factor: 3.1 area_factor: 1.5 angle_factor:1 shape_cost: 20.9 
+
+pixel_and_iou poly1:241778 poly2:74848 merge:73044
+poly1 area 241778  poly2 area 74848 inter area 73044
+node:0 --> 1 humoments: 4.02 iou: 0.3 iou_factor: 6.5 area_factor: 3.2 angle_factor:10.210796581027942 shape_cost: 856.1 
+
+pixel_and_iou poly1:180007 poly2:121180 merge:99181
+poly1 area 180007  poly2 area 121180 inter area 99181
+node:1 --> 0 humoments: 3.94 iou: 0.5 iou_factor: 4.0 area_factor: 1.5 angle_factor:39.40601435408524 shape_cost: 921.6 
+
+pixel_and_iou poly1:180007 poly2:52055 merge:48813
+poly1 area 180007  poly2 area 52055 inter area 48813
+node:1 --> 1 humoments: 3.59 iou: 0.3 iou_factor: 7.2 area_factor: 3.5 angle_factor:33.96510013715545 shape_cost: 3054.6 
+
+pixel_and_iou poly1:94602 poly2:176399 merge:64535
+poly1 area 94602  poly2 area 176399 inter area 64535
+node:2 --> 0 humoments: 2.83 iou: 0.3 iou_factor: 6.2 area_factor: 1.9 angle_factor:28.715255600128348 shape_cost: 940.3 
+
+pixel_and_iou poly1:94602 poly2:78417 merge:43613
+poly1 area 94602  poly2 area 78417 inter area 43613
+node:2 --> 1 humoments: 2.55 iou: 0.3 iou_factor: 5.8 area_factor: 1.2 angle_factor:23.274341383198596 shape_cost: 412.7 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 105_8.63242912_46.7482262.json dist:1787.1424292183387  edit_path[(0, None), (1, 0), (2, 1)]
+update cost before:1787.1424292183387 after:1787.1424292183387 
+
+
+pixel_and_iou poly1:241778 poly2:82392 merge:82392
+poly1 area 241778  poly2 area 82392 inter area 82392
+node:0 --> 1 humoments: 4.14 iou: 0.3 iou_factor: 5.7 area_factor: 2.9 angle_factor:1 shape_cost: 69.2 
+
+pixel_and_iou poly1:241778 poly2:51417 merge:50936
+poly1 area 241778  poly2 area 51417 inter area 50936
+node:0 --> 2 humoments: 0.80 iou: 0.2 iou_factor: 9.1 area_factor: 4.7 angle_factor:41.46266664655204 shape_cost: 1411.5 
+
+pixel_and_iou poly1:241778 poly2:51866 merge:49878
+poly1 area 241778  poly2 area 51866 inter area 49878
+node:0 --> 5 humoments: 10.18 iou: 0.2 iou_factor: 9.3 area_factor: 4.7 angle_factor:22.280151749981385 shape_cost: 9855.1 
+
+pixel_and_iou poly1:180007 poly2:59626 merge:57137
+poly1 area 180007  poly2 area 59626 inter area 57137
+node:1 --> 1 humoments: 3.65 iou: 0.3 iou_factor: 6.2 area_factor: 3.0 angle_factor:40.881395158873026 shape_cost: 2790.0 
+
+pixel_and_iou poly1:180007 poly2:41147 merge:41147
+poly1 area 180007  poly2 area 41147 inter area 41147
+node:1 --> 2 humoments: 1.52 iou: 0.2 iou_factor: 8.4 area_factor: 4.4 angle_factor:1 shape_cost: 55.8 
+
+pixel_and_iou poly1:180007 poly2:37141 merge:37141
+poly1 area 180007  poly2 area 37141 inter area 37141
+node:1 --> 5 humoments: 3.63 iou: 0.2 iou_factor: 9.2 area_factor: 4.8 angle_factor:21.912619357522814 shape_cost: 3566.4 
+
+pixel_and_iou poly1:94602 poly2:82392 merge:39645
+poly1 area 94602  poly2 area 82392 inter area 39645
+node:2 --> 1 humoments: 2.40 iou: 0.3 iou_factor: 6.7 area_factor: 1.1 angle_factor:30.190636404916205 shape_cost: 557.1 
+
+pixel_and_iou poly1:94602 poly2:51417 merge:35443
+poly1 area 94602  poly2 area 51417 inter area 35443
+node:2 --> 2 humoments: 3.02 iou: 0.3 iou_factor: 6.1 area_factor: 1.8 angle_factor:1 shape_cost: 33.6 
+
+pixel_and_iou poly1:94602 poly2:52147 merge:46123
+poly1 area 94602  poly2 area 52147 inter area 46123
+node:2 --> 5 humoments: 7.41 iou: 0.5 iou_factor: 4.3 area_factor: 1.8 angle_factor:11.221860603565965 shape_cost: 643.9 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 106_8.63819408_46.7397881.json dist:905.0336257757205  edit_path[(0, 1), (1, 2), (2, 5)]
+update cost before:905.0336257757205 after:905.0336257757205 
+
+
+pixel_and_iou poly1:241778 poly2:46201 merge:44258
+poly1 area 241778  poly2 area 46201 inter area 44258
+node:0 --> 2 humoments: 10.61 iou: 0.2 iou_factor: 10.4 area_factor: 5.2 angle_factor:21.89383465714464 shape_cost: 12694.6 
+
+pixel_and_iou poly1:241778 poly2:86833 merge:86833
+poly1 area 241778  poly2 area 86833 inter area 86833
+node:0 --> 4 humoments: 3.62 iou: 0.4 iou_factor: 5.4 area_factor: 2.8 angle_factor:1 shape_cost: 54.6 
+
+pixel_and_iou poly1:241778 poly2:66678 merge:63681
+poly1 area 241778  poly2 area 66678 inter area 63681
+node:0 --> 5 humoments: 1.24 iou: 0.3 iou_factor: 7.4 area_factor: 3.6 angle_factor:45.33274734049845 shape_cost: 1508.3 
+
+pixel_and_iou poly1:180007 poly2:34158 merge:34158
+poly1 area 180007  poly2 area 34158 inter area 34158
+node:1 --> 2 humoments: 4.07 iou: 0.2 iou_factor: 10.0 area_factor: 5.3 angle_factor:22.287510947636914 shape_cost: 4791.7 
+
+pixel_and_iou poly1:180007 poly2:62606 merge:59502
+poly1 area 180007  poly2 area 62606 inter area 59502
+node:1 --> 4 humoments: 3.32 iou: 0.3 iou_factor: 6.0 area_factor: 2.9 angle_factor:41.27911637727512 shape_cost: 2355.7 
+
+pixel_and_iou poly1:180007 poly2:51402 merge:51402
+poly1 area 180007  poly2 area 51402 inter area 51402
+node:1 --> 5 humoments: 1.99 iou: 0.3 iou_factor: 6.8 area_factor: 3.5 angle_factor:1 shape_cost: 47.0 
+
+pixel_and_iou poly1:94602 poly2:46239 merge:41217
+poly1 area 94602  poly2 area 46239 inter area 41217
+node:2 --> 2 humoments: 7.27 iou: 0.4 iou_factor: 4.7 area_factor: 2.0 angle_factor:11.59675219367978 shape_cost: 813.9 
+
+pixel_and_iou poly1:94602 poly2:86833 merge:41257
+poly1 area 94602  poly2 area 86833 inter area 41257
+node:2 --> 4 humoments: 1.95 iou: 0.3 iou_factor: 6.6 area_factor: 1.1 angle_factor:30.58835762331811 shape_cost: 426.8 
+
+pixel_and_iou poly1:94602 poly2:67151 merge:41617
+poly1 area 94602  poly2 area 67151 inter area 41617
+node:2 --> 5 humoments: 2.44 iou: 0.3 iou_factor: 5.6 area_factor: 1.4 angle_factor:11.821639005874339 shape_cost: 228.0 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 107_8.64157486_46.7428627.json dist:1033.346104903772  edit_path[(0, 4), (1, 5), (2, 2)]
+update cost before:1033.346104903772 after:1033.346104903772 
+
+
+pixel_and_iou poly1:241778 poly2:181584 merge:175875
+poly1 area 241778  poly2 area 181584 inter area 175875
+node:0 --> 0 humoments: 1.54 iou: 0.7 iou_factor: 2.8 area_factor: 1.3 angle_factor:1 shape_cost: 5.7 
+
+pixel_and_iou poly1:241778 poly2:16986 merge:16986
+poly1 area 241778  poly2 area 16986 inter area 16986
+node:0 --> 1 humoments: 1.56 iou: 0.1 iou_factor: 24.9 area_factor: 14.2 angle_factor:1 shape_cost: 554.8 
+
+pixel_and_iou poly1:180007 poly2:126886 merge:104732
+poly1 area 180007  poly2 area 126886 inter area 104732
+node:1 --> 0 humoments: 1.81 iou: 0.5 iou_factor: 3.8 area_factor: 1.4 angle_factor:40.85518093197247 shape_cost: 397.6 
+
+pixel_and_iou poly1:180007 poly2:16919 merge:16919
+poly1 area 180007  poly2 area 16919 inter area 16919
+node:1 --> 1 humoments: 1.87 iou: 0.1 iou_factor: 19.2 area_factor: 10.6 angle_factor:41.53522583502009 shape_cost: 15918.3 
+
+pixel_and_iou poly1:94602 poly2:193098 merge:69786
+poly1 area 94602  poly2 area 193098 inter area 69786
+node:2 --> 0 humoments: 2.97 iou: 0.3 iou_factor: 6.1 area_factor: 2.0 angle_factor:30.1644221780155 shape_cost: 1108.1 
+
+pixel_and_iou poly1:94602 poly2:16986 merge:13183
+poly1 area 94602  poly2 area 16986 inter area 13183
+node:2 --> 1 humoments: 2.37 iou: 0.1 iou_factor: 13.9 area_factor: 5.6 angle_factor:30.844467081062703 shape_cost: 5651.0 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 108_8.64354038_46.7488289.json dist:2875.118806583566  edit_path[(0, 1), (1, None), (2, 0)]
+update cost before:2875.118806583566 after:2875.118806583566 
+
+
+pixel_and_iou poly1:241778 poly2:273101 merge:204522
+poly1 area 241778  poly2 area 273101 inter area 204522
+node:0 --> 1 humoments: 3.94 iou: 0.7 iou_factor: 3.0 area_factor: 1.1 angle_factor:11.27587076296199 shape_cost: 149.8 
+
+pixel_and_iou poly1:180007 poly2:207342 merge:143001
+poly1 area 180007  poly2 area 207342 inter area 143001
+node:1 --> 1 humoments: 3.34 iou: 0.6 iou_factor: 3.4 area_factor: 1.2 angle_factor:32.8897387002438 shape_cost: 425.1 
+
+pixel_and_iou poly1:94602 poly2:345584 merge:90996
+poly1 area 94602  poly2 area 345584 inter area 90996
+node:2 --> 1 humoments: 5.50 iou: 0.3 iou_factor: 7.4 area_factor: 3.7 angle_factor:22.198979946286848 shape_cost: 3294.8 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 109_8.64358044_46.7526703.json dist:4962.098839815759  edit_path[(0, None), (1, None), (2, 1)]
+update cost before:4962.098839815759 after:4962.098839815759 
+
+
+pixel_and_iou poly1:241778 poly2:304322 merge:218521
+poly1 area 241778  poly2 area 304322 inter area 218521
+node:0 --> 0 humoments: 2.95 iou: 0.7 iou_factor: 3.0 area_factor: 1.3 angle_factor:10.376702176782096 shape_cost: 113.7 
+
+pixel_and_iou poly1:180007 poly2:232214 merge:153821
+poly1 area 180007  poly2 area 232214 inter area 153821
+node:1 --> 0 humoments: 2.35 iou: 0.6 iou_factor: 3.3 area_factor: 1.3 angle_factor:33.787806928424146 shape_cost: 338.4 
+
+pixel_and_iou poly1:94602 poly2:382217 merge:92051
+poly1 area 94602  poly2 area 382217 inter area 92051
+node:2 --> 0 humoments: 4.80 iou: 0.2 iou_factor: 8.0 area_factor: 4.0 angle_factor:23.097048174467222 shape_cost: 3592.1 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 110_8.64444923_46.7556992.json dist:5013.734717556265  edit_path[(0, None), (1, None), (2, 0)]
+update cost before:5013.734717556265 after:5013.734717556265 
+
+
+pixel_and_iou poly1:241778 poly2:24094 merge:23417
+poly1 area 241778  poly2 area 24094 inter area 23417
+node:0 --> 1 humoments: 5.60 iou: 0.1 iou_factor: 18.8 area_factor: 10.0 angle_factor:16.7429614588017 shape_cost: 17658.2 
+
+pixel_and_iou poly1:241778 poly2:228425 merge:199613
+poly1 area 241778  poly2 area 228425 inter area 199613
+node:0 --> 2 humoments: 3.57 iou: 0.7 iou_factor: 2.7 area_factor: 1.1 angle_factor:1 shape_cost: 10.1 
+
+pixel_and_iou poly1:180007 poly2:21998 merge:20989
+poly1 area 180007  poly2 area 21998 inter area 20989
+node:1 --> 1 humoments: 4.66 iou: 0.1 iou_factor: 15.9 area_factor: 8.2 angle_factor:27.431148472888637 shape_cost: 16600.8 
+
+pixel_and_iou poly1:180007 poly2:177694 merge:127146
+poly1 area 180007  poly2 area 177694 inter area 127146
+node:1 --> 2 humoments: 3.29 iou: 0.6 iou_factor: 3.6 area_factor: 1.0 angle_factor:39.946905429846666 shape_cost: 474.0 
+
+pixel_and_iou poly1:94602 poly2:24898 merge:19876
+poly1 area 94602  poly2 area 24898 inter area 19876
+node:2 --> 1 humoments: 13.16 iou: 0.2 iou_factor: 9.5 area_factor: 3.8 angle_factor:16.7403897189317 shape_cost: 7991.8 
+
+pixel_and_iou poly1:94602 poly2:260261 merge:74237
+poly1 area 94602  poly2 area 260261 inter area 74237
+node:2 --> 2 humoments: 1.86 iou: 0.3 iou_factor: 7.3 area_factor: 2.8 angle_factor:29.256146675889795 shape_cost: 1088.2 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 111_8.6469574_46.7590485.json dist:8906.287248586515  edit_path[(0, None), (1, 2), (2, 1)]
+update cost before:8906.287248586515 after:8906.287248586515 
+
+
+pixel_and_iou poly1:241778 poly2:75210 merge:75210
+poly1 area 241778  poly2 area 75210 inter area 75210
+node:0 --> 0 humoments: 3.58 iou: 0.3 iou_factor: 6.2 area_factor: 3.2 angle_factor:1 shape_cost: 71.8 
+
+pixel_and_iou poly1:241778 poly2:30384 merge:30384
+poly1 area 241778  poly2 area 30384 inter area 30384
+node:0 --> 1 humoments: 4.31 iou: 0.1 iou_factor: 14.7 area_factor: 8.0 angle_factor:27.26078709525013 shape_cost: 13779.6 
+
+pixel_and_iou poly1:241778 poly2:73222 merge:67162
+poly1 area 241778  poly2 area 73222 inter area 67162
+node:0 --> 2 humoments: 2.08 iou: 0.3 iou_factor: 7.1 area_factor: 3.3 angle_factor:40.72382830356796 shape_cost: 1991.6 
+
+pixel_and_iou poly1:241778 poly2:65406 merge:63886
+poly1 area 241778  poly2 area 65406 inter area 63886
+node:0 --> 3 humoments: 2.53 iou: 0.3 iou_factor: 7.3 area_factor: 3.7 angle_factor:21.96213415812877 shape_cost: 1504.6 
+
+pixel_and_iou poly1:180007 poly2:56865 merge:54462
+poly1 area 180007  poly2 area 56865 inter area 54462
+node:1 --> 0 humoments: 3.33 iou: 0.3 iou_factor: 6.5 area_factor: 3.2 angle_factor:46.39518580773296 shape_cost: 3165.6 
+
+pixel_and_iou poly1:180007 poly2:23801 merge:23801
+poly1 area 180007  poly2 area 23801 inter area 23801
+node:1 --> 1 humoments: 3.75 iou: 0.1 iou_factor: 14.1 area_factor: 7.6 angle_factor:16.91332283644047 shape_cost: 6750.3 
+
+pixel_and_iou poly1:180007 poly2:49666 merge:49666
+poly1 area 180007  poly2 area 49666 inter area 49666
+node:1 --> 2 humoments: 2.26 iou: 0.3 iou_factor: 7.0 area_factor: 3.6 angle_factor:1 shape_cost: 57.3 
+
+pixel_and_iou poly1:180007 poly2:47952 merge:47952
+poly1 area 180007  poly2 area 47952 inter area 47952
+node:1 --> 3 humoments: 2.64 iou: 0.3 iou_factor: 7.2 area_factor: 3.8 angle_factor:22.226186716074913 shape_cost: 1595.2 
+
+pixel_and_iou poly1:94602 poly2:75210 merge:35003
+poly1 area 94602  poly2 area 75210 inter area 35003
+node:2 --> 0 humoments: 2.11 iou: 0.3 iou_factor: 7.4 area_factor: 1.3 angle_factor:35.704427053776314 shape_cost: 702.6 
+
+pixel_and_iou poly1:94602 poly2:30384 merge:26030
+poly1 area 94602  poly2 area 30384 inter area 26030
+node:2 --> 1 humoments: 2.42 iou: 0.3 iou_factor: 7.3 area_factor: 3.1 angle_factor:1 shape_cost: 55.2 
+
+pixel_and_iou poly1:94602 poly2:74082 merge:54890
+poly1 area 94602  poly2 area 74082 inter area 54890
+node:2 --> 2 humoments: 1.99 iou: 0.5 iou_factor: 4.1 area_factor: 1.3 angle_factor:1 shape_cost: 10.3 
+
+pixel_and_iou poly1:94602 poly2:65559 merge:49832
+poly1 area 94602  poly2 area 65559 inter area 49832
+node:2 --> 3 humoments: 1.68 iou: 0.5 iou_factor: 4.3 area_factor: 1.4 angle_factor:11.535427962117858 shape_cost: 121.1 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 112_8.65719318_46.7620239.json dist:879.5555282180786  edit_path[(0, 0), (1, 2), (2, 3), (None, 1)]
+update cost before:879.5555282180786 after:879.5555282180786 
+
+
+pixel_and_iou poly1:241778 poly2:24663 merge:24663
+poly1 area 241778  poly2 area 24663 inter area 24663
+node:0 --> 0 humoments: 6.81 iou: 0.1 iou_factor: 17.9 area_factor: 9.8 angle_factor:1 shape_cost: 1192.3 
+
+pixel_and_iou poly1:241778 poly2:54529 merge:54348
+poly1 area 241778  poly2 area 54529 inter area 54348
+node:0 --> 1 humoments: 3.32 iou: 0.2 iou_factor: 8.5 area_factor: 4.4 angle_factor:27.18738566333345 shape_cost: 3406.7 
+
+pixel_and_iou poly1:241778 poly2:70054 merge:61087
+poly1 area 241778  poly2 area 70054 inter area 61087
+node:0 --> 3 humoments: 3.81 iou: 0.2 iou_factor: 7.9 area_factor: 3.5 angle_factor:39.81213132370563 shape_cost: 4129.9 
+
+pixel_and_iou poly1:241778 poly2:84978 merge:78443
+poly1 area 241778  poly2 area 84978 inter area 78443
+node:0 --> 4 humoments: 2.55 iou: 0.3 iou_factor: 6.1 area_factor: 2.8 angle_factor:24.340407233640274 shape_cost: 1084.8 
+
+pixel_and_iou poly1:180007 poly2:19637 merge:19637
+poly1 area 180007  poly2 area 19637 inter area 19637
+node:1 --> 0 humoments: 5.45 iou: 0.1 iou_factor: 16.8 area_factor: 9.2 angle_factor:40.20265214254396 shape_cost: 33734.7 
+
+pixel_and_iou poly1:180007 poly2:39335 merge:39335
+poly1 area 180007  poly2 area 39335 inter area 39335
+node:1 --> 1 humoments: 3.10 iou: 0.2 iou_factor: 8.8 area_factor: 4.6 angle_factor:16.987474033713045 shape_cost: 2109.2 
+
+pixel_and_iou poly1:180007 poly2:45624 merge:45624
+poly1 area 180007  poly2 area 45624 inter area 45624
+node:1 --> 3 humoments: 3.49 iou: 0.3 iou_factor: 7.6 area_factor: 3.9 angle_factor:1 shape_cost: 104.6 
+
+pixel_and_iou poly1:180007 poly2:61924 merge:61924
+poly1 area 180007  poly2 area 61924 inter area 61924
+node:1 --> 4 humoments: 2.53 iou: 0.3 iou_factor: 5.6 area_factor: 2.9 angle_factor:19.8523185082304 shape_cost: 825.3 
+
+pixel_and_iou poly1:94602 poly2:24663 merge:15342
+poly1 area 94602  poly2 area 24663 inter area 15342
+node:2 --> 0 humoments: 5.96 iou: 0.1 iou_factor: 12.7 area_factor: 3.8 angle_factor:29.511893388587367 shape_cost: 8564.6 
+
+pixel_and_iou poly1:94602 poly2:54954 merge:41315
+poly1 area 94602  poly2 area 54954 inter area 41315
+node:2 --> 1 humoments: 1.77 iou: 0.4 iou_factor: 5.1 area_factor: 1.7 angle_factor:1 shape_cost: 15.6 
+
+pixel_and_iou poly1:94602 poly2:73083 merge:52848
+poly1 area 94602  poly2 area 73083 inter area 52848
+node:2 --> 3 humoments: 1.56 iou: 0.5 iou_factor: 4.3 area_factor: 1.3 angle_factor:1 shape_cost: 8.6 
+
+pixel_and_iou poly1:94602 poly2:87217 merge:62762
+poly1 area 94602  poly2 area 87217 inter area 62762
+node:2 --> 4 humoments: 1.70 iou: 0.5 iou_factor: 3.7 area_factor: 1.1 angle_factor:1 shape_cost: 6.9 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 113_8.66228008_46.7632179.json dist:1865.3413093512154  edit_path[(0, 0), (1, 3), (None, 1), (2, 4)]
+update cost before:1865.3413093512154 after:1865.3413093512154 
+
+
+pixel_and_iou poly1:241778 poly2:114481 merge:103075
+poly1 area 241778  poly2 area 114481 inter area 103075
+node:0 --> 0 humoments: 3.74 iou: 0.4 iou_factor: 4.8 area_factor: 2.1 angle_factor:22.10882649983075 shape_cost: 836.4 
+
+pixel_and_iou poly1:241778 poly2:113002 merge:90840
+poly1 area 241778  poly2 area 113002 inter area 90840
+node:0 --> 1 humoments: 2.29 iou: 0.3 iou_factor: 5.6 area_factor: 2.1 angle_factor:30.4220329310306 shape_cost: 840.4 
+
+pixel_and_iou poly1:241778 poly2:35428 merge:35427
+poly1 area 241778  poly2 area 35428 inter area 35427
+node:0 --> 3 humoments: 2.72 iou: 0.1 iou_factor: 12.8 area_factor: 6.8 angle_factor:28.56563843131505 shape_cost: 6773.9 
+
+pixel_and_iou poly1:180007 poly2:79046 merge:76853
+poly1 area 180007  poly2 area 79046 inter area 76853
+node:1 --> 0 humoments: 3.38 iou: 0.4 iou_factor: 4.6 area_factor: 2.3 angle_factor:22.071095837992626 shape_cost: 786.2 
+
+pixel_and_iou poly1:180007 poly2:79648 merge:79403
+poly1 area 180007  poly2 area 79648 inter area 79403
+node:1 --> 1 humoments: 2.89 iou: 0.4 iou_factor: 4.4 area_factor: 2.3 angle_factor:13.760403131842384 shape_cost: 398.3 
+
+pixel_and_iou poly1:180007 poly2:28817 merge:28817
+poly1 area 180007  poly2 area 28817 inter area 28817
+node:1 --> 3 humoments: 2.75 iou: 0.2 iou_factor: 11.8 area_factor: 6.2 angle_factor:15.608471500375432 shape_cost: 3148.2 
+
+pixel_and_iou poly1:94602 poly2:130602 merge:72795
+poly1 area 94602  poly2 area 130602 inter area 72795
+node:2 --> 0 humoments: 1.57 iou: 0.5 iou_factor: 4.1 area_factor: 1.4 angle_factor:11.38033708403567 shape_cost: 101.0 
+
+pixel_and_iou poly1:94602 poly2:129055 merge:69220
+poly1 area 94602  poly2 area 129055 inter area 69220
+node:2 --> 1 humoments: 1.43 iou: 0.4 iou_factor: 4.4 area_factor: 1.4 angle_factor:1 shape_cost: 8.5 
+
+pixel_and_iou poly1:94602 poly2:35428 merge:27650
+poly1 area 94602  poly2 area 35428 inter area 27650
+node:2 --> 3 humoments: 1.82 iou: 0.3 iou_factor: 7.1 area_factor: 2.7 angle_factor:1 shape_cost: 34.7 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 114_8.66015816_46.7653732.json dist:1507.975730729962  edit_path[(0, 0), (1, 1), (2, 3)]
+update cost before:1507.975730729962 after:1507.975730729962 
+
+
+pixel_and_iou poly1:241778 poly2:18504 merge:18504
+poly1 area 241778  poly2 area 18504 inter area 18504
+node:0 --> 4 humoments: 3.01 iou: 0.1 iou_factor: 23.1 area_factor: 13.1 angle_factor:26.249124957876212 shape_cost: 23874.1 
+
+pixel_and_iou poly1:241778 poly2:90215 merge:79124
+poly1 area 241778  poly2 area 90215 inter area 79124
+node:0 --> 5 humoments: 4.02 iou: 0.3 iou_factor: 6.2 area_factor: 2.7 angle_factor:29.145836989524042 shape_cost: 1945.4 
+
+pixel_and_iou poly1:241778 poly2:93111 merge:77787
+poly1 area 241778  poly2 area 93111 inter area 77787
+node:0 --> 6 humoments: 7.11 iou: 0.3 iou_factor: 6.4 area_factor: 2.6 angle_factor:24.298905340896592 shape_cost: 2872.2 
+
+pixel_and_iou poly1:180007 poly2:16352 merge:16352
+poly1 area 180007  poly2 area 16352 inter area 16352
+node:1 --> 4 humoments: 2.92 iou: 0.1 iou_factor: 19.8 area_factor: 11.0 angle_factor:17.924984973815832 shape_cost: 11437.6 
+
+pixel_and_iou poly1:180007 poly2:62501 merge:62501
+poly1 area 180007  poly2 area 62501 inter area 62501
+node:1 --> 5 humoments: 3.85 iou: 0.3 iou_factor: 5.6 area_factor: 2.9 angle_factor:15.035073578477975 shape_cost: 933.1 
+
+pixel_and_iou poly1:180007 poly2:61854 merge:54668
+poly1 area 180007  poly2 area 61854 inter area 54668
+node:1 --> 6 humoments: 5.68 iou: 0.3 iou_factor: 6.6 area_factor: 2.9 angle_factor:19.888746617164195 shape_cost: 2177.0 
+
+pixel_and_iou poly1:94602 poly2:18504 merge:15114
+poly1 area 94602  poly2 area 18504 inter area 15114
+node:2 --> 4 humoments: 1.76 iou: 0.2 iou_factor: 12.2 area_factor: 5.1 angle_factor:1 shape_cost: 109.6 
+
+pixel_and_iou poly1:94602 poly2:102263 merge:57486
+poly1 area 94602  poly2 area 102263 inter area 57486
+node:2 --> 5 humoments: 1.05 iou: 0.4 iou_factor: 4.7 area_factor: 1.1 angle_factor:1 shape_cost: 5.4 
+
+pixel_and_iou poly1:94602 poly2:111999 merge:71778
+poly1 area 94602  poly2 area 111999 inter area 71778
+node:2 --> 6 humoments: 13.96 iou: 0.5 iou_factor: 3.7 area_factor: 1.2 angle_factor:1 shape_cost: 60.9 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 115_8.66443348_46.7623863.json dist:4156.255378299988  edit_path[(0, 6), (1, 5), (2, 4)]
+update cost before:4156.255378299988 after:4156.255378299988 
+
+
+pixel_and_iou poly1:241778 poly2:15611 merge:15611
+poly1 area 241778  poly2 area 15611 inter area 15611
+node:0 --> 1 humoments: 3.75 iou: 0.1 iou_factor: 26.8 area_factor: 15.5 angle_factor:24.31763100654571 shape_cost: 37916.4 
+
+pixel_and_iou poly1:241778 poly2:12886 merge:12886
+poly1 area 241778  poly2 area 12886 inter area 12886
+node:0 --> 2 humoments: 0.91 iou: 0.1 iou_factor: 31.6 area_factor: 18.8 angle_factor:32.25565760009595 shape_cost: 17351.7 
+
+pixel_and_iou poly1:241778 poly2:166746 merge:132101
+poly1 area 241778  poly2 area 166746 inter area 132101
+node:0 --> 3 humoments: 3.47 iou: 0.5 iou_factor: 4.1 area_factor: 1.4 angle_factor:20.9145944945502 shape_cost: 431.5 
+
+pixel_and_iou poly1:180007 poly2:13476 merge:13476
+poly1 area 180007  poly2 area 13476 inter area 13476
+node:1 --> 1 humoments: 3.77 iou: 0.1 iou_factor: 23.6 area_factor: 13.4 angle_factor:19.85647892514598 shape_cost: 23537.5 
+
+pixel_and_iou poly1:180007 poly2:12214 merge:12214
+poly1 area 180007  poly2 area 12214 inter area 12214
+node:1 --> 2 humoments: 1.57 iou: 0.1 iou_factor: 25.7 area_factor: 14.7 angle_factor:11.918452331592432 shape_cost: 7092.2 
+
+pixel_and_iou poly1:180007 poly2:119900 merge:96552
+poly1 area 180007  poly2 area 119900 inter area 96552
+node:1 --> 3 humoments: 2.96 iou: 0.5 iou_factor: 4.1 area_factor: 1.5 angle_factor:23.265893251838243 shape_cost: 426.0 
+
+pixel_and_iou poly1:94602 poly2:15611 merge:13802
+poly1 area 94602  poly2 area 15611 inter area 13802
+node:2 --> 1 humoments: 1.12 iou: 0.1 iou_factor: 13.1 area_factor: 6.1 angle_factor:1 shape_cost: 88.9 
+
+pixel_and_iou poly1:94602 poly2:12886 merge:10788
+poly1 area 94602  poly2 area 12886 inter area 10788
+node:2 --> 2 humoments: 2.95 iou: 0.1 iou_factor: 16.5 area_factor: 7.3 angle_factor:1 shape_cost: 356.6 
+
+pixel_and_iou poly1:94602 poly2:208972 merge:82889
+poly1 area 94602  poly2 area 208972 inter area 82889
+node:2 --> 3 humoments: 1.68 iou: 0.4 iou_factor: 5.2 area_factor: 2.2 angle_factor:12.575134497881278 shape_cost: 242.0 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 116_8.66896057_46.7662277.json dist:2388.9592102257425  edit_path[(0, 3), (1, None), (2, 2), (None, 1)]
+update cost before:2388.9592102257425 after:2388.9592102257425 
+
+
+pixel_and_iou poly1:241778 poly2:28738 merge:25019
+poly1 area 241778  poly2 area 28738 inter area 25019
+node:0 --> 1 humoments: 12.51 iou: 0.1 iou_factor: 17.9 area_factor: 8.4 angle_factor:31.414672416820316 shape_cost: 59077.3 
+
+pixel_and_iou poly1:241778 poly2:11572 merge:11572
+poly1 area 241778  poly2 area 11572 inter area 11572
+node:0 --> 2 humoments: 4.17 iou: 0.0 iou_factor: 34.6 area_factor: 20.9 angle_factor:23.25088801225933 shape_cost: 70090.4 
+
+pixel_and_iou poly1:241778 poly2:151534 merge:122796
+poly1 area 241778  poly2 area 151534 inter area 122796
+node:0 --> 3 humoments: 3.97 iou: 0.5 iou_factor: 4.3 area_factor: 1.6 angle_factor:21.597156680717724 shape_cost: 589.2 
+
+pixel_and_iou poly1:180007 poly2:18286 merge:18286
+poly1 area 180007  poly2 area 18286 inter area 18286
+node:1 --> 1 humoments: 9.36 iou: 0.1 iou_factor: 17.9 area_factor: 9.8 angle_factor:12.772881897984501 shape_cost: 21086.6 
+
+pixel_and_iou poly1:180007 poly2:10534 merge:10534
+poly1 area 180007  poly2 area 10534 inter area 10534
+node:1 --> 2 humoments: 3.67 iou: 0.1 iou_factor: 29.2 area_factor: 17.1 angle_factor:20.923221919431715 shape_cost: 38295.8 
+
+pixel_and_iou poly1:180007 poly2:106821 merge:90168
+poly1 area 180007  poly2 area 106821 inter area 90168
+node:1 --> 3 humoments: 3.53 iou: 0.5 iou_factor: 4.3 area_factor: 1.7 angle_factor:22.5826471204712 shape_cost: 573.5 
+
+pixel_and_iou poly1:94602 poly2:34609 merge:25116
+poly1 area 94602  poly2 area 34609 inter area 25116
+node:2 --> 1 humoments: 15.15 iou: 0.2 iou_factor: 8.0 area_factor: 2.7 angle_factor:1 shape_cost: 329.6 
+
+pixel_and_iou poly1:94602 poly2:11572 merge:10320
+poly1 area 94602  poly2 area 11572 inter area 10320
+node:2 --> 2 humoments: 2.42 iou: 0.1 iou_factor: 17.0 area_factor: 8.2 angle_factor:10.232463165473806 shape_cost: 3443.3 
+
+pixel_and_iou poly1:94602 poly2:185781 merge:80259
+poly1 area 94602  poly2 area 185781 inter area 80259
+node:2 --> 3 humoments: 1.53 iou: 0.4 iou_factor: 4.9 area_factor: 2.0 angle_factor:11.891888366514259 shape_cost: 173.4 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 117_8.66868782_46.767643.json dist:6390.34886769205  edit_path[(0, 3), (1, None), (2, 2), (None, 1)]
+update cost before:6390.34886769205 after:6390.34886769205 
+
+
+pixel_and_iou poly1:241778 poly2:8710 merge:8710
+poly1 area 241778  poly2 area 8710 inter area 8710
+node:0 --> 2 humoments: 4.73 iou: 0.0 iou_factor: 43.5 area_factor: 27.8 angle_factor:19.65373698723203 shape_cost: 112150.8 
+
+pixel_and_iou poly1:241778 poly2:59078 merge:51343
+poly1 area 241778  poly2 area 59078 inter area 51343
+node:0 --> 3 humoments: 7.01 iou: 0.2 iou_factor: 9.3 area_factor: 4.1 angle_factor:28.83041958762204 shape_cost: 7661.6 
+
+pixel_and_iou poly1:241778 poly2:127171 merge:105812
+poly1 area 241778  poly2 area 127171 inter area 105812
+node:0 --> 4 humoments: 5.43 iou: 0.4 iou_factor: 4.9 area_factor: 1.9 angle_factor:20.78864226150661 shape_cost: 1041.4 
+
+pixel_and_iou poly1:180007 poly2:8078 merge:8078
+poly1 area 180007  poly2 area 8078 inter area 8078
+node:1 --> 2 humoments: 4.02 iou: 0.0 iou_factor: 36.4 area_factor: 22.3 angle_factor:24.5203729444589 shape_cost: 80152.5 
+
+pixel_and_iou poly1:180007 poly2:40523 merge:40523
+poly1 area 180007  poly2 area 40523 inter area 40523
+node:1 --> 3 humoments: 5.70 iou: 0.2 iou_factor: 8.5 area_factor: 4.4 angle_factor:15.354401414741112 shape_cost: 3307.3 
+
+pixel_and_iou poly1:180007 poly2:89531 merge:75415
+poly1 area 180007  poly2 area 89531 inter area 75415
+node:1 --> 4 humoments: 4.51 iou: 0.4 iou_factor: 5.0 area_factor: 2.0 angle_factor:23.389809306514085 shape_cost: 1063.4 
+
+pixel_and_iou poly1:94602 poly2:8710 merge:7935
+poly1 area 94602  poly2 area 8710 inter area 7935
+node:2 --> 2 humoments: 2.97 iou: 0.1 iou_factor: 21.5 area_factor: 10.9 angle_factor:13.82961419050126 shape_cost: 9566.5 
+
+pixel_and_iou poly1:94602 poly2:68616 merge:44230
+poly1 area 94602  poly2 area 68616 inter area 44230
+node:2 --> 3 humoments: 5.15 iou: 0.4 iou_factor: 5.2 area_factor: 1.4 angle_factor:1 shape_cost: 37.2 
+
+pixel_and_iou poly1:94602 poly2:155285 merge:71440
+poly1 area 94602  poly2 area 155285 inter area 71440
+node:2 --> 4 humoments: 2.99 iou: 0.4 iou_factor: 4.9 area_factor: 1.6 angle_factor:12.6990505525572 shape_cost: 303.8 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 118_8.67111206_46.7680435.json dist:13373.018518773933  edit_path[(0, None), (1, 4), (2, 2), (None, 3)]
+update cost before:13373.018518773933 after:13373.018518773933 
+
+
+pixel_and_iou poly1:241778 poly2:143901 merge:118057
+poly1 area 241778  poly2 area 143901 inter area 118057
+node:0 --> 0 humoments: 4.82 iou: 0.4 iou_factor: 4.4 area_factor: 1.7 angle_factor:21.90939578979354 shape_cost: 786.8 
+
+pixel_and_iou poly1:241778 poly2:46271 merge:41318
+poly1 area 241778  poly2 area 46271 inter area 41318
+node:0 --> 1 humoments: 8.54 iou: 0.2 iou_factor: 11.3 area_factor: 5.2 angle_factor:30.195694705337687 shape_cost: 15188.5 
+
+pixel_and_iou poly1:241778 poly2:11165 merge:11165
+poly1 area 241778  poly2 area 11165 inter area 11165
+node:0 --> 2 humoments: 4.29 iou: 0.0 iou_factor: 35.6 area_factor: 21.7 angle_factor:22.963313626952186 shape_cost: 75972.9 
+
+pixel_and_iou poly1:180007 poly2:100889 merge:85835
+poly1 area 180007  poly2 area 100889 inter area 85835
+node:1 --> 0 humoments: 4.10 iou: 0.4 iou_factor: 4.4 area_factor: 1.8 angle_factor:22.26905087946767 shape_cost: 723.3 
+
+pixel_and_iou poly1:180007 poly2:31354 merge:31354
+poly1 area 180007  poly2 area 31354 inter area 31354
+node:1 --> 1 humoments: 6.65 iou: 0.2 iou_factor: 10.9 area_factor: 5.7 angle_factor:13.992942015058583 shape_cost: 5799.8 
+
+pixel_and_iou poly1:180007 poly2:10163 merge:10163
+poly1 area 180007  poly2 area 10163 inter area 10163
+node:1 --> 2 humoments: 3.74 iou: 0.1 iou_factor: 30.1 area_factor: 17.7 angle_factor:21.21079630473768 shape_cost: 42336.5 
+
+pixel_and_iou poly1:94602 poly2:175682 merge:78892
+poly1 area 94602  poly2 area 175682 inter area 78892
+node:2 --> 0 humoments: 2.36 iou: 0.4 iou_factor: 4.7 area_factor: 1.9 angle_factor:11.578292125510725 shape_cost: 240.4 
+
+pixel_and_iou poly1:94602 poly2:52571 merge:39502
+poly1 area 94602  poly2 area 52571 inter area 39502
+node:2 --> 1 humoments: 7.34 iou: 0.4 iou_factor: 5.3 area_factor: 1.8 angle_factor:1 shape_cost: 70.1 
+
+pixel_and_iou poly1:94602 poly2:11165 merge:10116
+poly1 area 94602  poly2 area 11165 inter area 10116
+node:2 --> 2 humoments: 2.50 iou: 0.1 iou_factor: 17.3 area_factor: 8.5 angle_factor:10.520037550782213 shape_cost: 3843.8 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 119_8.66948318_46.7687988.json dist:6772.721838989239  edit_path[(0, 0), (1, None), (2, 2), (None, 1)]
+update cost before:6772.721838989239 after:6772.721838989239 
+
+
+pixel_and_iou poly1:241778 poly2:47449 merge:46652
+poly1 area 241778  poly2 area 47449 inter area 46652
+node:0 --> 0 humoments: 4.93 iou: 0.2 iou_factor: 9.9 area_factor: 5.1 angle_factor:1 shape_cost: 248.1 
+
+pixel_and_iou poly1:241778 poly2:38667 merge:38667
+poly1 area 241778  poly2 area 38667 inter area 38667
+node:0 --> 1 humoments: 2.68 iou: 0.2 iou_factor: 11.8 area_factor: 6.3 angle_factor:23.234412514428776 shape_cost: 4576.4 
+
+pixel_and_iou poly1:241778 poly2:71736 merge:71736
+poly1 area 241778  poly2 area 71736 inter area 71736
+node:0 --> 2 humoments: 5.13 iou: 0.3 iou_factor: 6.5 area_factor: 3.4 angle_factor:1 shape_cost: 112.7 
+
+pixel_and_iou poly1:180007 poly2:32556 merge:26971
+poly1 area 180007  poly2 area 32556 inter area 26971
+node:1 --> 0 humoments: 3.96 iou: 0.1 iou_factor: 12.9 area_factor: 5.5 angle_factor:50.12249521408445 shape_cost: 14140.7 
+
+pixel_and_iou poly1:180007 poly2:28916 merge:28916
+poly1 area 180007  poly2 area 28916 inter area 28916
+node:1 --> 1 humoments: 2.60 iou: 0.2 iou_factor: 11.7 area_factor: 6.2 angle_factor:20.93969741726199 shape_cost: 3970.4 
+
+pixel_and_iou poly1:180007 poly2:52348 merge:50639
+poly1 area 180007  poly2 area 52348 inter area 50639
+node:1 --> 2 humoments: 4.31 iou: 0.3 iou_factor: 6.9 area_factor: 3.4 angle_factor:40.6189263788346 shape_cost: 4172.7 
+
+pixel_and_iou poly1:94602 poly2:48888 merge:14380
+poly1 area 94602  poly2 area 48888 inter area 14380
+node:2 --> 0 humoments: 2.64 iou: 0.1 iou_factor: 16.5 area_factor: 1.9 angle_factor:39.43173646012755 shape_cost: 3314.4 
+
+pixel_and_iou poly1:94602 poly2:38667 merge:31970
+poly1 area 94602  poly2 area 38667 inter area 31970
+node:2 --> 1 humoments: 1.83 iou: 0.3 iou_factor: 6.1 area_factor: 2.4 angle_factor:10.2489386633047 shape_cost: 281.4 
+
+pixel_and_iou poly1:94602 poly2:71736 merge:35357
+poly1 area 94602  poly2 area 71736 inter area 35357
+node:2 --> 2 humoments: 3.64 iou: 0.3 iou_factor: 7.1 area_factor: 1.3 angle_factor:29.92816762487766 shape_cost: 1025.7 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 11_8.53155708_46.60886.json dist:5016.141052236901  edit_path[(0, 0), (1, 2), (2, 1)]
+update cost before:5016.141052236901 after:5016.141052236901 
+
+
+pixel_and_iou poly1:241778 poly2:20467 merge:20467
+poly1 area 241778  poly2 area 20467 inter area 20467
+node:0 --> 0 humoments: 0.83 iou: 0.1 iou_factor: 21.1 area_factor: 11.8 angle_factor:36.38840456910606 shape_cost: 7583.4 
+
+pixel_and_iou poly1:241778 poly2:52840 merge:52839
+poly1 area 241778  poly2 area 52840 inter area 52839
+node:0 --> 1 humoments: 7.61 iou: 0.2 iou_factor: 8.8 area_factor: 4.6 angle_factor:1 shape_cost: 304.9 
+
+pixel_and_iou poly1:241778 poly2:104588 merge:95321
+poly1 area 241778  poly2 area 104588 inter area 95321
+node:0 --> 5 humoments: 2.54 iou: 0.4 iou_factor: 5.1 area_factor: 2.3 angle_factor:27.682953491593878 shape_cost: 833.8 
+
+pixel_and_iou poly1:180007 poly2:20467 merge:20467
+poly1 area 180007  poly2 area 20467 inter area 20467
+node:1 --> 0 humoments: 1.40 iou: 0.1 iou_factor: 16.2 area_factor: 8.8 angle_factor:1 shape_cost: 198.7 
+
+pixel_and_iou poly1:180007 poly2:39196 merge:38396
+poly1 area 180007  poly2 area 39196 inter area 38396
+node:1 --> 1 humoments: 5.98 iou: 0.2 iou_factor: 9.0 area_factor: 4.6 angle_factor:40.65893200456964 shape_cost: 10046.3 
+
+pixel_and_iou poly1:180007 poly2:74817 merge:74817
+poly1 area 180007  poly2 area 74817 inter area 74817
+node:1 --> 5 humoments: 1.96 iou: 0.4 iou_factor: 4.7 area_factor: 2.4 angle_factor:16.511900830342945 shape_cost: 365.7 
+
+pixel_and_iou poly1:94602 poly2:20467 merge:15972
+poly1 area 94602  poly2 area 20467 inter area 15972
+node:2 --> 0 humoments: 3.12 iou: 0.2 iou_factor: 11.7 area_factor: 4.6 angle_factor:1 shape_cost: 168.7 
+
+pixel_and_iou poly1:94602 poly2:52840 merge:26041
+poly1 area 94602  poly2 area 52840 inter area 26041
+node:2 --> 1 humoments: 7.38 iou: 0.2 iou_factor: 8.9 area_factor: 1.8 angle_factor:29.968173250612928 shape_cost: 3529.8 
+
+pixel_and_iou poly1:94602 poly2:110589 merge:76640
+poly1 area 94602  poly2 area 110589 inter area 76640
+node:2 --> 5 humoments: 4.49 iou: 0.6 iou_factor: 3.3 area_factor: 1.2 angle_factor:1 shape_cost: 17.3 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 120_8.66698265_46.7730026.json dist:619.1964461026623  edit_path[(0, 1), (1, 0), (2, 5)]
+update cost before:619.1964461026623 after:619.1964461026623 
+
+
+pixel_and_iou poly1:241778 poly2:43171 merge:43171
+poly1 area 241778  poly2 area 43171 inter area 43171
+node:0 --> 0 humoments: 3.18 iou: 0.2 iou_factor: 10.6 area_factor: 5.6 angle_factor:1 shape_cost: 188.9 
+
+pixel_and_iou poly1:241778 poly2:9193 merge:9193
+poly1 area 241778  poly2 area 9193 inter area 9193
+node:0 --> 1 humoments: 0.58 iou: 0.0 iou_factor: 41.6 area_factor: 26.3 angle_factor:44.30861440490668 shape_cost: 28132.8 
+
+pixel_and_iou poly1:241778 poly2:12623 merge:12623
+poly1 area 241778  poly2 area 12623 inter area 12623
+node:0 --> 2 humoments: 3.85 iou: 0.1 iou_factor: 32.1 area_factor: 19.2 angle_factor:44.458866066705134 shape_cost: 105406.1 
+
+pixel_and_iou poly1:241778 poly2:121708 merge:110210
+poly1 area 241778  poly2 area 121708 inter area 110210
+node:0 --> 3 humoments: 1.88 iou: 0.4 iou_factor: 4.5 area_factor: 2.0 angle_factor:31.764464187005856 shape_cost: 534.4 
+
+pixel_and_iou poly1:180007 poly2:34895 merge:34874
+poly1 area 180007  poly2 area 34895 inter area 34874
+node:1 --> 0 humoments: 3.07 iou: 0.2 iou_factor: 9.8 area_factor: 5.2 angle_factor:48.45234968372847 shape_cost: 7533.4 
+
+pixel_and_iou poly1:180007 poly2:9193 merge:9193
+poly1 area 180007  poly2 area 9193 inter area 9193
+node:1 --> 1 humoments: 1.05 iou: 0.1 iou_factor: 32.7 area_factor: 19.6 angle_factor:1 shape_cost: 670.5 
+
+pixel_and_iou poly1:180007 poly2:11492 merge:11492
+poly1 area 180007  poly2 area 11492 inter area 11492
+node:1 --> 2 humoments: 3.25 iou: 0.1 iou_factor: 27.1 area_factor: 15.7 angle_factor:1 shape_cost: 1380.2 
+
+pixel_and_iou poly1:180007 poly2:85485 merge:85485
+poly1 area 180007  poly2 area 85485 inter area 85485
+node:1 --> 3 humoments: 2.21 iou: 0.5 iou_factor: 4.1 area_factor: 2.1 angle_factor:12.419286843281881 shape_cost: 238.4 
+
+pixel_and_iou poly1:94602 poly2:43171 merge:23621
+poly1 area 94602  poly2 area 43171 inter area 23621
+node:2 --> 0 humoments: 1.83 iou: 0.2 iou_factor: 9.2 area_factor: 2.2 angle_factor:37.76159092977108 shape_cost: 1393.5 
+
+pixel_and_iou poly1:94602 poly2:9193 merge:7646
+poly1 area 94602  poly2 area 9193 inter area 7646
+node:2 --> 1 humoments: 3.90 iou: 0.1 iou_factor: 22.3 area_factor: 10.3 angle_factor:10.825263227173611 shape_cost: 9700.1 
+
+pixel_and_iou poly1:94602 poly2:12623 merge:11283
+poly1 area 94602  poly2 area 12623 inter area 11283
+node:2 --> 2 humoments: 4.04 iou: 0.1 iou_factor: 15.7 area_factor: 7.5 angle_factor:10.975514888971325 shape_cost: 5203.4 
+
+pixel_and_iou poly1:94602 poly2:129206 merge:75788
+poly1 area 94602  poly2 area 129206 inter area 75788
+node:2 --> 3 humoments: 3.34 iou: 0.5 iou_factor: 3.8 area_factor: 1.4 angle_factor:1 shape_cost: 17.5 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 121_8.66590118_46.7778168.json dist:3666.5216013764702  edit_path[(0, 0), (1, 2), (2, 3), (None, 1)]
+update cost before:3666.5216013764702 after:3666.5216013764702 
+
+
+pixel_and_iou poly1:241778 poly2:10915 merge:10915
+poly1 area 241778  poly2 area 10915 inter area 10915
+node:0 --> 2 humoments: 5.73 iou: 0.0 iou_factor: 36.3 area_factor: 22.2 angle_factor:46.93654966861193 shape_cost: 216051.9 
+
+pixel_and_iou poly1:241778 poly2:139189 merge:122778
+poly1 area 241778  poly2 area 139189 inter area 122778
+node:0 --> 4 humoments: 2.80 iou: 0.5 iou_factor: 4.1 area_factor: 1.7 angle_factor:30.238308039812097 shape_cost: 606.4 
+
+pixel_and_iou poly1:241778 poly2:4768 merge:4768
+poly1 area 241778  poly2 area 4768 inter area 4768
+node:0 --> 5 humoments: 5.41 iou: 0.0 iou_factor: 67.3 area_factor: 50.7 angle_factor:1 shape_cost: 18446.3 
+
+pixel_and_iou poly1:180007 poly2:9853 merge:9853
+poly1 area 180007  poly2 area 9853 inter area 9853
+node:1 --> 2 humoments: 4.71 iou: 0.1 iou_factor: 30.9 area_factor: 18.3 angle_factor:1 shape_cost: 2659.6 
+
+pixel_and_iou poly1:180007 poly2:95299 merge:93818
+poly1 area 180007  poly2 area 95299 inter area 93818
+node:1 --> 4 humoments: 2.75 iou: 0.5 iou_factor: 3.8 area_factor: 1.9 angle_factor:13.943886624136518 shape_cost: 275.2 
+
+pixel_and_iou poly1:180007 poly2:4578 merge:4578
+poly1 area 180007  poly2 area 4578 inter area 4578
+node:1 --> 5 humoments: 4.48 iou: 0.0 iou_factor: 56.4 area_factor: 39.3 angle_factor:35.945354185561655 shape_cost: 357433.8 
+
+pixel_and_iou poly1:94602 poly2:10915 merge:9737
+poly1 area 94602  poly2 area 10915 inter area 9737
+node:2 --> 2 humoments: 3.38 iou: 0.1 iou_factor: 17.9 area_factor: 8.7 angle_factor:13.45319849087878 shape_cost: 7049.2 
+
+pixel_and_iou poly1:94602 poly2:152673 merge:76821
+poly1 area 94602  poly2 area 152673 inter area 76821
+node:2 --> 4 humoments: 1.84 iou: 0.5 iou_factor: 4.3 area_factor: 1.6 angle_factor:1 shape_cost: 12.9 
+
+pixel_and_iou poly1:94602 poly2:4768 merge:4472
+poly1 area 94602  poly2 area 4768 inter area 4472
+node:2 --> 5 humoments: 3.30 iou: 0.0 iou_factor: 35.0 area_factor: 19.8 angle_factor:25.254595431605875 shape_cost: 57960.5 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 122_8.67024326_46.7823944.json dist:21358.19250082453  edit_path[(0, 5), (1, 2), (2, 4)]
+update cost before:21358.19250082453 after:21358.19250082453 
+
+
+pixel_and_iou poly1:241778 poly2:4415 merge:4415
+poly1 area 241778  poly2 area 4415 inter area 4415
+node:0 --> 2 humoments: 7.09 iou: 0.0 iou_factor: 70.8 area_factor: 54.8 angle_factor:1 shape_cost: 27493.9 
+
+pixel_and_iou poly1:241778 poly2:15960 merge:15960
+poly1 area 241778  poly2 area 15960 inter area 15960
+node:0 --> 4 humoments: 5.53 iou: 0.1 iou_factor: 26.3 area_factor: 15.1 angle_factor:46.441533787598985 shape_cost: 102394.2 
+
+pixel_and_iou poly1:241778 poly2:150049 merge:127065
+poly1 area 241778  poly2 area 150049 inter area 127065
+node:0 --> 5 humoments: 2.66 iou: 0.5 iou_factor: 4.1 area_factor: 1.6 angle_factor:35.01146915111445 shape_cost: 613.6 
+
+pixel_and_iou poly1:180007 poly2:4211 merge:4211
+poly1 area 180007  poly2 area 4211 inter area 4211
+node:1 --> 2 humoments: 5.61 iou: 0.0 iou_factor: 59.9 area_factor: 42.7 angle_factor:35.622207442354394 shape_cost: 511643.8 
+
+pixel_and_iou poly1:180007 poly2:13339 merge:13339
+poly1 area 180007  poly2 area 13339 inter area 13339
+node:1 --> 4 humoments: 4.61 iou: 0.1 iou_factor: 23.8 area_factor: 13.5 angle_factor:1 shape_cost: 1479.4 
+
+pixel_and_iou poly1:180007 poly2:101081 merge:98986
+poly1 area 180007  poly2 area 101081 inter area 98986
+node:1 --> 5 humoments: 2.71 iou: 0.5 iou_factor: 3.6 area_factor: 1.8 angle_factor:1 shape_cost: 17.4 
+
+pixel_and_iou poly1:94602 poly2:4415 merge:4182
+poly1 area 94602  poly2 area 4415 inter area 4182
+node:2 --> 2 humoments: 5.37 iou: 0.0 iou_factor: 37.0 area_factor: 21.4 angle_factor:24.931448688396507 shape_cost: 105992.6 
+
+pixel_and_iou poly1:94602 poly2:15960 merge:14032
+poly1 area 94602  poly2 area 15960 inter area 14032
+node:2 --> 4 humoments: 3.11 iou: 0.1 iou_factor: 12.9 area_factor: 5.9 angle_factor:12.958182609865883 shape_cost: 3076.6 
+
+pixel_and_iou poly1:94602 poly2:165033 merge:75382
+poly1 area 94602  poly2 area 165033 inter area 75382
+node:2 --> 5 humoments: 1.78 iou: 0.4 iou_factor: 4.8 area_factor: 1.7 angle_factor:1 shape_cost: 14.8 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 123_8.6662302_46.7900467.json dist:29226.90885349341  edit_path[(0, 2), (1, 4), (2, 5)]
+update cost before:29226.90885349341 after:29226.90885349341 
+
+
+pixel_and_iou poly1:241778 poly2:1640 merge:1640
+poly1 area 241778  poly2 area 1640 inter area 1640
+node:0 --> 0 humoments: 1.07 iou: 0.0 iou_factor: 119.2 area_factor: 147.4 angle_factor:15.453568826959534 shape_cost: 290654.3 
+
+pixel_and_iou poly1:241778 poly2:188314 merge:148383
+poly1 area 241778  poly2 area 188314 inter area 148383
+node:0 --> 1 humoments: 3.68 iou: 0.5 iou_factor: 3.7 area_factor: 1.3 angle_factor:34.08655829781766 shape_cost: 599.9 
+
+pixel_and_iou poly1:241778 poly2:11950 merge:11950
+poly1 area 241778  poly2 area 11950 inter area 11950
+node:0 --> 2 humoments: 3.51 iou: 0.0 iou_factor: 33.7 area_factor: 20.2 angle_factor:44.988088851778535 shape_cost: 107421.7 
+
+pixel_and_iou poly1:180007 poly2:1640 merge:1640
+poly1 area 180007  poly2 area 1640 inter area 1640
+node:1 --> 0 humoments: 1.73 iou: 0.0 iou_factor: 104.7 area_factor: 109.8 angle_factor:28.720541104720326 shape_cost: 569272.9 
+
+pixel_and_iou poly1:180007 poly2:125199 merge:115726
+poly1 area 180007  poly2 area 125199 inter area 115726
+node:1 --> 1 humoments: 3.36 iou: 0.6 iou_factor: 3.2 area_factor: 1.4 angle_factor:10.111010420086917 shape_cost: 157.4 
+
+pixel_and_iou poly1:180007 poly2:10211 merge:10211
+poly1 area 180007  poly2 area 10211 inter area 10211
+node:1 --> 2 humoments: 3.43 iou: 0.1 iou_factor: 30.0 area_factor: 17.6 angle_factor:1 shape_cost: 1814.8 
+
+pixel_and_iou poly1:94602 poly2:1640 merge:1640
+poly1 area 94602  poly2 area 1640 inter area 1640
+node:2 --> 0 humoments: 2.63 iou: 0.0 iou_factor: 73.2 area_factor: 57.7 angle_factor:18.029782350762087 shape_cost: 199978.7 
+
+pixel_and_iou poly1:94602 poly2:216544 merge:85516
+poly1 area 94602  poly2 area 216544 inter area 85516
+node:2 --> 1 humoments: 2.28 iou: 0.4 iou_factor: 5.1 area_factor: 2.3 angle_factor:1 shape_cost: 26.8 
+
+pixel_and_iou poly1:94602 poly2:11950 merge:11096
+poly1 area 94602  poly2 area 11950 inter area 11096
+node:2 --> 2 humoments: 2.55 iou: 0.1 iou_factor: 15.8 area_factor: 7.9 angle_factor:11.50473767404533 shape_cost: 3680.5 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 124_8.66812229_46.7943039.json dist:202639.97476949435  edit_path[(0, 1), (1, 2), (2, 0)]
+update cost before:202639.97476949435 after:202639.97476949435 
+
+
+pixel_and_iou poly1:241778 poly2:461 merge:461
+poly1 area 241778  poly2 area 461 inter area 461
+node:0 --> 1 humoments: 5.17 iou: 0.0 iou_factor: 168.0 area_factor: 524.5 angle_factor:1 shape_cost: 455751.1 
+
+pixel_and_iou poly1:241778 poly2:1284 merge:1284
+poly1 area 241778  poly2 area 1284 inter area 1284
+node:0 --> 2 humoments: 7.53 iou: 0.0 iou_factor: 130.6 area_factor: 188.3 angle_factor:1 shape_cost: 185226.9 
+
+pixel_and_iou poly1:241778 poly2:9563 merge:9563
+poly1 area 241778  poly2 area 9563 inter area 9563
+node:0 --> 3 humoments: 3.09 iou: 0.0 iou_factor: 40.4 area_factor: 25.3 angle_factor:1 shape_cost: 3152.9 
+
+pixel_and_iou poly1:241778 poly2:1303 merge:1303
+poly1 area 241778  poly2 area 1303 inter area 1303
+node:0 --> 4 humoments: 4.06 iou: 0.0 iou_factor: 130.0 area_factor: 185.6 angle_factor:1 shape_cost: 97899.4 
+
+pixel_and_iou poly1:241778 poly2:1538 merge:1538
+poly1 area 241778  poly2 area 1538 inter area 1538
+node:0 --> 6 humoments: 2.54 iou: 0.0 iou_factor: 122.2 area_factor: 157.2 angle_factor:1 shape_cost: 48772.6 
+
+pixel_and_iou poly1:241778 poly2:11620 merge:11620
+poly1 area 241778  poly2 area 11620 inter area 11620
+node:0 --> 7 humoments: 5.29 iou: 0.0 iou_factor: 34.4 area_factor: 20.8 angle_factor:43.035947090703175 shape_cost: 163105.3 
+
+pixel_and_iou poly1:241778 poly2:119936 merge:104449
+poly1 area 241778  poly2 area 119936 inter area 104449
+node:0 --> 8 humoments: 3.76 iou: 0.4 iou_factor: 4.8 area_factor: 2.0 angle_factor:35.79296274615584 shape_cost: 1304.4 
+
+pixel_and_iou poly1:180007 poly2:461 merge:461
+poly1 area 180007  poly2 area 461 inter area 461
+node:1 --> 1 humoments: 4.33 iou: 0.0 iou_factor: 159.2 area_factor: 390.5 angle_factor:50.71644140169004 shape_cost: 13668559.5 
+
+pixel_and_iou poly1:180007 poly2:1284 merge:1284
+poly1 area 180007  poly2 area 1284 inter area 1284
+node:1 --> 2 humoments: 5.91 iou: 0.0 iou_factor: 116.7 area_factor: 140.2 angle_factor:40.361845054199094 shape_cost: 3904058.6 
+
+pixel_and_iou poly1:180007 poly2:8867 merge:8867
+poly1 area 180007  poly2 area 8867 inter area 8867
+node:1 --> 3 humoments: 2.75 iou: 0.0 iou_factor: 33.8 area_factor: 20.3 angle_factor:39.85788603360601 shape_cost: 75177.4 
+
+pixel_and_iou poly1:180007 poly2:1303 merge:1303
+poly1 area 180007  poly2 area 1303 inter area 1303
+node:1 --> 4 humoments: 3.60 iou: 0.0 iou_factor: 116.0 area_factor: 138.1 angle_factor:39.00980494543664 shape_cost: 2250695.5 
+
+pixel_and_iou poly1:180007 poly2:1538 merge:1538
+poly1 area 180007  poly2 area 1538 inter area 1538
+node:1 --> 6 humoments: 2.78 iou: 0.0 iou_factor: 107.9 area_factor: 117.0 angle_factor:45.18510248815346 shape_cost: 1584071.4 
+
+pixel_and_iou poly1:180007 poly2:9831 merge:9831
+poly1 area 180007  poly2 area 9831 inter area 9831
+node:1 --> 7 humoments: 4.48 iou: 0.1 iou_factor: 31.0 area_factor: 18.3 angle_factor:1 shape_cost: 2537.2 
+
+pixel_and_iou poly1:180007 poly2:80760 merge:79302
+poly1 area 180007  poly2 area 80760 inter area 79302
+node:1 --> 8 humoments: 3.43 iou: 0.4 iou_factor: 4.5 area_factor: 2.2 angle_factor:1 shape_cost: 34.2 
+
+pixel_and_iou poly1:94602 poly2:461 merge:461
+poly1 area 94602  poly2 area 461 inter area 461
+node:2 --> 1 humoments: 3.03 iou: 0.0 iou_factor: 134.5 area_factor: 205.2 angle_factor:40.02568264769826 shape_cost: 3342771.4 
+
+pixel_and_iou poly1:94602 poly2:1284 merge:1284
+poly1 area 94602  poly2 area 1284 inter area 1284
+node:2 --> 2 humoments: 14.99 iou: 0.0 iou_factor: 84.8 area_factor: 73.7 angle_factor:29.671086300233952 shape_cost: 2781076.1 
+
+pixel_and_iou poly1:94602 poly2:9563 merge:8146
+poly1 area 94602  poly2 area 9563 inter area 8146
+node:2 --> 3 humoments: 1.90 iou: 0.1 iou_factor: 21.1 area_factor: 9.9 angle_factor:29.167127279647968 shape_cost: 11543.5 
+
+pixel_and_iou poly1:94602 poly2:1303 merge:1303
+poly1 area 94602  poly2 area 1303 inter area 1303
+node:2 --> 4 humoments: 2.33 iou: 0.0 iou_factor: 84.1 area_factor: 72.6 angle_factor:28.319046191479387 shape_cost: 403790.1 
+
+pixel_and_iou poly1:94602 poly2:1538 merge:1538
+poly1 area 94602  poly2 area 1538 inter area 1538
+node:2 --> 6 humoments: 2.44 iou: 0.0 iou_factor: 76.2 area_factor: 61.5 angle_factor:34.49434373419459 shape_cost: 394874.6 
+
+pixel_and_iou poly1:94602 poly2:11620 merge:10999
+poly1 area 94602  poly2 area 11620 inter area 10999
+node:2 --> 7 humoments: 2.85 iou: 0.1 iou_factor: 15.9 area_factor: 8.1 angle_factor:1 shape_cost: 369.6 
+
+pixel_and_iou poly1:94602 poly2:130218 merge:67263
+poly1 area 94602  poly2 area 130218 inter area 67263
+node:2 --> 8 humoments: 2.25 iou: 0.4 iou_factor: 4.6 area_factor: 1.4 angle_factor:1 shape_cost: 14.2 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 127_8.66062069_46.8061867.json dist:1128159.797212931  edit_path[(0, 1), (1, 8), (2, 7), (None, 2), (None, 3), (None, 4), (None, 6)]
+update cost before:1128159.797212931 after:1128159.797212931 
+
+
+pixel_and_iou poly1:241778 poly2:12874 merge:12874
+poly1 area 241778  poly2 area 12874 inter area 12874
+node:0 --> 2 humoments: 6.86 iou: 0.1 iou_factor: 31.6 area_factor: 18.8 angle_factor:1 shape_cost: 4075.3 
+
+pixel_and_iou poly1:241778 poly2:52478 merge:45455
+poly1 area 241778  poly2 area 52478 inter area 45455
+node:0 --> 4 humoments: 4.76 iou: 0.2 iou_factor: 10.4 area_factor: 4.6 angle_factor:43.843718023101076 shape_cost: 9989.9 
+
+pixel_and_iou poly1:241778 poly2:84327 merge:77302
+poly1 area 241778  poly2 area 84327 inter area 77302
+node:0 --> 5 humoments: 4.21 iou: 0.3 iou_factor: 6.2 area_factor: 2.9 angle_factor:34.343036580737234 shape_cost: 2585.1 
+
+pixel_and_iou poly1:241778 poly2:3522 merge:3522
+poly1 area 241778  poly2 area 3522 inter area 3522
+node:0 --> 9 humoments: 12.35 iou: 0.0 iou_factor: 81.4 area_factor: 68.6 angle_factor:1 shape_cost: 68991.7 
+
+pixel_and_iou poly1:180007 poly2:11137 merge:11137
+poly1 area 180007  poly2 area 11137 inter area 11137
+node:1 --> 2 humoments: 5.45 iou: 0.1 iou_factor: 27.8 area_factor: 16.2 angle_factor:37.77678717992156 shape_cost: 92587.0 
+
+pixel_and_iou poly1:180007 poly2:36412 merge:35485
+poly1 area 180007  poly2 area 36412 inter area 35485
+node:1 --> 4 humoments: 4.10 iou: 0.2 iou_factor: 9.7 area_factor: 4.9 angle_factor:1 shape_cost: 196.6 
+
+pixel_and_iou poly1:180007 poly2:57113 merge:57113
+poly1 area 180007  poly2 area 57113 inter area 57113
+node:1 --> 5 humoments: 3.74 iou: 0.3 iou_factor: 6.1 area_factor: 3.2 angle_factor:1 shape_cost: 72.1 
+
+pixel_and_iou poly1:180007 poly2:3317 merge:3317
+poly1 area 180007  poly2 area 3317 inter area 3317
+node:1 --> 9 humoments: 5.49 iou: 0.0 iou_factor: 70.4 area_factor: 54.3 angle_factor:39.20756620881996 shape_cost: 821159.7 
+
+pixel_and_iou poly1:94602 poly2:12874 merge:9685
+poly1 area 94602  poly2 area 12874 inter area 9685
+node:2 --> 2 humoments: 5.50 iou: 0.1 iou_factor: 18.3 area_factor: 7.3 angle_factor:27.086028425965104 shape_cost: 20075.8 
+
+pixel_and_iou poly1:94602 poly2:54820 merge:40644
+poly1 area 94602  poly2 area 54820 inter area 40644
+node:2 --> 4 humoments: 2.40 iou: 0.4 iou_factor: 5.2 area_factor: 1.7 angle_factor:10.359521305940579 shape_cost: 223.4 
+
+pixel_and_iou poly1:94602 poly2:89182 merge:56156
+poly1 area 94602  poly2 area 89182 inter area 56156
+node:2 --> 5 humoments: 2.35 iou: 0.4 iou_factor: 4.4 area_factor: 1.1 angle_factor:1 shape_cost: 11.1 
+
+pixel_and_iou poly1:94602 poly2:3522 merge:3055
+poly1 area 94602  poly2 area 3522 inter area 3055
+node:2 --> 9 humoments: 9.06 iou: 0.0 iou_factor: 47.5 area_factor: 26.9 angle_factor:28.516807454862626 shape_cost: 329508.9 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 128_8.65469646_46.8161659.json dist:78022.54381033493  edit_path[(0, 9), (1, 4), (2, 5), (None, 2)]
+update cost before:78022.54381033493 after:78022.54381033493 
+
+
+pixel_and_iou poly1:241778 poly2:55476 merge:55476
+poly1 area 241778  poly2 area 55476 inter area 55476
+node:0 --> 0 humoments: 1.08 iou: 0.2 iou_factor: 8.4 area_factor: 4.4 angle_factor:10.605114462499134 shape_cost: 415.1 
+
+pixel_and_iou poly1:241778 poly2:136403 merge:121139
+poly1 area 241778  poly2 area 136403 inter area 121139
+node:0 --> 1 humoments: 2.47 iou: 0.5 iou_factor: 4.2 area_factor: 1.8 angle_factor:27.089420122562366 shape_cost: 492.5 
+
+pixel_and_iou poly1:180007 poly2:43604 merge:43604
+poly1 area 180007  poly2 area 43604 inter area 43604
+node:1 --> 0 humoments: 1.54 iou: 0.2 iou_factor: 7.9 area_factor: 4.1 angle_factor:33.568995469191556 shape_cost: 1694.7 
+
+pixel_and_iou poly1:180007 poly2:92584 merge:92341
+poly1 area 180007  poly2 area 92584 inter area 92341
+node:1 --> 1 humoments: 2.47 iou: 0.5 iou_factor: 3.8 area_factor: 1.9 angle_factor:17.086158402492984 shape_cost: 314.5 
+
+pixel_and_iou poly1:94602 poly2:55476 merge:34462
+poly1 area 94602  poly2 area 55476 inter area 34462
+node:2 --> 0 humoments: 2.94 iou: 0.3 iou_factor: 6.5 area_factor: 1.7 angle_factor:22.878236715234575 shape_cost: 744.1 
+
+pixel_and_iou poly1:94602 poly2:150278 merge:80448
+poly1 area 94602  poly2 area 150278 inter area 80448
+node:2 --> 1 humoments: 1.92 iou: 0.5 iou_factor: 4.0 area_factor: 1.6 angle_factor:1 shape_cost: 12.2 
+
+G1: 0_8.627420884109522_46.73040070850499.json G2: 129_8.72249508_46.6698456.json dist:1100.6838630772859  edit_path[(0, 0), (1, 1), (2, None)]
+update cost before:1100.6838630772859 after:1100.6838630772859 
+
+
+pixel_and_iou poly1:241778 poly2:12884 merge:11730
+poly1 area 241778  poly2 area 12884 inter area 11730
+node:0 --> 5 humoments: 4.95 iou: 0.0 iou_factor: 34.3 area_factor: 18.8 angle_factor:36.13146349222707 shape_cost: 115123.9 
+
+pixel_and_iou poly1:241778 poly2:7220 merge:7220
+poly1 area 241778  poly2 area 7220 inter area 7220
+node:0 --> 8 humoments: 3.55 iou: 0.0 iou_factor: 50.2 area_factor: 33.5 angle_factor:33.03756285593451 shape_cost: 197095.3 
+
+pixel_and_iou poly1:241778 poly2:17366 merge:17366
+poly1 area 241778  poly2 area 17366 inter area 17366
+node:0 --> 13 humoments: 4.63 iou: 0.1 iou_factor: 24.4 area_factor: 13.9 angle_factor:28.727159174348785 shape_cost: 45299.0 
+
+pixel_and_iou poly1:241778 poly2:3381 merge:3381
+poly1 area 241778  poly2 area 3381 inter area 3381
+node:0 --> 14 humoments: 5.33 iou: 0.0 iou_factor: 83.4 area_factor: 71.5 angle_factor:1 shape_cost: 31789.7 
+

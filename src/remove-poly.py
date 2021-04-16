@@ -133,7 +133,7 @@ def vis_poly():
     print("input imgid:")
     img_id = sys.stdin.readline().strip()
 
-    img_dir = r"C:\qianlinjun\graduate\test-data\crop"
+    img_dir = r"D:\qianlinjun\graduate\test-data\query"
     for json_path in Path(img_dir).iterdir():
         json_path = str(json_path)
         if "json" in json_path and img_id == json_path.split("\\")[-1].split("_")[0]:

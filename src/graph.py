@@ -6,6 +6,7 @@ import json
 import heapq
 import time
 import numpy as np
+import shutil
 np.set_printoptions(suppress=True)
 
 from pykml import parser
@@ -60,7 +61,7 @@ class SceneNode(object):
         
         return angle
 
-    # calculate difference
+    # calculate differencef
     def compute_iou(self, G1_node, G2_node):
         pass
 
@@ -187,6 +188,7 @@ def build_Graph_From_Polygons(polygons, name, skipPolyID=None, reverse_order=Fal
 
 def loadGraphsFromJson(save_path, test_name=None, visualize=False, skipPolyID = None):
     scene_graphs = []
+
     for json_file in os.listdir(save_path):
         if "json" not in json_file:
             continue
@@ -226,16 +228,24 @@ def update_cost(g1, g2, veterx_edit_path, Cost_matrix):
         cost = 0
         if n1 == None:
             #insert n2
-            cost = math.sqrt( g2.nodes[n2]["scene_node"].area )    
+            # cost = math.sqrt( g2.nodes[n2]["scene_node"].area )
+            n1_row = g1_nodes.index(n1)
+            n2_col = g2_nodes.index(n2)
+            print("edit:{} cost:{}".format(e, cost))    
         elif n2 == None:
             #del n1
-            cost = math.sqrt( g1.nodes[n1]["scene_node"].area )
+            # cost = math.sqrt( g1.nodes[n1]["scene_node"].area )
+            n1_row = g1_nodes.index(n1)
+            n2_col = g2_nodes.index(n2)
+            Cost_matrix.C
+            print("edit:{} cost:{}".format(e, cost))   
         else:
             # n1 substitute n2
             # Cost_matrix
             n1_row = g1_nodes.index(n1)
             n2_col = g2_nodes.index(n2)
             cost = Cost_matrix.C[n1_row, n2_col]
+            print("edit:{} cost:{}".format(e, cost))   
         
         cost_detail.append((e, cost))
         cost_total += cost
@@ -249,7 +259,7 @@ def build_from_graph(G, reverse=False):
     for node_id in G.nodes:
         
         scene_node = G.nodes[node_id]["scene_node"]
-        polygons.append({"id":scene_node.id,"contour":scene_node.contour,"area":scene_node.area, "momente":scene_node.momente})
+        polygons.append({"id":scene_node.id,"contour":scene_node.contour,"area":scene_node.area, "momente":scene_node.posXY})
         # id_     
         # = polygon["id"]
         # contour = polygon["contour"]
@@ -374,8 +384,11 @@ def search_graph(query_G, scene_graphs):
         # smallest_poly_diff = node_subst_cost(query_G.nodes[pending_u[0]], scene_G.nodes[pending_v[0]])
         # largest_poly_diff  = node_subst_cost(query_G.nodes[pending_u[-1]], scene_G.nodes[pending_v[-1]])
         # if smallest_poly_diff > largest_poly_diff:
+        #     print("oriquery",, query_G.nodes)
         #     query_G = build_from_graph(query_G, reverse=True)
         #     scene_G = build_from_graph(scene_G,reverse=True)
+        #     print("modifyquery", query_G.nodes)
+        #     print("modifyquery"scene_G.nodes)
 
 
         ori_cost, vertex_path, edge_path, Cv, Ce = nx.graph_edit_distance(query_G, scene_G, 
@@ -579,8 +592,8 @@ def cal_dist(queryLoc, searchResut):
 #         # if "183_8.74401855_46.6736794" in G.name:
 
 def cal_two_dist(name1, name2):
-    query_path = r"C:\qianlinjun\graduate\test-data\query"
-    query_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601" , skipPolyID=0
+    query_path = r"D:\qianlinjun\graduate\test-data\query"
+    query_graphs = loadGraphsFromJson(query_path, visualize=False, skipPolyID=4) #"8.59262657_46.899601" 
     search_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601"
     g1_id = None
     g2_id = None
@@ -589,8 +602,10 @@ def cal_two_dist(name1, name2):
             g1_id = idx
         elif name2 in G.name:
             g2_id = idx
-    
-    search_graph(query_graphs[g1_id], search_graphs[g2_id:g2_id+1])
+    t1 = time.time()
+    search_graph(query_graphs[g1_id], search_graphs[g1_id:g1_id+1])
+    t2 = time.time()
+    print(t2-t1)
 
 
 
@@ -619,8 +634,8 @@ def query_all():
 
     valid_count = 0
     for idx, G in enumerate(query_graphs):
-        if "25_8.59218502_46.6390839" not in G.name:
-            continue
+        # if "25_8.59218502_46.6390839" not in G.name:
+        #     continue
 
         time1 = time.time()
         queryGraph = query_graphs[idx]#scene_graphs[idx]
@@ -714,19 +729,19 @@ def query_all():
 
 
 N = 25
-def analysis_result(res_path):
+def analysis_result(resfile_path, result_save_dir):
     # with open(path, "r") as f:
     #     resList = f.readlines()
     #     for res in resList:
     #         res = res.strip()
-    query_path = r"C:\qianlinjun\graduate\test-data\query"
+    query_path = r"D:\qianlinjun\graduate\test-data\query"
     query_graphs = loadGraphsFromJson(query_path, visualize=False) #"8.59262657_46.899601"
 
     if len(query_graphs) <= 2:
         print("len(query_graphs) <= 2")
         exit(0)
     
-    with open(res_path, "r") as f:
+    with open(resfile_path, "r") as f:
         allResList = f.readlines()
         # for res in allResList:
         #     res = res.strip().spilt(" ")
@@ -740,26 +755,55 @@ def analysis_result(res_path):
 
         ifvalid = False
         print("analysis {}".format(G.name))
+        
+
+
+
         resList = allResList[g_idx]
         resList = resList.strip().split(" ")
         
         topN_findlist = [0 for i in range(N)] # 0 5 10 15 20 25
 
-        for res_idx, res in enumerate(resList):
-            filename, ged_dist = res.split("|")
-            ged_dist = float(ged_dist)
+        #***************** 对每一个查询图片建立结果文件夹
+        data_path = r"D:\qianlinjun\graduate\test-data\crop"
+        folder_name = G.name.split("\\")[-1].replace(".json","") #~dir\file_name.json
+        folder_path = os.path.join(result_save_dir, folder_name)
+        if os.path.exists(folder_path) is False:
+            os.makedirs(folder_path)
+        shutil.copy(G.name.replace(".json", ".png"), folder_path)
+        shutil.copy(G.name.replace(".json", "_mask.png"), folder_path)
+        #*****************
 
-            # for vis
-            if ged_dist < 1000 and res_idx <= 25 :
-                print(filename, res_idx)
-            continue
+        for res_idx, res in enumerate(resList):
+            filename, ojilid_dist = res.split("|")
+            ojilid_dist = float(ojilid_dist)
+
+            #***************** for vis
+            src_img = os.path.join(data_path, filename+".png")
+            src_mask = os.path.join(data_path, filename+"_mask.png")
+            if ojilid_dist < 1000 and res_idx <= 25 :
+                print(filename, res_idx, ojilid_dist)
+                # copy file 2 res
+                dst_img = os.path.join(folder_path, str(res_idx) +"_"+ filename+"_find.png")
+                dst_img_mask = os.path.join(folder_path, str(res_idx) +"_"+ filename+"_mask_find.png")
+                shutil.copyfile(src_img, dst_img)
+                shutil.copyfile(src_mask, dst_img_mask)
+            elif res_idx <= 25:
+                dst_img = os.path.join(folder_path, str(res_idx) +"_"+filename+".png")
+                dst_img_mask = os.path.join(folder_path, str(res_idx) +"_"+ filename+"_mask_find.png")
+                shutil.copyfile(src_img, dst_img)
+                shutil.copyfile(src_mask, dst_img_mask)     
+            
+            #*****************
+
+            # continue
 
             for topN in range(N):
                 # topN = n_idx * 5
                 # if topN == 0:
                 #     topN = 1
             
-                if ged_dist < 1000 and res_idx <= topN :
+                if ojilid_dist < 1000 and res_idx <= topN :
                     topN_findlist[topN] += 1
                     # if ifvalid is False:
                     #     ifvalid = True
@@ -770,7 +814,6 @@ def analysis_result(res_path):
                     res_loc = filename.split("_")[1:]
                     res_lon = round(float(res_loc[0]), 6)
                     res_lat = round(float(res_loc[1]), 6)
-
                     # print( "{},{} {},{} {}".format(query_lon, query_lat, res_lon, res_lat, res_idx+1))
                     # break
 
@@ -813,15 +856,21 @@ if __name__ == "__main__":
     # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_no_area_factor" #
     # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_no_angle_factor"
     # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_15_node_cost_del_1_5" #4_14_with_edge_cost_3angle_1_3dist_1_5insdel"
-    result_save_dir = r"D:\qianlinjun\graduate\src\src\output\debug"
-    res_path = os.path.join(result_save_dir, "validate.txt")
+    # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\debug"
+    # result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_14_with_edge_cost_no_angle_same_left_right"
+    
+    # best
+    result_save_dir = r"D:\qianlinjun\graduate\src\src\output\4_14_with_edge_cost_no_angle"
+
+    resfile_path = os.path.join(result_save_dir, "validate.txt")
     # query_all()
-    # analysis_result(res_path)
+    analysis_result(resfile_path, result_save_dir)
+# 
 
-
-    name1 = "19_8.6204996_46.886002"#5
-    name2 = "6_8.721228366639377_46.67035726569055" #2
-    cal_two_dist(name1,name2)
+    # 图匹配章节实验
+    # name1 = "19_8.6204996_46.886002"#5
+    # name2 = "6_8.721228366639377_46.67035726569055" #2
+    # cal_two_dist(name1,name2)
 
 
 

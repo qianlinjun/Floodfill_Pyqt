@@ -81,13 +81,13 @@ def loadJsonAndDraw(img_path, specify_poly_id=None):
     # cv2.waitKey()
 
 def vis_all():
-    img_dir = r"D:\qianlinjun\graduate\test-data\query"
+    img_dir = r"D:\qianlinjun\graduate\test-data\crop"
     for img_path in Path(img_dir).iterdir():
         print(img_path)
         loadJsonAndDraw(img_path)
 
 def vis_poly():
-    img_path = r"C:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60\12_8.5369873_46.6108665.png"
+    img_path = r"D:\qianlinjun\graduate\data\switz-test-pts-3-17-11-image-fov-60\12_8.5369873_46.6108665.png"
     specify_poly_id = 13
     loadJsonAndDraw(img_path, specify_poly_id)
 
